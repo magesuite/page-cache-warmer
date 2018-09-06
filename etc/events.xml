@@ -1,0 +1,12 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="catalog_product_save_after">
+        <observer name="creativestyle_catalog_product_save_after" instance="Creativestyle\MageSuite\PageCacheWarmer\Observer\AddProductToWarmer"/>
+    </event>
+    <event name="cms_page_save_after">
+        <observer name="cache_warmup_cms_save" instance="Creativestyle\MageSuite\PageCacheWarmer\Observer\AddCmsToWarmer"/>
+    </event>
+    <event name="catalog_category_save_after">
+        <observer name="cache_warmup_cms_save" instance="Creativestyle\MageSuite\PageCacheWarmer\Observer\AddCategoryToWarmer"/>
+    </event>
+</config>
