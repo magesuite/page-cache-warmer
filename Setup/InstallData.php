@@ -60,7 +60,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                     'input' => 'select',
                     'group' => 'Cache Warmup',
                     'source' => 'Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority',
-                    'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+                    'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
                     'class' => '',
                     'visible' => 1,
                     'required' => 0,
@@ -107,7 +107,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                     'required' => false,
                     'sort_order' => 100,
                     'source' => 'Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority',
-                    'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+                    'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
                     'group' => 'Cache Warmup',
                 ]
             );
