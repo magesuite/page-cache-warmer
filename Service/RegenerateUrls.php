@@ -100,6 +100,7 @@ class RegenerateUrls
 
                     $select->where($data['table_alias']. '_default' . '.attribute_id =?', $attributeId);
                     $select->where($data['table_alias']. '_default' . '.store_id = 0');
+                    $select->where('COALESCE('.$data['table_alias']. '_store'.'.value, '.$data['table_alias']. '_default'.'.value)');
                 } else {
                     $select->joinLeft(
                         [$data['table_alias'] => 'cms_page'],
