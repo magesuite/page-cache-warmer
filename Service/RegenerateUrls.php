@@ -76,7 +76,8 @@ class RegenerateUrls
                         [
                             'entity_type',
                             'entity_id',
-                            'url' => new Zend_Db_Expr("CONCAT('". $baseUrl . "', main_table.request_path)")
+                            'url' => new Zend_Db_Expr("CONCAT('". $baseUrl . "', main_table.request_path)"),
+                            'priority' => new Zend_Db_Expr('COALESCE('.$data['table_alias']. '_store'.'.value, '.$data['table_alias']. '_default'.'.value)')
                         ]
                     )
                     ->where('main_table.entity_type =?', $data['entity_type'])
@@ -86,11 +87,19 @@ class RegenerateUrls
                     $attributeId = $this->attributeRepository->get($data['attribute_entity_type'], 'warmup_priority')->getAttributeId();
 
                     $select->joinLeft(
-                        [$data['table_alias'] => $data['table']],
-                        'main_table.entity_id = ' . $data['table_alias'] . '.entity_id AND ' . $data['table_alias'] . '.attribute_id = ' . $attributeId,
-                        ['priority' => $data['field']]
-                    )
-                        ->where($data['table_alias'] . '.value != 0');
+                        [$data['table_alias'] . '_default' => $data['table']],
+                        'main_table.entity_id = ' . $data['table_alias']. '_default' . '.entity_id AND ' . $data['table_alias'] . '_default' . '.attribute_id = ' . $attributeId,
+                        ['']
+                    );
+
+                    $select->joinLeft(
+                        [$data['table_alias'] . '_store' => $data['table']],
+                        $data['table_alias']. '_default' . '.entity_id = ' . $data['table_alias'] . '_store' . '.entity_id AND ' . $data['table_alias'] . '_default' . '.attribute_id = ' . $data['table_alias'] . '_store' . '.attribute_id AND ' . $data['table_alias'] . '_store' . '.store_id = ' . $storeId,
+                        ['']
+                    );
+
+                    $select->where($data['table_alias']. '_default' . '.attribute_id =?', $attributeId);
+                    $select->where($data['table_alias']. '_default' . '.store_id = 0');
                 } else {
                     $select->joinLeft(
                         [$data['table_alias'] => 'cms_page'],
@@ -100,12 +109,14 @@ class RegenerateUrls
                         ->where($data['table_alias'] . '.warmup_priority != 0');
                 }
 
+
                 $select->joinLeft(
                         ['customer_group' => 'customer_group'],
                         'main_table.entity_id',
                         ['customer_group' => 'customer_group_id']
                     )
                     ->where('customer_group.customer_group_id IN(?)', $data['customer_groups']);
+
 
                 $insertQuery = $connection->insertFromSelect(
                     $select,
