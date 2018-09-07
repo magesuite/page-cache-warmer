@@ -5,28 +5,27 @@
  * Date: 05/09/2018
  * Time: 15:28
  */
-
 namespace Creativestyle\MageSuite\PageCacheWarmer\Observer;
-
 
 class CacheFlush implements \Magento\Framework\Event\ObserverInterface
 {
-    /**
-     * @var \Creativestyle\MageSuite\PageCacheWarmer\Service\RegenerateUrls
-     */
-    private $regenerateUrls;
+
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     private $scopeConfig;
+    /**
+     * @var CronScheduler
+     */
+    private $cronScheduler;
 
     public function __construct(
-        \Creativestyle\MageSuite\PageCacheWarmer\Service\RegenerateUrls $regenerateUrls,
+        \Creativestyle\MageSuite\PageCacheWarmer\Service\CronScheduler $cronScheduler,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     )
     {
-        $this->regenerateUrls = $regenerateUrls;
         $this->scopeConfig = $scopeConfig;
+        $this->cronScheduler = $cronScheduler;
     }
 
     /**
@@ -38,6 +37,6 @@ class CacheFlush implements \Magento\Framework\Event\ObserverInterface
             return;
         }
 
-        $this->regenerateUrls->regenerate();
+        $this->cronScheduler->schedule();
     }
 }

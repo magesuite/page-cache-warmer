@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="regenerate_page_cache_warmer_urls" instance="Creativestyle\MageSuite\PageCacheWarmer\Cron\RegenerateUrls" method="execute">
+            <schedule>0 0 31 2 *</schedule>
+        </job>
+    </group>
+</config>

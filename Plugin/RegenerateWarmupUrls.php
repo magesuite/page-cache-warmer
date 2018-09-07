@@ -9,21 +9,21 @@ namespace Creativestyle\MageSuite\PageCacheWarmer\Plugin;
 class RegenerateWarmupUrls
 {
     /**
-     * @var \Creativestyle\MageSuite\PageCacheWarmer\Service\RegenerateUrls
+     * @var \Creativestyle\MageSuite\PageCacheWarmer\Service\CronScheduler
      */
-    private $regenerateUrls;
+    private $cronScheduler;
 
     public function __construct(
-        \Creativestyle\MageSuite\PageCacheWarmer\Service\RegenerateUrls $regenerateUrls
+        \Creativestyle\MageSuite\PageCacheWarmer\Service\CronScheduler $cronScheduler
     )
     {
-        $this->regenerateUrls = $regenerateUrls;
+        $this->cronScheduler = $cronScheduler;
     }
 
     public function afterCleanType(\Magento\Framework\App\Cache\TypeList $subject, $result, $typeCode)
     {
         if ($typeCode == 'full_page') {
-            $this->regenerateUrls->regenerate();
+            $this->cronScheduler->schedule();
         }
 
         return $result;
