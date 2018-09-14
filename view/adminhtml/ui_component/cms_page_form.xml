@@ -24,7 +24,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source\UiComponent\WarmupPriority"/>
+                        <options class="MageSuite\PageCacheWarmer\Model\Config\Source\UiComponent\WarmupPriority"/>
                     </settings>
                 </select>
             </formElements>

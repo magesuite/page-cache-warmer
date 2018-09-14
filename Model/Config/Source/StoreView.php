@@ -1,5 +1,5 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source;
+namespace MageSuite\PageCacheWarmer\Model\Config\Source;
 
 class StoreView implements \Magento\Framework\Option\ArrayInterface
 {

@@ -1,7 +1,7 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Model;
+namespace MageSuite\PageCacheWarmer\Model;
 
-class PageCacheWarmer extends \Magento\Framework\Model\AbstractModel implements \Creativestyle\MageSuite\PageCacheWarmer\Api\Data\PageCacheWarmerInterface
+class PageCacheWarmer extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\PageCacheWarmerInterface
 {
     const NO_WARMUP = 0;
     const LO_PRIORITY = 10;
@@ -9,7 +9,7 @@ class PageCacheWarmer extends \Magento\Framework\Model\AbstractModel implements 
 
     protected function _construct()
     {
-        $this->_init('Creativestyle\MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer');
+        $this->_init('MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer');
     }
 
     public function setId($id)

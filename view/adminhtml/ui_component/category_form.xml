@@ -12,7 +12,7 @@
         </argument>
         <field name="warmup_priority">
             <argument name="data" xsi:type="array">
-                <item name="options" xsi:type="object">Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source\UiComponent\WarmupPriority</item>
+                <item name="options" xsi:type="object">MageSuite\PageCacheWarmer\Model\Config\Source\UiComponent\WarmupPriority</item>
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="label" xsi:type="string" translate="true">Warmup Priority</item>

@@ -6,7 +6,7 @@
  * Time: 14:06
  */
 
-namespace Creativestyle\MageSuite\PageCacheWarmer\Service;
+namespace MageSuite\PageCacheWarmer\Service;
 
 
 class CronScheduler

@@ -1,5 +1,5 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Api\Data;
+namespace MageSuite\PageCacheWarmer\Api\Data;
 
 interface PageCacheWarmerInterface
 {

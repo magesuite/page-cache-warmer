@@ -1,5 +1,5 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Setup;
+namespace MageSuite\PageCacheWarmer\Setup;
 
 class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 {

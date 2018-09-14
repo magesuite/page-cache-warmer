@@ -6,7 +6,7 @@
  * Time: 18:52
  */
 
-namespace Creativestyle\MageSuite\PageCacheWarmer\Observer;
+namespace MageSuite\PageCacheWarmer\Observer;
 
 
 class AbstractWarmerObserver
@@ -17,7 +17,7 @@ class AbstractWarmerObserver
 
     const CMS_ENTITY = 'cms-page';
     /**
-     * @var \Creativestyle\MageSuite\PageCacheWarmer\Service\WarmupEntityCreator
+     * @var \MageSuite\PageCacheWarmer\Service\WarmupEntityCreator
      */
     protected $warmupEntityCreator;
     /**
@@ -26,7 +26,7 @@ class AbstractWarmerObserver
     private $scopeConfig;
 
     public function __construct(
-        \Creativestyle\MageSuite\PageCacheWarmer\Service\WarmupEntityCreator $warmupEntityCreator,
+        \MageSuite\PageCacheWarmer\Service\WarmupEntityCreator $warmupEntityCreator,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     )
     {

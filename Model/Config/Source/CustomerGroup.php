@@ -1,5 +1,5 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source;
+namespace MageSuite\PageCacheWarmer\Model\Config\Source;
 
 class CustomerGroup implements \Magento\Framework\Option\ArrayInterface
 {

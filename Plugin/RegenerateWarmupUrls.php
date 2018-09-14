@@ -1,5 +1,5 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Plugin;
+namespace MageSuite\PageCacheWarmer\Plugin;
 /**
  * Created by PhpStorm.
  * User: blazejdoleska
@@ -9,12 +9,12 @@ namespace Creativestyle\MageSuite\PageCacheWarmer\Plugin;
 class RegenerateWarmupUrls
 {
     /**
-     * @var \Creativestyle\MageSuite\PageCacheWarmer\Service\CronScheduler
+     * @var \MageSuite\PageCacheWarmer\Service\CronScheduler
      */
     private $cronScheduler;
 
     public function __construct(
-        \Creativestyle\MageSuite\PageCacheWarmer\Service\CronScheduler $cronScheduler
+        \MageSuite\PageCacheWarmer\Service\CronScheduler $cronScheduler
     )
     {
         $this->cronScheduler = $cronScheduler;

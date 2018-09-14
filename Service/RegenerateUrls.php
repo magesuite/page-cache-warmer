@@ -1,12 +1,12 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Service;
+namespace MageSuite\PageCacheWarmer\Service;
 
 use Zend_Db_Expr;
 
 class RegenerateUrls
 {
     /**
-     * @var \Creativestyle\MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer\CollectionFactory
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer\CollectionFactory
      */
     private $pageWarmerCollectionFactory;
     /**
@@ -31,7 +31,7 @@ class RegenerateUrls
     private $storeRepository;
 
     public function __construct(
-        \Creativestyle\MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer\CollectionFactory $pageWarmerCollectionFactory,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer\CollectionFactory $pageWarmerCollectionFactory,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Eav\Api\AttributeRepositoryInterface $attributeRepository,

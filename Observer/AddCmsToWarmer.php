@@ -1,10 +1,10 @@
 <?php
 
-namespace Creativestyle\MageSuite\PageCacheWarmer\Observer;
+namespace MageSuite\PageCacheWarmer\Observer;
 
-use Creativestyle\MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
+use MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
 
-class AddCmsToWarmer extends \Creativestyle\MageSuite\PageCacheWarmer\Observer\AbstractWarmerObserver implements \Magento\Framework\Event\ObserverInterface
+class AddCmsToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWarmerObserver implements \Magento\Framework\Event\ObserverInterface
 {
     /**
      * @param \Magento\Framework\Event\Observer $observer

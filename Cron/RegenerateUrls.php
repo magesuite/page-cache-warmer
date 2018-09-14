@@ -1,10 +1,10 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Cron;
+namespace MageSuite\PageCacheWarmer\Cron;
 
 class RegenerateUrls
 {
     /**
-     * @var \Creativestyle\MageSuite\PageCacheWarmer\Service\RegenerateUrls
+     * @var \MageSuite\PageCacheWarmer\Service\RegenerateUrls
      */
     private $regenerateUrls;
     /**
@@ -13,7 +13,7 @@ class RegenerateUrls
     private $scopeConfig;
 
     public function __construct(
-        \Creativestyle\MageSuite\PageCacheWarmer\Service\RegenerateUrls $regenerateUrls,
+        \MageSuite\PageCacheWarmer\Service\RegenerateUrls $regenerateUrls,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     )
     {

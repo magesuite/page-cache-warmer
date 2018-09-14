@@ -11,7 +11,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "Creativestyle\\MageSuite\\PageCacheWarmer\\": ""
+      "MageSuite\\PageCacheWarmer\\": ""
     }
   }
 }

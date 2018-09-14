@@ -5,7 +5,7 @@
  * Date: 05/09/2018
  * Time: 15:28
  */
-namespace Creativestyle\MageSuite\PageCacheWarmer\Observer;
+namespace MageSuite\PageCacheWarmer\Observer;
 
 class CacheFlush implements \Magento\Framework\Event\ObserverInterface
 {
@@ -15,12 +15,12 @@ class CacheFlush implements \Magento\Framework\Event\ObserverInterface
      */
     private $scopeConfig;
     /**
-     * @var CronScheduler
+     * @var \MageSuite\PageCacheWarmer\Service\CronScheduler
      */
     private $cronScheduler;
 
     public function __construct(
-        \Creativestyle\MageSuite\PageCacheWarmer\Service\CronScheduler $cronScheduler,
+        \MageSuite\PageCacheWarmer\Service\CronScheduler $cronScheduler,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     )
     {

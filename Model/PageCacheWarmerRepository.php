@@ -1,25 +1,25 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Model;
+namespace MageSuite\PageCacheWarmer\Model;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\CouldNotDeleteException;
 
-class PageCacheWarmerRepository implements \Creativestyle\MageSuite\PageCacheWarmer\Api\PageCacheWarmerRepositoryInterface
+class PageCacheWarmerRepository implements \MageSuite\PageCacheWarmer\Api\PageCacheWarmerRepositoryInterface
 {
     /**
-     * @var \Creativestyle\MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer
      */
     protected $pageCacheWarmerResource;
 
     /**
-     * @var \Creativestyle\MageSuite\PageCacheWarmer\Model\PageCacheWarmerFactory
+     * @var \MageSuite\PageCacheWarmer\Model\PageCacheWarmerFactory
      */
     protected $pageCacheWarmerFactory;
 
     public function __construct(
-        \Creativestyle\MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer $pageCacheWarmerResource,
-        \Creativestyle\MageSuite\PageCacheWarmer\Model\PageCacheWarmerFactory $pageCacheWarmerFactory
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer $pageCacheWarmerResource,
+        \MageSuite\PageCacheWarmer\Model\PageCacheWarmerFactory $pageCacheWarmerFactory
     )
     {
         $this->pageCacheWarmerResource = $pageCacheWarmerResource;
@@ -36,7 +36,7 @@ class PageCacheWarmerRepository implements \Creativestyle\MageSuite\PageCacheWar
         return $link;
     }
 
-    public function save(\Creativestyle\MageSuite\PageCacheWarmer\Api\Data\PageCacheWarmerInterface $url)
+    public function save(\MageSuite\PageCacheWarmer\Api\Data\PageCacheWarmerInterface $url)
     {
         try {
             $this->pageCacheWarmerResource->save($url);
@@ -49,7 +49,7 @@ class PageCacheWarmerRepository implements \Creativestyle\MageSuite\PageCacheWar
         return $url;
     }
 
-    public function delete(\Creativestyle\MageSuite\PageCacheWarmer\Api\Data\PageCacheWarmerInterface $url)
+    public function delete(\MageSuite\PageCacheWarmer\Api\Data\PageCacheWarmerInterface $url)
     {
         try {
             $this->pageCacheWarmerResource->delete($url);

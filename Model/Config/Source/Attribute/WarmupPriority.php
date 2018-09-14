@@ -1,7 +1,7 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source\Attribute;
+namespace MageSuite\PageCacheWarmer\Model\Config\Source\Attribute;
 
-use Creativestyle\MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
+use MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
 
 class WarmupPriority extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {

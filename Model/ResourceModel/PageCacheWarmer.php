@@ -1,5 +1,5 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Model\ResourceModel;
+namespace MageSuite\PageCacheWarmer\Model\ResourceModel;
 
 class PageCacheWarmer extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {

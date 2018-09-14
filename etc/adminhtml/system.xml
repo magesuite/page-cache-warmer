@@ -15,11 +15,11 @@
                 </field>
                 <field id="customer_group" translate="label" type="multiselect" sortOrder="20" showInDefault="1" >
                     <label>Customer Group</label>
-                    <source_model>Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source\CustomerGroup</source_model>
+                    <source_model>MageSuite\PageCacheWarmer\Model\Config\Source\CustomerGroup</source_model>
                 </field>
                 <field id="store_view" translate="label" type="multiselect" sortOrder="30" showInDefault="1" >
                     <label>Store View</label>
-                    <source_model>Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source\StoreView</source_model>
+                    <source_model>MageSuite\PageCacheWarmer\Model\Config\Source\StoreView</source_model>
                 </field>
             </group>
         </section>

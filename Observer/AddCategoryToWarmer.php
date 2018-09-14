@@ -1,10 +1,10 @@
 <?php
 
-namespace Creativestyle\MageSuite\PageCacheWarmer\Observer;
+namespace MageSuite\PageCacheWarmer\Observer;
 
-use Creativestyle\MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
+use MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
 
-class AddCategoryToWarmer extends \Creativestyle\MageSuite\PageCacheWarmer\Observer\AbstractWarmerObserver implements \Magento\Framework\Event\ObserverInterface
+class AddCategoryToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWarmerObserver implements \Magento\Framework\Event\ObserverInterface
 {
     /**
      * @param \Magento\Framework\Event\Observer $observer

@@ -1,5 +1,5 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Service;
+namespace MageSuite\PageCacheWarmer\Service;
 
 use function explode;
 use function in_array;
@@ -15,11 +15,11 @@ class WarmupEntityCreator
      */
     private $customerGroupCollection;
     /**
-     * @var \Creativestyle\MageSuite\PageCacheWarmer\Model\PageCacheWarmerFactory
+     * @var \MageSuite\PageCacheWarmer\Model\PageCacheWarmerFactory
      */
     private $pageCacheWarmerFactory;
     /**
-     * @var \Creativestyle\MageSuite\PageCacheWarmer\Model\PageCacheWarmerRepository
+     * @var \MageSuite\PageCacheWarmer\Model\PageCacheWarmerRepository
      */
     private $pageCacheWarmerRepository;
     /**
@@ -34,8 +34,8 @@ class WarmupEntityCreator
     public function __construct(
         \Magento\UrlRewrite\Model\ResourceModel\UrlRewriteCollectionFactory $urlRewriteCollection,
         \Magento\Customer\Model\ResourceModel\Group\CollectionFactory $customerGroupCollection,
-        \Creativestyle\MageSuite\PageCacheWarmer\Model\PageCacheWarmerFactory $pageCacheWarmerFactory,
-        \Creativestyle\MageSuite\PageCacheWarmer\Model\PageCacheWarmerRepository $pageCacheWarmerRepository,
+        \MageSuite\PageCacheWarmer\Model\PageCacheWarmerFactory $pageCacheWarmerFactory,
+        \MageSuite\PageCacheWarmer\Model\PageCacheWarmerRepository $pageCacheWarmerRepository,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Store\Api\StoreRepositoryInterface $storeRepository
     )

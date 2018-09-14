@@ -1,7 +1,7 @@
 <?php
-namespace Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source\UiComponent;
+namespace MageSuite\PageCacheWarmer\Model\Config\Source\UiComponent;
 
-use Creativestyle\MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
+use MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
 
 class WarmupPriority implements \Magento\Framework\Option\ArrayInterface
 {

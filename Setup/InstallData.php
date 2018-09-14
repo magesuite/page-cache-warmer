@@ -1,6 +1,6 @@
 <?php
 
-namespace Creativestyle\MageSuite\PageCacheWarmer\Setup;
+namespace MageSuite\PageCacheWarmer\Setup;
 
 class InstallData implements \Magento\Framework\Setup\InstallDataInterface
 {
@@ -59,7 +59,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                     'label' => 'Warmup Priority',
                     'input' => 'select',
                     'group' => 'Cache Warmup',
-                    'source' => 'Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority',
+                    'source' => 'MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority',
                     'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
                     'class' => '',
                     'visible' => 1,
@@ -106,7 +106,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                     'visible' => true,
                     'required' => false,
                     'sort_order' => 100,
-                    'source' => 'Creativestyle\MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority',
+                    'source' => 'MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority',
                     'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
                     'group' => 'Cache Warmup',
                 ]
