@@ -67,9 +67,17 @@ class RegenerateUrls
     public function insert($data)
     {
         try {
+            if ($data['entity_type'] == 'cms-page') {
+                $priorityExpression = 'cms_page.warmup_priority';
+            } else {
+                $priorityExpression = 'COALESCE('.$data['table_alias']. '_store'.'.value, '.$data['table_alias']. '_default'.'.value)';
+            }
+
+
             foreach ($data['store_ids'] as $storeId) {
                 $baseUrl = $this->getStoreBaseUrl($storeId);
                 $connection = $this->resourceConnection->getConnection();
+
                 $select = $connection->select()
                     ->from(
                         ['main_table' => 'url_rewrite'],
@@ -77,7 +85,7 @@ class RegenerateUrls
                             'entity_type',
                             'entity_id',
                             'url' => new Zend_Db_Expr("CONCAT('". $baseUrl . "', main_table.request_path)"),
-                            'priority' => new Zend_Db_Expr('COALESCE('.$data['table_alias']. '_store'.'.value, '.$data['table_alias']. '_default'.'.value)')
+                            'priority' => new Zend_Db_Expr($priorityExpression)
                         ]
                     )
                     ->where('main_table.entity_type =?', $data['entity_type'])
@@ -105,7 +113,7 @@ class RegenerateUrls
                     $select->joinLeft(
                         [$data['table_alias'] => 'cms_page'],
                         'main_table.entity_id = ' . $data['table_alias'] . '.page_id',
-                        ['priority' => 'warmup_priority']
+                        ['']
                     )
                         ->where($data['table_alias'] . '.warmup_priority != 0');
                 }
@@ -117,8 +125,7 @@ class RegenerateUrls
                         ['customer_group' => 'customer_group_id']
                     )
                     ->where('customer_group.customer_group_id IN(?)', $data['customer_groups']);
-
-
+                
                 $insertQuery = $connection->insertFromSelect(
                     $select,
                     'page_cache_warmer',

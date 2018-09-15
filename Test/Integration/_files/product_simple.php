@@ -7,7 +7,7 @@ $productRepository = $objectManager->create(\Magento\Catalog\Api\ProductReposito
 
 $product = $productRepository->get('simple');
 
-$product->setWarmupPriority(400);
+$product->setWarmupPriority(40);
 
 $productRepository->save($product);
 
