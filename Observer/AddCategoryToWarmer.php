@@ -1,5 +1,4 @@
 <?php
-
 namespace MageSuite\PageCacheWarmer\Observer;
 
 use MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
@@ -20,10 +19,7 @@ class AddCategoryToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWa
         if ($category->getWarmupPriority() == PageCacheWarmer::NO_WARMUP) {
             return;
         }
-        $warmupEntityCreator = $this->warmupEntityCreator;
 
-        $data = $warmupEntityCreator->prepareEntity($category->getEntityId(), $category->getWarmupPriority(), 'category');
-
-        $warmupEntityCreator->saveEntity($data);
+        $this->prepareAndSaveEntity($category->getEntityId(), $category->getWarmupPriority(), 'category');
     }
 }

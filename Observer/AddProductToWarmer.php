@@ -1,5 +1,4 @@
 <?php
-
 namespace MageSuite\PageCacheWarmer\Observer;
 
 use MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
@@ -20,10 +19,6 @@ class AddProductToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWar
         if ($product->getWarmupPriority() == PageCacheWarmer::NO_WARMUP) {
             return;
         }
-        $warmupEntityCreator = $this->warmupEntityCreator;
-
-        $data = $warmupEntityCreator->prepareEntity($product->getId(), $product->getWarmupPriority(), 'product');
-
-        $warmupEntityCreator->saveEntity($data);
+        $this->prepareAndSaveEntity($product->getId(), $product->getWarmupPriority(), 'product');
     }
 }

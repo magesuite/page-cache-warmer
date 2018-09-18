@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: blazejdoleska
- * Date: 05/09/2018
- * Time: 15:28
- */
 namespace MageSuite\PageCacheWarmer\Observer;
 
 class CacheFlush implements \Magento\Framework\Event\ObserverInterface

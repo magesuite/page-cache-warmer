@@ -1,5 +1,4 @@
 <?php
-
 namespace MageSuite\PageCacheWarmer\Observer;
 
 use MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
@@ -20,10 +19,6 @@ class AddCmsToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWarmerO
         if ($page->getWarmupPriority() == PageCacheWarmer::NO_WARMUP) {
             return;
         }
-        $warmupEntityCreator = $this->warmupEntityCreator;
-
-        $data = $warmupEntityCreator->prepareEntity($page->getPageId(), $page->getWarmupPriority(), 'cms-page');
-
-        $warmupEntityCreator->saveEntity($data);
+       $this->prepareAndSaveEntity($page->getPageId(), $page->getWarmupPriority(), 'cms-page');
     }
 }

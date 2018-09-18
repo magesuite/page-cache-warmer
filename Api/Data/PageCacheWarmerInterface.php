@@ -26,7 +26,7 @@ interface PageCacheWarmerInterface
     public function setEntityId($id);
 
     /**
-     * @return int
+     * @return string
      */
     public function getEntityType();
 

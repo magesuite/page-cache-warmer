@@ -1,18 +1,21 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Model\Config\Source;
 
+use function array_shift;
+
 class CustomerGroup implements \Magento\Framework\Option\ArrayInterface
 {
+
     /**
-     * @var \Magento\Customer\Model\ResourceModel\Group\Collection
+     * @var \Magento\Customer\Model\Config\Source\Group
      */
-    private $customerGroupCollection;
+    private $customerGroupSource;
 
     public function __construct(
-        \Magento\Customer\Model\ResourceModel\Group\Collection $customerGroupCollection
+        \Magento\Customer\Model\Config\Source\Group $customerGroupSource
     )
     {
-        $this->customerGroupCollection = $customerGroupCollection;
+        $this->customerGroupSource = $customerGroupSource;
     }
 
     /**
@@ -20,14 +23,9 @@ class CustomerGroup implements \Magento\Framework\Option\ArrayInterface
      */
     public function toOptionArray()
     {
-        $options = [];
-        $customerGroups = $this->customerGroupCollection;
-        foreach ($customerGroups as $customerGroup) {
-            $options[] = [
-                'label' => $customerGroup->getCustomerGroupCode(),
-                'value' => $customerGroup->getCustomerGroupId()
-            ];
-        }
+        $options = $this->customerGroupSource->toOptionArray();
+
+        array_shift($options);
 
         return $options;
     }

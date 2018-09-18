@@ -22,29 +22,29 @@ class RegenerateUrls
      */
     private $attributeRepository;
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     */
-    private $scopeConfig;
-    /**
      * @var \Magento\Store\Api\StoreRepositoryInterface
      */
     private $storeRepository;
+    /**
+     * @var Configuration
+     */
+    private $configuration;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer\CollectionFactory $pageWarmerCollectionFactory,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Eav\Api\AttributeRepositoryInterface $attributeRepository,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Store\Api\StoreRepositoryInterface $storeRepository
+        \Magento\Store\Api\StoreRepositoryInterface $storeRepository,
+        \MageSuite\PageCacheWarmer\Service\Configuration $configuration
     )
     {
         $this->pageWarmerCollectionFactory = $pageWarmerCollectionFactory;
         $this->resourceConnection = $resourceConnection;
         $this->logger = $logger;
         $this->attributeRepository = $attributeRepository;
-        $this->scopeConfig = $scopeConfig;
         $this->storeRepository = $storeRepository;
+        $this->configuration = $configuration;
     }
 
     public function regenerate()
@@ -53,12 +53,11 @@ class RegenerateUrls
 
         $pageWarmerCollection->walk('delete');
 
-        $storeIds = explode(',', $this->scopeConfig->getValue('cache_warmer/general/store_view'));
-        $customerGroups = explode(',', $this->scopeConfig->getValue('cache_warmer/general/customer_group'));
+        $configuration = $this->configuration->getConfiguration();
 
         foreach ($this->getEntityData() as $data) {
-            $data['store_ids'] = $storeIds;
-            $data['customer_groups'] = $customerGroups;
+            $data['store_ids'] = $configuration['store_views'];
+            $data['customer_groups'] = $configuration['customer_groups'];
             $this->insert($data);
         }
 
@@ -72,7 +71,6 @@ class RegenerateUrls
             } else {
                 $priorityExpression = 'COALESCE('.$data['table_alias']. '_store'.'.value, '.$data['table_alias']. '_default'.'.value)';
             }
-
 
             foreach ($data['store_ids'] as $storeId) {
                 $baseUrl = $this->getStoreBaseUrl($storeId);
@@ -178,8 +176,6 @@ class RegenerateUrls
 
         $store = $storeRepository->getById($storeId);
 
-        $url = $store->getBaseUrl();
-
-        return $url;
+        return $store->getBaseUrl();
     }
 }

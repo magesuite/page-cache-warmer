@@ -1,22 +1,26 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Model\Config\Source\UiComponent;
 
-use MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
-
 class WarmupPriority implements \Magento\Framework\Option\ArrayInterface
 {
+    /**
+     * @var \MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority
+     */
+    private $warmupPriority;
+
+    public function __construct(
+        \MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority $warmupPriority
+    )
+    {
+        $this->warmupPriority = $warmupPriority;
+    }
+
     /**
      * @return array
      */
     public function toOptionArray()
     {
-        $options = [
-            ['label' => __('No'), 'value' => PageCacheWarmer::NO_WARMUP],
-            ['label' => __('Yes, Low priority'), 'value' => PageCacheWarmer::LO_PRIORITY],
-            ['label' => __('Yes, High priority - As soon as possible'), 'value' => PageCacheWarmer::HI_PRIORITY]
-        ];
-
-        return $options;
+        return $this->warmupPriority->getAllOptions();
     }
 
 }

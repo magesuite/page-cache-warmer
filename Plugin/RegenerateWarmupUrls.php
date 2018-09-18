@@ -1,11 +1,6 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Plugin;
-/**
- * Created by PhpStorm.
- * User: blazejdoleska
- * Date: 05/09/2018
- * Time: 16:20
- */
+
 class RegenerateWarmupUrls
 {
     /**

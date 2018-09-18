@@ -1,9 +1,6 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Service;
 
-use function explode;
-use function in_array;
-
 class WarmupEntityCreator
 {
     /**
@@ -23,29 +20,29 @@ class WarmupEntityCreator
      */
     private $pageCacheWarmerRepository;
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     */
-    private $scopeConfig;
-    /**
      * @var \Magento\Store\Api\StoreRepositoryInterface
      */
     private $storeRepository;
+    /**
+     * @var Configuration
+     */
+    private $configuration;
 
     public function __construct(
         \Magento\UrlRewrite\Model\ResourceModel\UrlRewriteCollectionFactory $urlRewriteCollection,
         \Magento\Customer\Model\ResourceModel\Group\CollectionFactory $customerGroupCollection,
         \MageSuite\PageCacheWarmer\Model\PageCacheWarmerFactory $pageCacheWarmerFactory,
         \MageSuite\PageCacheWarmer\Model\PageCacheWarmerRepository $pageCacheWarmerRepository,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Store\Api\StoreRepositoryInterface $storeRepository
+        \Magento\Store\Api\StoreRepositoryInterface $storeRepository,
+        \MageSuite\PageCacheWarmer\Service\Configuration $configuration
     )
     {
         $this->urlRewriteCollection = $urlRewriteCollection;
         $this->customerGroupCollection = $customerGroupCollection;
         $this->pageCacheWarmerFactory = $pageCacheWarmerFactory;
         $this->pageCacheWarmerRepository = $pageCacheWarmerRepository;
-        $this->scopeConfig = $scopeConfig;
         $this->storeRepository = $storeRepository;
+        $this->configuration = $configuration;
     }
 
     public function saveEntity($data)
@@ -53,12 +50,7 @@ class WarmupEntityCreator
         foreach ($data as $row) {
             $entity = $this->pageCacheWarmerFactory->create();
 
-            $entity
-                ->setEntityId($row['entity_id'])
-                ->setEntityType($row['entity_type'])
-                ->setUrl($row['url'])
-                ->setPriority($row['priority'])
-                ->setCustomerGroup($row['customer_group']);
+            $entity->setData($row);
 
             $this->pageCacheWarmerRepository->save($entity);
         }
@@ -66,21 +58,18 @@ class WarmupEntityCreator
 
     public function prepareEntity($id, $priority, $entityType)
     {
+        $configuration = $this->configuration->getConfiguration();
+
         $data = [];
 
         $urlRewriteCollection = $this->urlRewriteCollection->create();
 
         $urlRewriteCollection
+            ->addFieldToFilter('store_id', ['in' => $configuration['store_views']])
             ->addFieldToFilter('entity_id', ['eq' => $id])
             ->addFieldToFilter('entity_type', ['eq' => $entityType]);
 
-        $customerGroups = explode(',', $this->scopeConfig->getValue('cache_warmer/general/customer_group'));
-        $storeViews = explode(',', $this->scopeConfig->getValue('cache_warmer/general/store_view'));
         foreach ($urlRewriteCollection as $urlRewrite) {
-            if (!in_array($urlRewrite->getStoreId(), $storeViews)) {
-                continue;
-            }
-
             $baseUrl = $this->getStoreBaseUrl($urlRewrite->getStoreId());
             $urlData = [
                 'entity_id' => $urlRewrite->getEntityId(),
@@ -89,7 +78,7 @@ class WarmupEntityCreator
                 'priority' => $priority
             ];
 
-            foreach ($customerGroups as $groupId) {
+            foreach ($configuration['customer_groups'] as $groupId) {
                 $data[$groupId] = $urlData;
                 $data[$groupId]['customer_group'] = $groupId;
             }
@@ -103,8 +92,6 @@ class WarmupEntityCreator
 
         $store = $storeRepository->getById($storeId);
 
-        $url = $store->getBaseUrl();
-
-        return $url;
+        return $store->getBaseUrl();
     }
 }

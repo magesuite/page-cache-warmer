@@ -1,5 +1,4 @@
 <?php
-
 namespace MageSuite\PageCacheWarmer\Setup;
 
 class InstallData implements \Magento\Framework\Setup\InstallDataInterface
@@ -47,71 +46,68 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
     ) {
         $setup->startSetup();
 
-        if (version_compare($context->getVersion(), '0.0.1', '<')) {
+        $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
 
-            $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+        $eavSetup->addAttribute(
+            \Magento\Catalog\Model\Product::ENTITY,
+            'warmup_priority',
+            [
+                'type' => 'int',
+                'label' => 'Warmup Priority',
+                'input' => 'select',
+                'group' => 'Cache Warmup',
+                'source' => 'MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority',
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                'class' => '',
+                'visible' => 1,
+                'required' => 0,
+                'user_defined' => 1,
+                'default' => '',
+                'searchable' => 0,
+                'filterable' => 0,
+                'comparable' => 0,
+                'visible_on_front' => 0,
+                'used_in_product_listing' => 0,
+                'unique' => 0,
+                'is_configurable' => 0,
+                'is_visible_in_advanced_search' => 0,
+                'filterable_in_search' => 0,
+                'is_filterable' => 0,
 
-            $eavSetup->addAttribute(
-                \Magento\Catalog\Model\Product::ENTITY,
-                'warmup_priority',
-                [
-                    'type' => 'int',
-                    'label' => 'Warmup Priority',
-                    'input' => 'select',
-                    'group' => 'Cache Warmup',
-                    'source' => 'MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority',
-                    'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                    'class' => '',
-                    'visible' => 1,
-                    'required' => 0,
-                    'user_defined' => 1,
-                    'default' => '',
-                    'searchable' => 0,
-                    'filterable' => 0,
-                    'comparable' => 0,
-                    'visible_on_front' => 0,
-                    'used_in_product_listing' => 0,
-                    'unique' => 0,
-                    'is_configurable' => 0,
-                    'is_visible_in_advanced_search' => 0,
-                    'filterable_in_search' => 0,
-                    'is_filterable' => 0,
+            ]
+        );
 
-                ]
-            );
+        $setId = $this->catalogConfig->getAttributeSetId(\Magento\Catalog\Model\Product::ENTITY, 'Default');
+        $groupId = $this->catalogConfig->getAttributeGroupId($setId, 'Cache Warmup');
 
-            $setId = $this->catalogConfig->getAttributeSetId(\Magento\Catalog\Model\Product::ENTITY, 'Default');
-            $groupId = $this->catalogConfig->getAttributeGroupId($setId, 'Cache Warmup');
-
-            if (!$groupId) {
-                $this->eavSetup->addAttributeGroup(\Magento\Catalog\Model\Product::ENTITY, $setId, 'Cache Warmup', 200);
-                $groupId = $this->eavSetup->getAttributeGroupId(\Magento\Catalog\Model\Product::ENTITY, $setId, 'Cache Warmup');
-            }
-
-            $this->attributeManagement->assign(
-                \Magento\Catalog\Model\Product::ENTITY,
-                $setId,
-                $groupId,
-                'warmup_priority',
-                100
-            );
-
-            $this->eavSetup->addAttribute(
-                \Magento\Catalog\Model\Category::ENTITY,
-                'warmup_priority',
-                [
-                    'type' => 'int',
-                    'label' => 'Warmup Priority',
-                    'input' => 'select',
-                    'visible' => true,
-                    'required' => false,
-                    'sort_order' => 100,
-                    'source' => 'MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority',
-                    'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                    'group' => 'Cache Warmup',
-                ]
-            );
+        if (!$groupId) {
+            $this->eavSetup->addAttributeGroup(\Magento\Catalog\Model\Product::ENTITY, $setId, 'Cache Warmup', 200);
+            $groupId = $this->eavSetup->getAttributeGroupId(\Magento\Catalog\Model\Product::ENTITY, $setId, 'Cache Warmup');
         }
+
+        $this->attributeManagement->assign(
+            \Magento\Catalog\Model\Product::ENTITY,
+            $setId,
+            $groupId,
+            'warmup_priority',
+            100
+        );
+
+        $this->eavSetup->addAttribute(
+            \Magento\Catalog\Model\Category::ENTITY,
+            'warmup_priority',
+            [
+                'type' => 'int',
+                'label' => 'Warmup Priority',
+                'input' => 'select',
+                'visible' => true,
+                'required' => false,
+                'sort_order' => 100,
+                'source' => 'MageSuite\PageCacheWarmer\Model\Config\Source\Attribute\WarmupPriority',
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                'group' => 'Cache Warmup',
+            ]
+        );
 
         $setup->endSetup();
     }

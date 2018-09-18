@@ -18,8 +18,8 @@ class WarmupPriority extends \Magento\Eav\Model\Entity\Attribute\Source\Abstract
         if (!$this->_options) {
             $this->_options = [
                 ['label' => __('No'), 'value' => PageCacheWarmer::NO_WARMUP],
-                ['label' => __('Yes, Low priority'), 'value' => PageCacheWarmer::LO_PRIORITY],
-                ['label' => __('Yes, High priority - As soon as possible'), 'value' => PageCacheWarmer::HI_PRIORITY]
+                ['label' => __('Yes, Low priority'), 'value' => PageCacheWarmer::LOW_PRIORITY],
+                ['label' => __('Yes, High priority - As soon as possible'), 'value' => PageCacheWarmer::HIGH_PRIORITY]
             ];
         }
         return $this->_options;

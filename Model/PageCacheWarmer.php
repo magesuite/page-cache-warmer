@@ -4,8 +4,8 @@ namespace MageSuite\PageCacheWarmer\Model;
 class PageCacheWarmer extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\PageCacheWarmerInterface
 {
     const NO_WARMUP = 0;
-    const LO_PRIORITY = 10;
-    const HI_PRIORITY = 20;
+    const LOW_PRIORITY = 10;
+    const HIGH_PRIORITY = 20;
 
     protected function _construct()
     {
