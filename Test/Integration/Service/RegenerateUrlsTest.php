@@ -2,8 +2,8 @@
 namespace MageSuite\PageCacheWarmer\Test\Service;
 
 /**
- * @magentoDbIsolation disabled
- * @magentoAppIsolation disabled
+ * @magentoDbIsolation enabled
+ * @magentoAppIsolation enabled
  */
 class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
 {
@@ -30,8 +30,8 @@ class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @magentoDbIsolation disabled
-     * @magentoAppIsolation disabled
+     * @magentoDbIsolation enabled
+     * @magentoAppIsolation enabled
      * @magentoConfigFixture cache_warmer/general/enabled 1
      * @magentoDataFixture loadUrlRewrite
      */
