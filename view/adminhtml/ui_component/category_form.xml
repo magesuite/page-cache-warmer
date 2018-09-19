@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="warmup_priority">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Cache Warmup</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">40</item>
+                <item name="additionalClasses" xsi:type="string">cs-csfeature__logo</item>
+            </item>
+        </argument>
+        <field name="warmup_priority">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">MageSuite\PageCacheWarmer\Model\Config\Source\UiComponent\WarmupPriority</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Warmup Priority</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">Creativestyle_PageCacheWarmer</item>
+                    <item name="dataScope" xsi:type="string">warmup_priority</item>
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+
+</form>

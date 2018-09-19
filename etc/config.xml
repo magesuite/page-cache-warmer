@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <cache_warmer>
+            <general>
+                <enabled>0</enabled>
+                <customer_group>0,1</customer_group>
+                <store_view>1</store_view>
+            </general>
+        </cache_warmer>
+    </default>
+</config>
