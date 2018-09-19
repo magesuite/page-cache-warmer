@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Observer;
 
-use MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
+use MageSuite\PageCacheWarmer\Model\WarmupQueue\Url;
 
 class AddCmsToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWarmerObserver implements \Magento\Framework\Event\ObserverInterface
 {
@@ -16,7 +16,7 @@ class AddCmsToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWarmerO
 
         $page = $observer->getObject();
 
-        if ($page->getWarmupPriority() == PageCacheWarmer::NO_WARMUP) {
+        if ($page->getWarmupPriority() == Url::NO_WARMUP) {
             return;
         }
        $this->prepareAndSaveEntity($page->getPageId(), $page->getWarmupPriority(), 'cms-page');

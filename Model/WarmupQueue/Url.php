@@ -1,7 +1,7 @@
 <?php
-namespace MageSuite\PageCacheWarmer\Model;
+namespace MageSuite\PageCacheWarmer\Model\WarmupQueue;
 
-class PageCacheWarmer extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\PageCacheWarmerInterface
+class Url extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\WarmupQueue\UrlInterface
 {
     const NO_WARMUP = 0;
     const LOW_PRIORITY = 10;
@@ -9,7 +9,7 @@ class PageCacheWarmer extends \Magento\Framework\Model\AbstractModel implements 
 
     protected function _construct()
     {
-        $this->_init('MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer');
+        $this->_init('MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url');
     }
 
     public function setId($id)

@@ -28,9 +28,9 @@ class WarmupEntityCreatorTest extends \PHPUnit\Framework\TestCase
     private $productRepository;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer\Collection
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection
      */
-    private $pageCacheWarmerCollection;
+    private $urlCollection;
 
     public function setUp()
     {
@@ -38,7 +38,7 @@ class WarmupEntityCreatorTest extends \PHPUnit\Framework\TestCase
         $this->warmupEntityCreator = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\WarmupEntityCreator::class);
         $this->categoryRepository = $this->objectManager->create(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
         $this->productRepository = $this->objectManager->create(\Magento\Catalog\Api\ProductRepositoryInterface::class);
-        $this->pageCacheWarmerCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer\Collection::class);
+        $this->urlCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection::class);
     }
 
     /**
@@ -88,10 +88,10 @@ class WarmupEntityCreatorTest extends \PHPUnit\Framework\TestCase
         $data = $this->getSaveData();
         $this->warmupEntityCreator->saveEntity($data);
 
-        $pageCacheWarmerCollection = $this->pageCacheWarmerCollection;
+        $urlCollection = $this->urlCollection;
 
         $i = 0;
-        foreach ($pageCacheWarmerCollection as $row) {
+        foreach ($urlCollection as $row) {
             $this->assertEquals($data[$i]['entity_type'], $row->getData('entity_type'));
             $this->assertEquals($data[$i]['url'], $row->getData('url'));
             $this->assertEquals($data[$i]['priority'], $row->getData('priority'));

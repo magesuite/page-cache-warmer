@@ -1,5 +1,5 @@
 <?php
-namespace MageSuite\PageCacheWarmer\Service;
+namespace MageSuite\PageCacheWarmer\Helper;
 
 class Configuration
 {
@@ -15,9 +15,17 @@ class Configuration
         $this->scopeConfig = $scopeConfig;
     }
 
+    public function isCacheWarmerEnabled()
+    {
+        $configuration = $this->getConfiguration();
+
+        return $configuration['is_enabled'];
+    }
+
     public function getConfiguration()
     {
         return [
+            'is_enabled' => $this->scopeConfig->getValue('cache_warmer/general/enabled'),
             'store_views' => explode(',', $this->scopeConfig->getValue('cache_warmer/general/store_view')),
             'customer_groups' => explode(',', $this->scopeConfig->getValue('cache_warmer/general/customer_group'))
         ];

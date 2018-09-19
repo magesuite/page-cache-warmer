@@ -6,7 +6,7 @@ use Zend_Db_Expr;
 class RegenerateUrls
 {
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer\CollectionFactory
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory
      */
     private $pageWarmerCollectionFactory;
     /**
@@ -26,17 +26,17 @@ class RegenerateUrls
      */
     private $storeRepository;
     /**
-     * @var Configuration
+     * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
     private $configuration;
 
     public function __construct(
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer\CollectionFactory $pageWarmerCollectionFactory,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory $pageWarmerCollectionFactory,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Eav\Api\AttributeRepositoryInterface $attributeRepository,
         \Magento\Store\Api\StoreRepositoryInterface $storeRepository,
-        \MageSuite\PageCacheWarmer\Service\Configuration $configuration
+        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration
     )
     {
         $this->pageWarmerCollectionFactory = $pageWarmerCollectionFactory;
@@ -126,7 +126,7 @@ class RegenerateUrls
                 
                 $insertQuery = $connection->insertFromSelect(
                     $select,
-                    'page_cache_warmer',
+                    'cache_warmup_queue',
                     [
                         'entity_type',
                         'entity_id',

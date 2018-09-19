@@ -1,7 +1,7 @@
 <?php
-namespace MageSuite\PageCacheWarmer\Api\Data;
+namespace MageSuite\PageCacheWarmer\Api\Data\WarmupQueue;
 
-interface PageCacheWarmerInterface
+interface UrlInterface
 {
     /**
      * @return int

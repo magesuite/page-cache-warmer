@@ -1,8 +1,6 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Model\Config\Source;
 
-use function array_shift;
-
 class CustomerGroup implements \Magento\Framework\Option\ArrayInterface
 {
 
@@ -25,6 +23,9 @@ class CustomerGroup implements \Magento\Framework\Option\ArrayInterface
     {
         $options = $this->customerGroupSource->toOptionArray();
 
+        /**
+         * Removed first element to avoid display 'Please Select' placeholder in multiselect
+         */
         array_shift($options);
 
         return $options;

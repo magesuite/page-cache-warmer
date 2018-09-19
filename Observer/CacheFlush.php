@@ -12,14 +12,20 @@ class CacheFlush implements \Magento\Framework\Event\ObserverInterface
      * @var \MageSuite\PageCacheWarmer\Service\CronScheduler
      */
     private $cronScheduler;
+    /**
+     * @var \MageSuite\PageCacheWarmer\Helper\Configuration
+     */
+    private $configuration;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Service\CronScheduler $cronScheduler,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration
     )
     {
         $this->scopeConfig = $scopeConfig;
         $this->cronScheduler = $cronScheduler;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -27,7 +33,7 @@ class CacheFlush implements \Magento\Framework\Event\ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        if (!$this->scopeConfig->getValue('cache_warmer/general/enabled')){
+        if (!$this->configuration->isCacheWarmerEnabled()){
             return;
         }
 

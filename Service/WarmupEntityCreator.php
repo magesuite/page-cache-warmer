@@ -12,47 +12,47 @@ class WarmupEntityCreator
      */
     private $customerGroupCollection;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\PageCacheWarmerFactory
-     */
-    private $pageCacheWarmerFactory;
-    /**
-     * @var \MageSuite\PageCacheWarmer\Model\PageCacheWarmerRepository
-     */
-    private $pageCacheWarmerRepository;
-    /**
      * @var \Magento\Store\Api\StoreRepositoryInterface
      */
     private $storeRepository;
     /**
-     * @var Configuration
+     * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
     private $configuration;
+    /**
+     * @var \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory
+     */
+    private $urlFactory;
+    /**
+     * @var \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlRepository
+     */
+    private $urlRepository;
 
     public function __construct(
         \Magento\UrlRewrite\Model\ResourceModel\UrlRewriteCollectionFactory $urlRewriteCollection,
         \Magento\Customer\Model\ResourceModel\Group\CollectionFactory $customerGroupCollection,
-        \MageSuite\PageCacheWarmer\Model\PageCacheWarmerFactory $pageCacheWarmerFactory,
-        \MageSuite\PageCacheWarmer\Model\PageCacheWarmerRepository $pageCacheWarmerRepository,
         \Magento\Store\Api\StoreRepositoryInterface $storeRepository,
-        \MageSuite\PageCacheWarmer\Service\Configuration $configuration
+        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
+        \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory $urlFactory,
+        \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlRepository $urlRepository
     )
     {
         $this->urlRewriteCollection = $urlRewriteCollection;
         $this->customerGroupCollection = $customerGroupCollection;
-        $this->pageCacheWarmerFactory = $pageCacheWarmerFactory;
-        $this->pageCacheWarmerRepository = $pageCacheWarmerRepository;
         $this->storeRepository = $storeRepository;
         $this->configuration = $configuration;
+        $this->urlFactory = $urlFactory;
+        $this->urlRepository = $urlRepository;
     }
 
     public function saveEntity($data)
     {
         foreach ($data as $row) {
-            $entity = $this->pageCacheWarmerFactory->create();
+            $entity = $this->urlFactory->create();
 
             $entity->setData($row);
 
-            $this->pageCacheWarmerRepository->save($entity);
+            $this->urlRepository->save($entity);
         }
     }
 
@@ -79,8 +79,8 @@ class WarmupEntityCreator
             ];
 
             foreach ($configuration['customer_groups'] as $groupId) {
-                $data[$groupId] = $urlData;
-                $data[$groupId]['customer_group'] = $groupId;
+                $urlData['customer_group'] = $groupId;
+                $data[] = $urlData;
             }
         }
         return $data;

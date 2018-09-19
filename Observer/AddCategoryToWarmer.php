@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Observer;
 
-use MageSuite\PageCacheWarmer\Model\PageCacheWarmer;
+use MageSuite\PageCacheWarmer\Model\WarmupQueue\Url;
 
 class AddCategoryToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWarmerObserver implements \Magento\Framework\Event\ObserverInterface
 {
@@ -16,7 +16,7 @@ class AddCategoryToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWa
 
         $category = $observer->getCategory();
 
-        if ($category->getWarmupPriority() == PageCacheWarmer::NO_WARMUP) {
+        if ($category->getWarmupPriority() == Url::NO_WARMUP) {
             return;
         }
 

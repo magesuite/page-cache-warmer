@@ -9,7 +9,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
         $installer->startSetup();
 
         $table = $installer->getConnection()->newTable(
-            $installer->getTable('page_cache_warmer')
+            $installer->getTable('cache_warmup_queue')
         )->addColumn(
             'id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,

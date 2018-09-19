@@ -12,14 +12,20 @@ class AbstractWarmerObserver
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     private $scopeConfig;
+    /**
+     * @var \MageSuite\PageCacheWarmer\Helper\Configuration
+     */
+    private $configuration;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Service\WarmupEntityCreator $warmupEntityCreator,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration
     )
     {
         $this->warmupEntityCreator = $warmupEntityCreator;
         $this->scopeConfig = $scopeConfig;
+        $this->configuration = $configuration;
     }
 
     public function prepareAndSaveEntity($id, $priority, $type)
@@ -33,6 +39,6 @@ class AbstractWarmerObserver
 
     public function getIsCrawlerEnabled()
     {
-        return $this->scopeConfig->getValue('cache_warmer/general/enabled');
+        return $this->configuration->isCacheWarmerEnabled();
     }
 }

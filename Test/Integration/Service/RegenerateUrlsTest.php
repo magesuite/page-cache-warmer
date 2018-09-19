@@ -18,15 +18,15 @@ class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
     private $regenerateUrls;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer\Collection
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection
      */
-    private $pageCacheWarmerCollection;
+    private $urlCollection;
 
     public function setUp()
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->regenerateUrls = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\RegenerateUrls::class);
-        $this->pageCacheWarmerCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\PageCacheWarmer\Collection::class);
+        $this->urlCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection::class);
     }
 
     /**
@@ -39,12 +39,12 @@ class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
     {
         $this->regenerateUrls->regenerate();
 
-        $pageCacheWarmerCollection = $this->pageCacheWarmerCollection;
+        $urlCollection = $this->urlCollection;
 
-        $this->assertEquals(2, $pageCacheWarmerCollection->getSize());
+        $this->assertEquals(2, $urlCollection->getSize());
 
         $pages = [];
-        foreach ($pageCacheWarmerCollection as $page) {
+        foreach ($urlCollection as $page) {
             $pages[] = [
                 'id' => $page->getEntityId(),
                 'url' => $page->getUrl(),
