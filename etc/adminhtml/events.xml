@@ -6,4 +6,7 @@
     <event name="adminhtml_cache_flush_system">
         <observer name="cache_warmup_cache_flush_system" instance="MageSuite\PageCacheWarmer\Observer\CacheFlush"/>
     </event>
+    <event name="customer_group_save_after">
+        <observer name="cache_warmup_customer_group_save" instance="MageSuite\PageCacheWarmer\Observer\CustomerGroupSave"/>
+    </event>
 </config>
