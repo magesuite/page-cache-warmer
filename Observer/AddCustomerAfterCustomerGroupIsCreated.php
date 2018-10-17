@@ -1,24 +1,25 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Observer;
 
-class CustomerGroupSave implements \Magento\Framework\Event\ObserverInterface
+class AddCustomerAfterCustomerGroupIsCreated implements \Magento\Framework\Event\ObserverInterface
 {
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
     private $configuration;
     /**
-     * @var \MageSuite\PageCacheWarmer\Service\CreateCustomers
+     * @var \MageSuite\PageCacheWarmer\Service\CustomerCreator
      */
-    private $createCustomers;
+    private $customerCreator;
+
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
-        \MageSuite\PageCacheWarmer\Service\CreateCustomers $createCustomers
+        \MageSuite\PageCacheWarmer\Service\CustomerCreator $customerCreator
     )
     {
         $this->configuration = $configuration;
-        $this->createCustomers = $createCustomers;
+        $this->customerCreator = $customerCreator;
     }
 
     /**
@@ -30,6 +31,6 @@ class CustomerGroupSave implements \Magento\Framework\Event\ObserverInterface
             return;
         }
 
-        $this->createCustomers->create();
+        $this->customerCreator->create();
     }
 }

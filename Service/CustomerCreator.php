@@ -2,7 +2,7 @@
 namespace MageSuite\PageCacheWarmer\Service;
 
 
-class CreateCustomers
+class CustomerCreator
 {
     /**
      * @var \Magento\Customer\Model\CustomerFactory
@@ -56,40 +56,42 @@ class CreateCustomers
     {
         $email = $this->prepareEmail($customerGroup->getCustomerGroupCode());
 
-        if(!$this->validateCustomer($email)){
+        if($this->customerExists($email)){
             return;
         }
 
-        $customer = $this->customerFactory->create();
-
-        $customerData = $this->prepareCustomer($customerGroup);
-
-        $customer->setData($customerData);
+        $customer = $this->prepareCustomer($customerGroup);
 
         $this->customerResource->save($customer);
     }
 
-    public function validateCustomer($email)
+    public function customerExists($email)
     {
         $customer = $this->customerFactory->create();
 
         $customer->loadByEmail($email);
 
         if($customer->getId()){
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public function prepareCustomer($customerGroup)
     {
-        return [
+        $customer = $this->customerFactory->create();
+
+        $customerData = [
             'firstname' => strtolower($customerGroup->getCustomerGroupCode()),
             'lastname' => strtolower($customerGroup->getCustomerGroupCode()),
             'group_id' => $customerGroup->getCustomerGroupId(),
             'email' => $this->prepareEmail($customerGroup->getCustomerGroupCode()),
             'password' => $this->preparePassword()
         ];
+
+        $customer->setData($customerData);
+
+        return $customer;
     }
 
     public function prepareEmail($customerGroupCode)
@@ -115,8 +117,7 @@ class CreateCustomers
     {
         return [
             'domain' => $this->scopeConfig->getValue('cache_warmer/general/domain'),
-            'password' => $this->scopeConfig->getValue('cache_warmer/general/password'),
-            'salt' => $this->scopeConfig->getValue('cache_warmer/general/salt'),
+            'password' => $this->scopeConfig->getValue('cache_warmer/general/password')
         ];
     }
 }

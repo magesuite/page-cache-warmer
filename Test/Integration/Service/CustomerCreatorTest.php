@@ -5,7 +5,7 @@ namespace MageSuite\PageCacheWarmer\Test\Service;
  * @magentoDbIsolation enabled
  * @magentoAppIsolation enabled
  */
-class CreateCustomersTest extends \PHPUnit\Framework\TestCase
+class CustomerCreatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \Magento\TestFramework\ObjectManager
@@ -13,9 +13,9 @@ class CreateCustomersTest extends \PHPUnit\Framework\TestCase
     private $objectManager;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Service\CreateCustomers
+     * @var \MageSuite\PageCacheWarmer\Service\CustomerCreator
      */
-    private $createCustomersService;
+    private $customerCreatorService;
 
     /**
      * @var \Magento\Customer\Model\ResourceModel\Group\Collection
@@ -30,7 +30,7 @@ class CreateCustomersTest extends \PHPUnit\Framework\TestCase
     public function setUp()
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-        $this->createCustomersService = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\CreateCustomers::class);
+        $this->customerCreatorService = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\CustomerCreator::class);
         $this->customerGroupCollection = $this->objectManager->create(\Magento\Customer\Model\ResourceModel\Group\Collection::class);
         $this->customer = $this->objectManager->create(\Magento\Customer\Model\Customer::class);
     }
@@ -40,11 +40,10 @@ class CreateCustomersTest extends \PHPUnit\Framework\TestCase
      * @magentoAppIsolation enabled
      * @magentoConfigFixture default/cache_warmer/general/domain testdomain
      * @magentoConfigFixture default/cache_warmer/general/password test1234
-     * @magentoConfigFixture default/cache_warmer/general/salt 1234567890
      */
     public function testItPrepareEmailCorrectly()
     {
-        $email = $this->createCustomersService->prepareEmail('Retailer');
+        $email = $this->customerCreatorService->prepareEmail('Retailer');
 
         $this->assertEquals('bad0abc5062f0a4c261359eab54bdcc9@testdomain.wu.magesuite.io', $email);
     }
@@ -54,22 +53,21 @@ class CreateCustomersTest extends \PHPUnit\Framework\TestCase
      * @magentoAppIsolation enabled
      * @magentoConfigFixture default/cache_warmer/general/domain testdomain12345
      * @magentoConfigFixture default/cache_warmer/general/password test1234
-     * @magentoConfigFixture default/cache_warmer/general/salt 1234567890
      */
     public function testItPrepareCustomerDataCorrectly()
     {
         $customerGroupCollection = $this->customerGroupCollection;
 
         foreach ($customerGroupCollection as $customerGroup) {
-            $customerData = $this->createCustomersService->prepareCustomer($customerGroup);
+            $customer = $this->customerCreatorService->prepareCustomer($customerGroup);
 
-            $email = $this->createCustomersService->prepareEmail($customerGroup->getCustomerGroupCode());
+            $email = $this->customerCreatorService->prepareEmail($customerGroup->getCustomerGroupCode());
 
-            $this->assertEquals(strtolower($customerGroup->getCustomerGroupCode()), $customerData['firstname']);
-            $this->assertEquals(strtolower($customerGroup->getCustomerGroupCode()), $customerData['lastname']);
-            $this->assertEquals($customerGroup->getCustomerGroupId(), $customerData['group_id']);
-            $this->assertEquals($email, $customerData['email']);
-            $this->assertEquals('test1234', $customerData['password']);
+            $this->assertEquals(strtolower($customerGroup->getCustomerGroupCode()), $customer->getFirstname());
+            $this->assertEquals(strtolower($customerGroup->getCustomerGroupCode()), $customer->getLastname());
+            $this->assertEquals($customerGroup->getCustomerGroupId(), $customer->getGroupId());
+            $this->assertEquals($email, $customer->getEmail());
+            $this->assertEquals('test1234', $customer->getPassword());
         }
     }
 
@@ -81,13 +79,13 @@ class CreateCustomersTest extends \PHPUnit\Framework\TestCase
      */
     public function testItValidatesCustomerCorrectly()
     {
-        $validation = $this->createCustomersService->validateCustomer('ttt@test.com');
-
-        $this->assertTrue($validation);
-
-        $validation = $this->createCustomersService->validateCustomer('customer@example.com');
+        $validation = $this->customerCreatorService->customerExists('ttt@test.com');
 
         $this->assertFalse($validation);
+
+        $validation = $this->customerCreatorService->customerExists('customer@example.com');
+
+        $this->assertTrue($validation);
     }
 
     /**
@@ -95,12 +93,11 @@ class CreateCustomersTest extends \PHPUnit\Framework\TestCase
      * @magentoAppIsolation enabled
      * @magentoConfigFixture default/cache_warmer/general/domain testdomain12345
      * @magentoConfigFixture default/cache_warmer/general/password test1234
-     * @magentoConfigFixture default/cache_warmer/general/salt 1234567890
      * @magentoConfigFixture current_store customer/account_share/scope 0
      */
     public function testItCreateCustomerCorrectly()
     {
-        $this->createCustomersService->create();
+        $this->customerCreatorService->create();
 
         $customerGroupCollection = $this->customerGroupCollection;
 
@@ -108,7 +105,7 @@ class CreateCustomersTest extends \PHPUnit\Framework\TestCase
             if($customerGroup->getCustomerGroupId() == 0){
                 continue;
             }
-            $email = $this->createCustomersService->prepareEmail($customerGroup->getCustomerGroupCode());
+            $email = $this->customerCreatorService->prepareEmail($customerGroup->getCustomerGroupCode());
 
             $customer = $this->customer->loadByEmail($email);
 

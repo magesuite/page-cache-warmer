@@ -3,10 +3,11 @@ namespace MageSuite\PageCacheWarmer\Model\Config\Backend;
 
 class EnableModule extends \Magento\Framework\App\Config\Value
 {
+
     /**
-     * @var \MageSuite\PageCacheWarmer\Service\CreateCustomers
+     * @var \MageSuite\PageCacheWarmer\Service\CustomerCreator
      */
-    private $createCustomers;
+    private $customerCreator;
 
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -15,12 +16,12 @@ class EnableModule extends \Magento\Framework\App\Config\Value
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        \MageSuite\PageCacheWarmer\Service\CreateCustomers $createCustomers,
+        \MageSuite\PageCacheWarmer\Service\CustomerCreator $customerCreator,
         array $data = []
     )
     {
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
-        $this->createCustomers = $createCustomers;
+        $this->customerCreator = $customerCreator;
     }
 
     /**
@@ -29,7 +30,7 @@ class EnableModule extends \Magento\Framework\App\Config\Value
     public function afterSave()
     {
         if ($this->isValueChanged() && $this->getValue() == 1) {
-            $this->createCustomers->create();
+            $this->customerCreator->create();
         }
         return parent::afterSave();
     }
