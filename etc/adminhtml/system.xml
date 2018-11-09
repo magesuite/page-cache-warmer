@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="creativestyle" translate="label" sortOrder="300">
-            <label>creativeshop</label>
+        <tab id="magesuite" translate="label" sortOrder="300">
+            <label>MageSuite</label>
         </tab>
         <section id="cache_warmer" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Cache Warmer</label>
-            <tab>creativestyle</tab>
+            <tab>magesuite</tab>
             <resource>MageSuite_PageCacheWarmer::config_cachewarmer</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" >
