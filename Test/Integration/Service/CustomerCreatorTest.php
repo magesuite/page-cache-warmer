@@ -59,7 +59,8 @@ class CustomerCreatorTest extends \PHPUnit\Framework\TestCase
         $customerGroupCollection = $this->customerGroupCollection;
 
         foreach ($customerGroupCollection as $customerGroup) {
-            $customer = $this->customerCreatorService->prepareCustomer($customerGroup);
+            $result = $this->customerCreatorService->prepareCustomers($customerGroup);
+            $customer = $result[0];
 
             $email = $this->customerCreatorService->prepareEmail($customerGroup->getCustomerGroupCode());
 
