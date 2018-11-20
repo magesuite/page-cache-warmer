@@ -102,15 +102,15 @@ class CustomerCreator
                     continue;
                 }
                 $customerData['website_id'] = $website->getId();
-                $customer = $this->customerFactory->create();
-                $customers[] = $customer->setData($customerData);
+                $customer = $this->customerFactory->create(['data' => $customerData]);
+                $customers[] = $customer;
             }
         } else {
             if($this->customerExists($email)){
                 return [];
             }
-            $customer = $this->customerFactory->create();
-            $customers[] = $customer->setData($customerData);
+            $customer = $this->customerFactory->create(['data' => $customerData]);
+            $customers[] = $customer;
         }
 
         return $customers;

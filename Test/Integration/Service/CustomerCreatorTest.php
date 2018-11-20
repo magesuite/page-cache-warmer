@@ -27,12 +27,18 @@ class CustomerCreatorTest extends \PHPUnit\Framework\TestCase
      */
     private $customer;
 
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    private $storeManager;
+
     public function setUp()
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->customerCreatorService = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\CustomerCreator::class);
         $this->customerGroupCollection = $this->objectManager->create(\Magento\Customer\Model\ResourceModel\Group\Collection::class);
         $this->customer = $this->objectManager->create(\Magento\Customer\Model\Customer::class);
+        $this->storeManager = $this->objectManager->create(\Magento\Store\Model\StoreManagerInterface::class);
     }
 
     /**
@@ -112,5 +118,47 @@ class CustomerCreatorTest extends \PHPUnit\Framework\TestCase
 
             $this->assertEquals($customer->getEmail(), $email);
         }
+    }
+
+    /**
+     * @magentoDbIsolation enabled
+     * @magentoAppIsolation enabled
+     * @magentoDataFixture websiteFixture
+     * @magentoConfigFixture default/cache_warmer/general/domain testdomain12345
+     * @magentoConfigFixture default/cache_warmer/general/password test1234
+     * @magentoConfigFixture current_store customer/account_share/scope 1
+     */
+    public function testItCreateCustomerCorrectlyWhenWebsiteScopeEnabled()
+    {
+        $this->customerCreatorService->create();
+
+        $customerGroupCollection = $this->customerGroupCollection;
+
+        $storeManager = $this->storeManager;
+
+        foreach ($customerGroupCollection as $customerGroup) {
+            if($customerGroup->getCustomerGroupId() == 0){
+                continue;
+            }
+            $email = $this->customerCreatorService->prepareEmail($customerGroup->getCustomerGroupCode());
+
+            foreach ($storeManager->getWebsites() as $website) {
+                $customer = $this->customer;
+                $customer->setWebsiteId($website->getId());
+                $customer = $customer->loadByEmail($email);
+
+                $this->assertEquals($customer->getEmail(), $email);
+            }
+        }
+    }
+
+    public static function websiteFixture()
+    {
+        include __DIR__ . '/../_files/website.php';
+    }
+
+    public static function websiteFixtureRollback()
+    {
+        include __DIR__ . '/../_files/website_rollback.php';
     }
 }
