@@ -1,7 +1,6 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Service;
 
-
 class CustomerCreator
 {
     /**
@@ -24,13 +23,18 @@ class CustomerCreator
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     private $scopeConfig;
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    private $storeManager;
 
     public function __construct(
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
         \Magento\Customer\Model\ResourceModel\Group\CollectionFactory $groupCollectionFactory,
         \Magento\Customer\Model\ResourceModel\Customer $customerResource,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
     )
     {
         $this->customerFactory = $customerFactory;
@@ -38,6 +42,7 @@ class CustomerCreator
         $this->groupCollectionFactory = $groupCollectionFactory;
         $this->customerResource = $customerResource;
         $this->scopeConfig = $scopeConfig;
+        $this->storeManager = $storeManager;
     }
 
     public function create()
@@ -48,26 +53,26 @@ class CustomerCreator
             if($customerGroup->getCustomerGroupId() == 0){
                 continue;
             }
-            $this->createCustomer($customerGroup);
+            $this->createCustomers($customerGroup);
         }
     }
 
-    public function createCustomer($customerGroup)
+    public function createCustomers($customerGroup)
     {
-        $email = $this->prepareEmail($customerGroup->getCustomerGroupCode());
+        $customers = $this->prepareCustomers($customerGroup);
 
-        if($this->customerExists($email)){
-            return;
+        foreach ($customers as $customer) {
+            $this->customerResource->save($customer);
         }
-
-        $customer = $this->prepareCustomer($customerGroup);
-
-        $this->customerResource->save($customer);
     }
 
-    public function customerExists($email)
+    public function customerExists($email, $websiteId = null)
     {
         $customer = $this->customerFactory->create();
+
+        if($websiteId) {
+            $customer->setWebsiteId($websiteId);
+        }
 
         $customer->loadByEmail($email);
 
@@ -77,10 +82,9 @@ class CustomerCreator
         return false;
     }
 
-    public function prepareCustomer($customerGroup)
+    public function prepareCustomers($customerGroup)
     {
-        $customer = $this->customerFactory->create();
-
+        $config = $this->getConfig();
         $customerData = [
             'firstname' => strtolower($customerGroup->getCustomerGroupCode()),
             'lastname' => strtolower($customerGroup->getCustomerGroupCode()),
@@ -89,9 +93,27 @@ class CustomerCreator
             'password' => $this->preparePassword()
         ];
 
-        $customer->setData($customerData);
+        $email = $this->prepareEmail($customerData['email']);
 
-        return $customer;
+        $customers = [];
+        if ($config['website_scope']) {
+            foreach ($this->storeManager->getWebsites() as $website) {
+                if($this->customerExists($email, $website->getId())){
+                    continue;
+                }
+                $customerData['website_id'] = $website->getId();
+                $customer = $this->customerFactory->create(['data' => $customerData]);
+                $customers[] = $customer;
+            }
+        } else {
+            if($this->customerExists($email)){
+                return [];
+            }
+            $customer = $this->customerFactory->create(['data' => $customerData]);
+            $customers[] = $customer;
+        }
+
+        return $customers;
     }
 
     public function prepareEmail($customerGroupCode)
@@ -117,7 +139,8 @@ class CustomerCreator
     {
         return [
             'domain' => $this->scopeConfig->getValue('cache_warmer/general/domain'),
-            'password' => $this->scopeConfig->getValue('cache_warmer/general/password')
+            'password' => $this->scopeConfig->getValue('cache_warmer/general/password'),
+            'website_scope' => $this->scopeConfig->getValue('customer/account_share/scope') ? true : false
         ];
     }
 }
