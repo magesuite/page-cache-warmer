@@ -10,7 +10,7 @@ interface UrlInterface
 
     /**
      * @param int $id
-     * @return void
+     * @return \MageSuite\PageCacheWarmer\Model\WarmupQueue\Url
      */
     public function setId($id);
 
@@ -21,7 +21,7 @@ interface UrlInterface
 
     /**
      * @param int $id
-     * @return void
+     * @return \MageSuite\PageCacheWarmer\Model\WarmupQueue\Url
      */
     public function setEntityId($id);
 
@@ -32,7 +32,7 @@ interface UrlInterface
 
     /**
      * @param string $type
-     * @return void
+     * @return \MageSuite\PageCacheWarmer\Model\WarmupQueue\Url
      */
     public function setEntityType($type);
 
@@ -43,7 +43,7 @@ interface UrlInterface
 
     /**
      * @param string $url
-     * @return void
+     * @return \MageSuite\PageCacheWarmer\Model\WarmupQueue\Url
      */
     public function setUrl($url);
 
@@ -54,7 +54,7 @@ interface UrlInterface
 
     /**
      * @param string $customerGroup
-     * @return void
+     * @return \MageSuite\PageCacheWarmer\Model\WarmupQueue\Url
      */
     public function setCustomerGroup($customerGroup);
 
@@ -65,7 +65,7 @@ interface UrlInterface
 
     /**
      * @param int $priority
-     * @return void
+     * @return \MageSuite\PageCacheWarmer\Model\WarmupQueue\Url
      */
     public function setPriority($priority);
 }

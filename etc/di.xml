@@ -9,4 +9,13 @@
         <plugin name="regenerate_warmup_urls_after_flush_cache" type="MageSuite\PageCacheWarmer\Plugin\RegenerateWarmupUrls" sortOrder="1" />
     </type>
 
+    <preference for="MageSuite\PageCacheWarmer\DataProviders\AdditionalWarmupUrlsInterface"
+                type="MageSuite\PageCacheWarmer\DataProviders\EmptyAdditionalWarmupUrls" />
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="cache_warmup_manual" xsi:type="object">MageSuite\PageCacheWarmer\Console\Command\RegenerateUrls</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
