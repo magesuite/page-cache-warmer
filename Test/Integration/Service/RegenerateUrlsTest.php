@@ -21,12 +21,17 @@ class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection
      */
     private $urlCollection;
+    /**
+     * @var \MageSuite\PageCacheWarmer\DataProviders\AdditionalWarmupUrlsInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $additionalUrlProvider;
 
     public function setUp()
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-        $this->regenerateUrls = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\RegenerateUrls::class);
         $this->urlCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection::class);
+        $this->additionalUrlProvider = $this->getMockBuilder(\MageSuite\PageCacheWarmer\DataProviders\AdditionalWarmupUrlsInterface::class)->getMock();
+        $this->regenerateUrls = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\RegenerateUrls::class, ['additionalWarmupUrls' => $this->additionalUrlProvider]);
     }
 
     /**
@@ -37,11 +42,13 @@ class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
      */
     public function testCmsPrepareEntityDataCorrectly()
     {
+        $this->additionalUrlProvider->method('getAdditionalUrls')->willReturn(['test_url', 'second_url', 'third_url']);
+
         $this->regenerateUrls->regenerate();
 
         $urlCollection = $this->urlCollection;
 
-        $this->assertEquals(2, $urlCollection->getSize());
+        $this->assertEquals(8, $urlCollection->getSize());
 
         $pages = [];
         foreach ($urlCollection as $page) {
@@ -62,6 +69,36 @@ class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('http://localhost/index.php/no-route', $pages[1]['url']);
         $this->assertEquals(10, $pages[1]['priority']);
         $this->assertEquals(1, $pages[1]['customer_group']);
+
+        $this->assertEquals(0, $pages[2]['id']);
+        $this->assertEquals('http://localhost/index.php/test_url', $pages[2]['url']);
+        $this->assertEquals(20, $pages[2]['priority']);
+        $this->assertEquals(0, $pages[2]['customer_group']);
+
+        $this->assertEquals(0, $pages[3]['id']);
+        $this->assertEquals('http://localhost/index.php/test_url', $pages[3]['url']);
+        $this->assertEquals(20, $pages[3]['priority']);
+        $this->assertEquals(1, $pages[3]['customer_group']);
+
+        $this->assertEquals(0, $pages[4]['id']);
+        $this->assertEquals('http://localhost/index.php/second_url', $pages[4]['url']);
+        $this->assertEquals(20, $pages[4]['priority']);
+        $this->assertEquals(0, $pages[4]['customer_group']);
+
+        $this->assertEquals(0, $pages[5]['id']);
+        $this->assertEquals('http://localhost/index.php/second_url', $pages[5]['url']);
+        $this->assertEquals(20, $pages[5]['priority']);
+        $this->assertEquals(1, $pages[5]['customer_group']);
+
+        $this->assertEquals(0, $pages[6]['id']);
+        $this->assertEquals('http://localhost/index.php/third_url', $pages[6]['url']);
+        $this->assertEquals(20, $pages[6]['priority']);
+        $this->assertEquals(0, $pages[6]['customer_group']);
+
+        $this->assertEquals(0, $pages[7]['id']);
+        $this->assertEquals('http://localhost/index.php/third_url', $pages[7]['url']);
+        $this->assertEquals(20, $pages[7]['priority']);
+        $this->assertEquals(1, $pages[7]['customer_group']);
     }
 
     public static function loadUrlRewrite()

@@ -5,16 +5,16 @@ namespace MageSuite\PageCacheWarmer\Console\Command;
 class RegenerateUrls extends \Symfony\Component\Console\Command\Command
 {
     /**
-     * @var \MageSuite\PageCacheWarmer\Service\RegenerateUrls
+     * @var \MageSuite\PageCacheWarmer\Service\RegenerateUrlsFactory
      */
-    private $regenerateUrls;
+    private $regenerateUrlsFactory;
 
     public function __construct(
-        \MageSuite\PageCacheWarmer\Service\RegenerateUrls $regenerateUrls
+        \MageSuite\PageCacheWarmer\Service\RegenerateUrlsFactory $regenerateUrlsFactory
     )
     {
         parent::__construct();
-        $this->regenerateUrls = $regenerateUrls;
+        $this->regenerateUrlsFactory = $regenerateUrlsFactory;
     }
 
     protected function configure()
@@ -29,7 +29,8 @@ class RegenerateUrls extends \Symfony\Component\Console\Command\Command
         \Symfony\Component\Console\Output\OutputInterface $output
     )
     {
-        $this->regenerateUrls->regenerate();
+
+        $this->regenerateUrlsFactory->create()->regenerate();
     }
 }
 
