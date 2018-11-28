@@ -28,6 +28,10 @@ class CustomerGroup implements \Magento\Framework\Option\ArrayInterface
          */
         array_shift($options);
 
+        $options[] = [
+            'value' => 0,
+            'label' => 'NOT LOGGED IN'
+        ];
         return $options;
     }
 }
