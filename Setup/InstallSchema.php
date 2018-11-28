@@ -43,7 +43,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
             'customer_group',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             null,
-            ['nullable' => false],
+            ['nullable' => true],
             'Customer Group'
         )->addColumn(
             'priority',
