@@ -3,26 +3,33 @@ namespace MageSuite\PageCacheWarmer\Service;
 
 class CustomerCreator
 {
+    const CUSTOMER_EMAIL_HOST_SUFFIX = '.wu.magesuite.io';
+
     /**
      * @var \Magento\Customer\Model\CustomerFactory
      */
     private $customerFactory;
+
     /**
      * @var \Magento\Customer\Api\CustomerRepositoryInterface
      */
     private $customerRepository;
+
     /**
      * @var \Magento\Customer\Model\ResourceModel\Group\CollectionFactory
      */
     private $groupCollectionFactory;
+
     /**
      * @var \Magento\Customer\Model\ResourceModel\Customer
      */
     private $customerResource;
+
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     private $scopeConfig;
+
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
@@ -50,9 +57,10 @@ class CustomerCreator
         $customerGroupCollection = $this->groupCollectionFactory->create();
 
         foreach ($customerGroupCollection as $customerGroup) {
-            if($customerGroup->getCustomerGroupId() == 0){
+            if ($customerGroup->getCustomerGroupId() == 0) {
                 continue;
             }
+
             $this->createCustomers($customerGroup);
         }
     }
@@ -89,11 +97,11 @@ class CustomerCreator
             'firstname' => strtolower($customerGroup->getCustomerGroupCode()),
             'lastname' => strtolower($customerGroup->getCustomerGroupCode()),
             'group_id' => $customerGroup->getCustomerGroupId(),
-            'email' => $this->prepareEmail($customerGroup->getCustomerGroupCode()),
+            'email' => $this->prepareEmail($customerGroup->getCustomerGroupId()),
             'password' => $this->preparePassword()
         ];
 
-        $email = $this->prepareEmail($customerData['email']);
+        $email = $customerData['email'];
 
         $customers = [];
         if ($config['website_scope']) {
@@ -116,16 +124,12 @@ class CustomerCreator
         return $customers;
     }
 
-    public function prepareEmail($customerGroupCode)
+    public function prepareEmail($customerGroupId)
     {
-        $config = $this->getConfig();
+        $domainPrefix = $this->getConfig()['domain'];
+        $hash = md5($customerGroupId);
 
-        $localPart = md5($customerGroupCode);
-        $domainPart = $config['domain'];
-
-        $domain = '.wu.magesuite.io';
-
-        return $localPart . '@' . $domainPart . $domain;
+        return $hash . '@' . $domainPrefix . self::CUSTOMER_EMAIL_HOST_SUFFIX;
     }
 
     public function preparePassword()

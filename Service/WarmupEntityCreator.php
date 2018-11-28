@@ -60,6 +60,13 @@ class WarmupEntityCreator
     {
         $configuration = $this->configuration->getConfiguration();
 
+        /* Add `null` customer group at all times which always indicates
+         * a not logged in user - public cache warming. Public cache should
+         * be always warmed even if no other groups are selected so it's added
+         * at all times. We use a `null` value so the crawler can easily discern
+         * this special case. */
+        $customerGroups = array_merge([null], $configuration['customer_groups']);
+
         $data = [];
 
         $urlRewriteCollection = $this->urlRewriteCollection->create();
@@ -78,11 +85,12 @@ class WarmupEntityCreator
                 'priority' => $priority
             ];
 
-            foreach ($configuration['customer_groups'] as $groupId) {
+            foreach ($customerGroups as $groupId) {
                 $urlData['customer_group'] = $groupId;
                 $data[] = $urlData;
             }
         }
+
         return $data;
     }
 
