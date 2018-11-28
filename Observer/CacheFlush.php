@@ -16,16 +16,22 @@ class CacheFlush implements \Magento\Framework\Event\ObserverInterface
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
     private $configuration;
+    /**
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory
+     */
+    private $pageWarmerCollectionFactory;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Service\CronScheduler $cronScheduler,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration
+        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory $pageWarmerCollectionFactory
     )
     {
         $this->scopeConfig = $scopeConfig;
         $this->cronScheduler = $cronScheduler;
         $this->configuration = $configuration;
+        $this->pageWarmerCollectionFactory = $pageWarmerCollectionFactory;
     }
 
     /**
@@ -36,6 +42,10 @@ class CacheFlush implements \Magento\Framework\Event\ObserverInterface
         if (!$this->configuration->isCacheWarmerEnabled()){
             return;
         }
+
+        $pageWarmerCollection = $this->pageWarmerCollectionFactory->create();
+
+        $pageWarmerCollection->walk('delete');
 
         $this->cronScheduler->schedule();
     }
