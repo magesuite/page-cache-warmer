@@ -119,6 +119,13 @@ class WarmupEntityCreatorTest extends \PHPUnit\Framework\TestCase
                 'entity_type' => 'cms-page',
                 'url' => 'http://localhost/index.php/privacy-policy-cookie-restriction-mode',
                 'priority' => 40,
+                'customer_group' => null
+            ],
+            [
+                'entity_id' => '4',
+                'entity_type' => 'cms-page',
+                'url' => 'http://localhost/index.php/privacy-policy-cookie-restriction-mode',
+                'priority' => 40,
                 'customer_group' => "0"
             ],
             [
@@ -139,6 +146,13 @@ class WarmupEntityCreatorTest extends \PHPUnit\Framework\TestCase
                 'entity_type' => 'category',
                 'url' => 'http://localhost/index.php/category-1.html',
                 'priority' => 10,
+                'customer_group' => null
+            ],
+            [
+                'entity_id' => '333',
+                'entity_type' => 'category',
+                'url' => 'http://localhost/index.php/category-1.html',
+                'priority' => 10,
                 'customer_group' => "0"
             ],
             [
@@ -154,6 +168,13 @@ class WarmupEntityCreatorTest extends \PHPUnit\Framework\TestCase
     protected function getExpectedProductPrepareEntityData()
     {
         return [
+            [
+                'entity_id' => '1',
+                'entity_type' => 'product',
+                'url' => 'http://localhost/index.php/simple-product.html',
+                'priority' => 40,
+                'customer_group' => null
+            ],
             [
                 'entity_id' => '1',
                 'entity_type' => 'product',

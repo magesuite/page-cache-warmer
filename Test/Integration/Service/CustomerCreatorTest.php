@@ -68,7 +68,7 @@ class CustomerCreatorTest extends \PHPUnit\Framework\TestCase
             $result = $this->customerCreatorService->prepareCustomers($customerGroup);
             $customer = $result[0];
 
-            $email = $this->customerCreatorService->prepareEmail($customerGroup->getCustomerGroupCode());
+            $email = $this->customerCreatorService->prepareEmail($customerGroup->getCustomerGroupId());
 
             $this->assertEquals(strtolower($customerGroup->getCustomerGroupCode()), $customer->getFirstname());
             $this->assertEquals(strtolower($customerGroup->getCustomerGroupCode()), $customer->getLastname());
@@ -112,7 +112,7 @@ class CustomerCreatorTest extends \PHPUnit\Framework\TestCase
             if($customerGroup->getCustomerGroupId() == 0){
                 continue;
             }
-            $email = $this->customerCreatorService->prepareEmail($customerGroup->getCustomerGroupCode());
+            $email = $this->customerCreatorService->prepareEmail($customerGroup->getCustomerGroupId());
 
             $customer = $this->customer->loadByEmail($email);
 
@@ -140,7 +140,7 @@ class CustomerCreatorTest extends \PHPUnit\Framework\TestCase
             if($customerGroup->getCustomerGroupId() == 0){
                 continue;
             }
-            $email = $this->customerCreatorService->prepareEmail($customerGroup->getCustomerGroupCode());
+            $email = $this->customerCreatorService->prepareEmail($customerGroup->getCustomerGroupId());
 
             foreach ($storeManager->getWebsites() as $website) {
                 $customer = $this->customer;
