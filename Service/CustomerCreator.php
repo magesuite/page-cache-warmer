@@ -93,7 +93,7 @@ class CustomerCreator
             'password' => $this->preparePassword()
         ];
 
-        $email = $this->prepareEmail($customerData['email']);
+        $email = $customerData['email'];
 
         $customers = [];
         if ($config['website_scope']) {
