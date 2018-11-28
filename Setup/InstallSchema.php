@@ -46,7 +46,14 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
             null,
             ['nullable' => false],
             'Priority'
+        )->addColumn(
+            'processing_started_at',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
+            null,
+            ['nullable' => true],
+            'Job processing start date'
         );
+        
         $installer->getConnection()->createTable($table);
 
         $installer->getConnection()->addColumn(
