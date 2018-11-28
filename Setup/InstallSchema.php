@@ -3,6 +3,11 @@ namespace MageSuite\PageCacheWarmer\Setup;
 
 class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 {
+    const ACQUIRE_JOBS_INDEX_COLUMNS = [
+        'processing_started_at',
+        'priority'
+    ];
+
     public function install(\Magento\Framework\Setup\SchemaSetupInterface $setup, \Magento\Framework\Setup\ModuleContextInterface $context)
     {
         $installer = $setup;
@@ -52,6 +57,14 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
             null,
             ['nullable' => true],
             'Job processing start date'
+        )->addIndex(
+            $setup->getIdxName(
+                'MageSuite_PageCacheWarmer/cache_warmup_queue',
+                self::ACQUIRE_JOBS_INDEX_COLUMNS,
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+            ),
+            self::ACQUIRE_JOBS_INDEX_COLUMNS,
+            ['type' => \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX]
         );
         
         $installer->getConnection()->createTable($table);
