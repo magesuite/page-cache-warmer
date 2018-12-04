@@ -100,7 +100,7 @@ class RegenerateUrls
                         [
                             'entity_type',
                             'entity_id',
-                            'url' => new \Zend_Db_Expr("CONCAT('". $baseUrl . "', main_table.request_path)"),
+                            'url' => new \Zend_Db_Expr("CONCAT('". $baseUrl . "', TRIM(LEADING '/' FROM main_table.request_path))"),
                             'priority' => new \Zend_Db_Expr($priorityExpression)
                         ]
                     )
