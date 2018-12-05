@@ -9,9 +9,7 @@ class RegenerateUrls extends \Symfony\Component\Console\Command\Command
      */
     private $regenerateUrlsFactory;
 
-    public function __construct(
-        \MageSuite\PageCacheWarmer\Service\RegenerateUrlsFactory $regenerateUrlsFactory
-    )
+    public function __construct(\MageSuite\PageCacheWarmer\Service\RegenerateUrlsFactory $regenerateUrlsFactory)
     {
         parent::__construct();
         $this->regenerateUrlsFactory = $regenerateUrlsFactory;
