@@ -1,8 +1,6 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Service;
 
-use Zend_Db_Expr;
-
 class RegenerateUrls
 {
     /**
@@ -29,6 +27,18 @@ class RegenerateUrls
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
     private $configuration;
+    /**
+     * @var \MageSuite\PageCacheWarmer\DataProviders\AdditionalWarmupUrlsInterface
+     */
+    private $additionalWarmupUrls;
+    /**
+     * @var \MageSuite\PageCacheWarmer\Api\UrlRepositoryInterface
+     */
+    private $urlRepository;
+    /**
+     * @var \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory
+     */
+    private $urlFactory;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory $pageWarmerCollectionFactory,
@@ -36,7 +46,11 @@ class RegenerateUrls
         \Psr\Log\LoggerInterface $logger,
         \Magento\Eav\Api\AttributeRepositoryInterface $attributeRepository,
         \Magento\Store\Api\StoreRepositoryInterface $storeRepository,
-        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration
+        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
+        \MageSuite\PageCacheWarmer\DataProviders\AdditionalWarmupUrlsInterface $additionalWarmupUrls,
+        \MageSuite\PageCacheWarmer\Api\UrlRepositoryInterface $urlRepository,
+        \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory $urlFactory
+
     )
     {
         $this->pageWarmerCollectionFactory = $pageWarmerCollectionFactory;
@@ -45,6 +59,9 @@ class RegenerateUrls
         $this->attributeRepository = $attributeRepository;
         $this->storeRepository = $storeRepository;
         $this->configuration = $configuration;
+        $this->additionalWarmupUrls = $additionalWarmupUrls;
+        $this->urlRepository = $urlRepository;
+        $this->urlFactory = $urlFactory;
     }
 
     public function regenerate()
@@ -61,6 +78,7 @@ class RegenerateUrls
             $this->insert($data);
         }
 
+        $this->insertAdditionalUrls($configuration['store_views'], $configuration['customer_groups']);
     }
 
     public function insert($data)
@@ -82,8 +100,8 @@ class RegenerateUrls
                         [
                             'entity_type',
                             'entity_id',
-                            'url' => new Zend_Db_Expr("CONCAT('". $baseUrl . "', main_table.request_path)"),
-                            'priority' => new Zend_Db_Expr($priorityExpression)
+                            'url' => new \Zend_Db_Expr("CONCAT('". $baseUrl . "', TRIM(LEADING '/' FROM main_table.request_path))"),
+                            'priority' => new \Zend_Db_Expr($priorityExpression)
                         ]
                     )
                     ->where('main_table.entity_type =?', $data['entity_type'])
@@ -137,6 +155,32 @@ class RegenerateUrls
                 );
 
                 $connection->query($insertQuery);
+            }
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
+    }
+
+    public function insertAdditionalUrls($storeViews, $customerGroups)
+    {
+        try {
+            $customUrls = $this->additionalWarmupUrls->getAdditionalUrls();
+
+            foreach ($customUrls as $customUrl) {
+                foreach ($storeViews as $storeView) {
+                    foreach ($customerGroups as $customerGroup) {
+                        $url = $this->urlFactory->create();
+
+                        $baseUrl = $this->getStoreBaseUrl($storeView);
+
+                        $url->setEntityType('custom')
+                            ->setUrl($baseUrl . $customUrl)
+                            ->setCustomerGroup($customerGroup)
+                            ->setPriority(20);
+
+                        $this->urlRepository->save($url);
+                    }
+                }
             }
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
