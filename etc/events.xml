@@ -9,4 +9,10 @@
     <event name="catalog_category_save_after">
         <observer name="cache_warmup_cms_save" instance="MageSuite\PageCacheWarmer\Observer\AddCategoryToWarmer"/>
     </event>
+    <event name="adminhtml_cache_flush_all">
+        <observer name="cache_warmup_flush_cache_regenerate" instance="\MageSuite\PageCacheWarmer\Observer\CacheFlush" />
+    </event>
+    <event name="adminhtml_cache_flush_system">
+        <observer name="cache_warmup_flush_cache_regenerate" instance="\MageSuite\PageCacheWarmer\Observer\CacheFlush" />
+    </event>
 </config>
