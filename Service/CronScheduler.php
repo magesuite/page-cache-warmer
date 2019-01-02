@@ -36,7 +36,7 @@ class CronScheduler
             $cronSchedule
                 ->setJobCode(self::JOB_NAME)
                 ->setCreatedAt(date("Y-m-d H:i:s"))
-                ->setScheduledAt(date('Y-m-d H:i:s', strtotime("+5 min")))
+                ->setScheduledAt(date('Y-m-d H:i:s', strtotime("+1 min")))
                 ->setStatus($cronSchedule::STATUS_PENDING);
 
             $this->scheduleResource->save($cronSchedule);
