@@ -16,6 +16,10 @@ class AddCategoryToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWa
 
         $category = $observer->getCategory();
 
+        $warmupTags = $category->getIdentities();
+
+        $this->prepareAndSaveEntityTags($category->getEntityId(), 'category', $warmupTags);
+
         if ($category->getWarmupPriority() == Url::NO_WARMUP) {
             return;
         }

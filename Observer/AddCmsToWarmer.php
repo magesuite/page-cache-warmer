@@ -16,6 +16,10 @@ class AddCmsToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWarmerO
 
         $page = $observer->getObject();
 
+        $warmupTags = $page->getIdentities();
+
+        $this->prepareAndSaveEntityTags($page->getPageId(), 'cms-page', $warmupTags);
+
         if ($page->getWarmupPriority() == Url::NO_WARMUP) {
             return;
         }
