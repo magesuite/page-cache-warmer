@@ -10,7 +10,7 @@ interface EntityUrlsRepositoryInterface
      * @return \MageSuite\PageCacheWarmer\Api\Data\Entity\UrlsInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getById($id);
+    public function getByUrl($id);
 
     /**
      * @param \MageSuite\PageCacheWarmer\Api\Data\Entity\UrlsInterface $url

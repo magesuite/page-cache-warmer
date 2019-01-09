@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Model\Entity;
 
-class Urls extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\Entity\TagsInterface
+class Urls extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\Entity\UrlsInterface
 {
     protected function _construct()
     {

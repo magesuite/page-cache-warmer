@@ -63,6 +63,31 @@ class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
 
             $installer->getConnection()->createTable($table);
 
+
+            $table = $installer->getConnection()->newTable(
+                $installer->getTable('varnish_cache_relations')
+            )->addColumn(
+                'id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
+                ['identity' => true, 'nullable' => false, 'primary' => true, 'unsigned' => true],
+                'ID'
+            )->addColumn(
+                'url_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                null,
+                ['nullable' => false],
+                'Url Id'
+            )->addColumn(
+                'tag_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                null,
+                ['nullable' => false],
+                'Tag Id'
+            );
+
+            $installer->getConnection()->createTable($table);
+
         }
 
         $installer->endSetup();

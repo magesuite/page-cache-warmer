@@ -19,28 +19,40 @@ class TagsRepository implements \MageSuite\PageCacheWarmer\Api\EntityTagsReposit
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags\CollectionFactory
      */
     private $collectionFactory;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
 
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags $tagsResource,
         \MageSuite\PageCacheWarmer\Model\Entity\TagsFactory $tagsFactory,
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags\CollectionFactory $collectionFactory
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags\CollectionFactory $collectionFactory,
+        \Psr\Log\LoggerInterface $logger
     )
     {
 
         $this->tagsResource = $tagsResource;
         $this->tagsFactory = $tagsFactory;
         $this->collectionFactory = $collectionFactory;
+        $this->logger = $logger;
     }
 
-    public function getById($id)
+    public function getByTag($tag)
     {
-        $page = $this->tagsFactory->create();
-        $page->load($id);
-        if (!$page->getId()) {
-            throw new NoSuchEntityException(__('Link with id "%1" does not exist.', $id));
+        try {
+            $entityTagsCollection = $this->collectionFactory->create();
+            $entityTagsCollection
+                ->addFieldToFilter('tag', ['eq' => $tag]);
+
+            if($entityTagsCollection->getSize()) {
+                return $entityTagsCollection->getFirstItem();
+            }
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
         }
-        return $page;
+        return null;
     }
 
     public function save(\MageSuite\PageCacheWarmer\Api\Data\Entity\TagsInterface $tag)

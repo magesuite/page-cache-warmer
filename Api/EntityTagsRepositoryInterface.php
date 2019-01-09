@@ -6,11 +6,11 @@ use MageSuite\PageCacheWarmer\Api\Data\Entity\TagsInterface;
 interface EntityTagsRepositoryInterface
 {
     /**
-     * @param int $id
+     * @param string $tag
      * @return \MageSuite\PageCacheWarmer\Api\Data\Entity\TagsInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getById($id);
+    public function getByTag($tag);
 
     /**
      * @param \MageSuite\PageCacheWarmer\Api\Data\Entity\TagsInterface $tag

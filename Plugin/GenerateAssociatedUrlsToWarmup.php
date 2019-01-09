@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Plugin;
 
-class AddUrlsToWarmupByTags
+class GenerateAssociatedUrlsToWarmup
 {
     const CMS_MODULE = 'cms';
     const CATALOG_MODULE = 'catalog';
@@ -22,14 +22,20 @@ class AddUrlsToWarmupByTags
      * @var \MageSuite\PageCacheWarmer\Service\AssociatedUrlsGenerator
      */
     private $associatedUrlsGenerator;
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    private $storeManager;
 
     public function __construct(
         \Magento\Framework\App\RequestInterface $request,
-        \MageSuite\PageCacheWarmer\Service\AssociatedUrlsGenerator $associatedUrlsGenerator
+        \MageSuite\PageCacheWarmer\Service\AssociatedUrlsGenerator $associatedUrlsGenerator,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
     )
     {
         $this->request = $request;
         $this->associatedUrlsGenerator = $associatedUrlsGenerator;
+        $this->storeManager = $storeManager;
     }
 
     public function aroundSetHeader(\Magento\Framework\App\ResponseInterface $subject, callable $proceed, $name, $value, $replace = false)
@@ -46,7 +52,9 @@ class AddUrlsToWarmupByTags
             $actionCheck = ($action == self::ACTION || $action == self::HOMEPAGE_ACTION) ? true : false;
 
             if ($moduleCheck && $controllerCheck && $actionCheck) {
-                $this->associatedUrlsGenerator->addAssociatedUrlsToWarmup($value, $controller, $request->getOriginalPathInfo(), $request->getParams());
+                $baseUrl = $this->storeManager->getStore()->getBaseUrl();
+                $requesUrl = rtrim($baseUrl, '/') . $request->getOriginalPathInfo();
+                $this->associatedUrlsGenerator->addAssociatedUrlsToWarmup($value, $controller, $requesUrl, $request->getParams());
             }
         }
 
