@@ -1,21 +1,5 @@
 <?php
-
 $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-
-///** @var \MageSuite\PageCacheWarmer\Model\Entity\Tags $tagEntity */
-//$tagEntity = $objectManager->create(\MageSuite\PageCacheWarmer\Model\Entity\Tags::class);
-//
-///** @var \MageSuite\PageCacheWarmer\Api\EntityTagsRepositoryInterface $tagsRepository */
-//$tagsRepository = $objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityTagsRepositoryInterface::class);
-//
-///** @var \MageSuite\PageCacheWarmer\Model\Entity\Urls $urlsEntity */
-//$urlsEntity = $objectManager->create(\MageSuite\PageCacheWarmer\Model\Entity\Urls::class);
-//
-///** @var \MageSuite\PageCacheWarmer\Api\EntityUrlsRepositoryInterface $urlsRepository */
-//$urlsRepository = $objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityUrlsRepositoryInterface::class);
-//
-///** @var \MageSuite\PageCacheWarmer\Api\EntityRelationsRepositoryInterface $relationsRepository */
-//$relationsRepository = $objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityRelationsRepositoryInterface::class);
 
 /** @var \MageSuite\PageCacheWarmer\Service\AssociatedUrlsGenerator $associatedUrlsGenerator */
 $associatedUrlsGenerator = $objectManager->create(\MageSuite\PageCacheWarmer\Service\AssociatedUrlsGenerator::class);
@@ -35,11 +19,6 @@ $sampleTags = [
     'cat_p_098',
     'cat_p_788',
 ];
-
-//foreach ($sampleTags as $tag) {
-//    $tagEntity->setTag($tag);
-//    $tagsRepository->save($tagEntity);
-//}
 
 $sampleUrls = [
     [
