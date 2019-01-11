@@ -16,13 +16,14 @@ class AddProductToWarmer extends \MageSuite\PageCacheWarmer\Observer\AbstractWar
 
         $product = $observer->getProduct();
 
-        $warmupTags = $product->getIdentities();
-
-        $this->prepareAndSaveEntityTags($product->getId(), 'product', $warmupTags);
-
         if ($product->getWarmupPriority() == Url::NO_WARMUP) {
             return;
         }
+
+        $warmupTags = $product->getIdentities();
+
+        $this->prepareAndSaveEntityAssociatedUrls($warmupTags);
+
         $this->prepareAndSaveEntity($product->getId(), $product->getWarmupPriority(), 'product');
     }
 }

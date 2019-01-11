@@ -17,21 +17,21 @@ class AbstractWarmerObserver
      */
     private $configuration;
     /**
-     * @var \MageSuite\PageCacheWarmer\Service\EntityTagsCreator
+     * @var \MageSuite\PageCacheWarmer\Service\AssociatedWarmupEntityCreator
      */
-    private $entityTagsCreator;
+    private $associatedWarmupEntityCreator;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Service\WarmupEntityCreator $warmupEntityCreator,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
-        \MageSuite\PageCacheWarmer\Service\EntityTagsCreator $entityTagsCreator
+        \MageSuite\PageCacheWarmer\Service\AssociatedWarmupEntityCreator $associatedWarmupEntityCreator
     )
     {
         $this->warmupEntityCreator = $warmupEntityCreator;
         $this->scopeConfig = $scopeConfig;
         $this->configuration = $configuration;
-        $this->entityTagsCreator = $entityTagsCreator;
+        $this->associatedWarmupEntityCreator = $associatedWarmupEntityCreator;
     }
 
     public function prepareAndSaveEntity($id, $priority, $type)
@@ -48,12 +48,11 @@ class AbstractWarmerObserver
         return $this->configuration->isCacheWarmerEnabled();
     }
 
-    public function prepareAndSaveEntityTags($id, $type, $tags)
+    public function prepareAndSaveEntityAssociatedUrls($tags)
     {
-        $entityTagsCreator = $this->entityTagsCreator;
+        $associatedWarmupEntityCreator = $this->associatedWarmupEntityCreator;
 
-        $data = $entityTagsCreator->prepareEntity($id, $type, $tags);
+        $associatedWarmupEntityCreator->addAssociatedUrls($tags);
 
-        $entityTagsCreator->saveEntity($data);
     }
 }
