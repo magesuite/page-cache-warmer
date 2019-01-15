@@ -13,18 +13,18 @@ class RelationRepository implements \MageSuite\PageCacheWarmer\Api\EntityRelatio
      */
     protected $relationsResource;
     /**
-     * @var RelationsFactory
+     * @var RelationFactory
      */
     protected $relationsFactory;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations\CollectionFactory
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\CollectionFactory
      */
     protected $collectionFactory;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation $relationsResource,
-        \MageSuite\PageCacheWarmer\Model\Entity\RelationsFactory $relationsFactory,
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations\CollectionFactory $collectionFactory
+        \MageSuite\PageCacheWarmer\Model\Entity\RelationFactory $relationsFactory,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\CollectionFactory $collectionFactory
     )
     {
         $this->relationsResource = $relationsResource;

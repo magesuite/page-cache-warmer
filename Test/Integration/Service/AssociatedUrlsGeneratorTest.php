@@ -18,32 +18,32 @@ class AssociatedUrlsGeneratorTest extends \PHPUnit\Framework\TestCase
     protected $associatedUrlsGenerator;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags\Collection
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tag\Collection
      */
     protected $tagsCollection;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Api\EntityTagsRepositoryInterface
+     * @var \MageSuite\PageCacheWarmer\Api\EntityTagRepositoryInterface
      */
     protected $tagsRepository;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls\Collection
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url\Collection
      */
     protected $urlsCollection;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Api\EntityUrlsRepositoryInterface
+     * @var \MageSuite\PageCacheWarmer\Api\EntityUrlRepositoryInterface
      */
     protected $urlsRepository;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations\Collection
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\Collection
      */
     protected $relationsCollection;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Api\EntityRelationsRepositoryInterface
+     * @var \MageSuite\PageCacheWarmer\Api\EntityRelationRepositoryInterface
      */
     protected $relationsRepository;
 
@@ -51,12 +51,12 @@ class AssociatedUrlsGeneratorTest extends \PHPUnit\Framework\TestCase
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->associatedUrlsGenerator = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\AssociatedUrlsGenerator::class);
-        $this->tagsCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags\Collection::class);
-        $this->tagsRepository = $this->objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityTagsRepositoryInterface::class);
-        $this->urlsCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls\Collection::class);
-        $this->urlsRepository = $this->objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityUrlsRepositoryInterface::class);
-        $this->relationsCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations\Collection::class);
-        $this->relationsRepository = $this->objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityRelationsRepositoryInterface::class);
+        $this->tagsCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tag\Collection::class);
+        $this->tagsRepository = $this->objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityTagRepositoryInterface::class);
+        $this->urlsCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url\Collection::class);
+        $this->urlsRepository = $this->objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityUrlRepositoryInterface::class);
+        $this->relationsCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\Collection::class);
+        $this->relationsRepository = $this->objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityRelationRepositoryInterface::class);
     }
 
     /**

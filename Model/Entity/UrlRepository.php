@@ -13,11 +13,11 @@ class UrlRepository implements \MageSuite\PageCacheWarmer\Api\EntityUrlRepositor
      */
     protected $urlsResource;
     /**
-     * @var UrlsFactory
+     * @var UrlFactory
      */
     protected $urlsFactory;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls\CollectionFactory
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url\CollectionFactory
      */
     protected $collectionFactory;
     /**
@@ -27,8 +27,8 @@ class UrlRepository implements \MageSuite\PageCacheWarmer\Api\EntityUrlRepositor
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url $urlsResource,
-        \MageSuite\PageCacheWarmer\Model\Entity\UrlsFactory $urlsFactory,
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls\CollectionFactory $collectionFactory,
+        \MageSuite\PageCacheWarmer\Model\Entity\UrlFactory $urlsFactory,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url\CollectionFactory $collectionFactory,
         \Psr\Log\LoggerInterface $logger
     )
     {

@@ -40,11 +40,11 @@ class RegenerateUrls
      */
     protected $urlFactory;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls\CollectionFactory
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url\CollectionFactory
      */
     protected $entityUrlsCollectionFactory;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations\CollectionFactory
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\CollectionFactory
      */
     protected $entityRelationsCollectionFactory;
 
@@ -58,8 +58,8 @@ class RegenerateUrls
         \MageSuite\PageCacheWarmer\DataProviders\AdditionalWarmupUrlsInterface $additionalWarmupUrls,
         \MageSuite\PageCacheWarmer\Api\UrlRepositoryInterface $urlRepository,
         \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory $urlFactory,
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls\CollectionFactory $entityUrlsCollectionFactory,
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations\CollectionFactory $entityRelationsCollectionFactory
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url\CollectionFactory $entityUrlsCollectionFactory,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\CollectionFactory $entityRelationsCollectionFactory
 
     )
     {

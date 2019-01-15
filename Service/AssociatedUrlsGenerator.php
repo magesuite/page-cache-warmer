@@ -22,7 +22,7 @@ class AssociatedUrlsGenerator
      */
     protected $tagsRepository;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\UrlsFactory
+     * @var \MageSuite\PageCacheWarmer\Model\Entity\UrlFactory
      */
     protected $urlsFactory;
     /**
@@ -30,7 +30,7 @@ class AssociatedUrlsGenerator
      */
     protected $urlsRepository;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\RelationsFactory
+     * @var \MageSuite\PageCacheWarmer\Model\Entity\RelationFactory
      */
     protected $relationsFactory;
     /**
@@ -43,9 +43,9 @@ class AssociatedUrlsGenerator
         \MageSuite\PageCacheWarmer\Api\EntityTagRepositoryInterface $entityTagsRepository,
         \MageSuite\PageCacheWarmer\Model\Entity\TagFactory $tagsFactory,
         \MageSuite\PageCacheWarmer\Model\Entity\TagRepository $tagsRepository,
-        \MageSuite\PageCacheWarmer\Model\Entity\UrlsFactory $urlsFactory,
+        \MageSuite\PageCacheWarmer\Model\Entity\UrlFactory $urlsFactory,
         \MageSuite\PageCacheWarmer\Model\Entity\UrlRepository $urlsRepository,
-        \MageSuite\PageCacheWarmer\Model\Entity\RelationsFactory $relationsFactory,
+        \MageSuite\PageCacheWarmer\Model\Entity\RelationFactory $relationsFactory,
         \MageSuite\PageCacheWarmer\Model\Entity\RelationRepository $relationsRepository
     )
     {
