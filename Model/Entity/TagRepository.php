@@ -5,28 +5,28 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\CouldNotDeleteException;
 
-class TagsRepository implements \MageSuite\PageCacheWarmer\Api\EntityTagsRepositoryInterface
+class TagRepository implements \MageSuite\PageCacheWarmer\Api\EntityTagRepositoryInterface
 {
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tag
      */
-    private $tagsResource;
+    protected $tagsResource;
     /**
      * @var TagsFactory
      */
-    private $tagsFactory;
+    protected $tagsFactory;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags\CollectionFactory
      */
-    private $collectionFactory;
+    protected $collectionFactory;
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    private $logger;
+    protected $logger;
 
 
     public function __construct(
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags $tagsResource,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tag $tagsResource,
         \MageSuite\PageCacheWarmer\Model\Entity\TagsFactory $tagsFactory,
         \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags\CollectionFactory $collectionFactory,
         \Psr\Log\LoggerInterface $logger
@@ -55,7 +55,7 @@ class TagsRepository implements \MageSuite\PageCacheWarmer\Api\EntityTagsReposit
         return null;
     }
 
-    public function save(\MageSuite\PageCacheWarmer\Api\Data\Entity\TagsInterface $tag)
+    public function save(\MageSuite\PageCacheWarmer\Api\Data\Entity\TagInterface $tag)
     {
         try {
             $entityTagsCollection = $this->collectionFactory->create();
@@ -76,7 +76,7 @@ class TagsRepository implements \MageSuite\PageCacheWarmer\Api\EntityTagsReposit
         return $tag;
     }
 
-    public function delete(\MageSuite\PageCacheWarmer\Api\Data\Entity\TagsInterface $tag)
+    public function delete(\MageSuite\PageCacheWarmer\Api\Data\Entity\TagInterface $tag)
     {
         try {
             $this->tagsResource->delete($tag);

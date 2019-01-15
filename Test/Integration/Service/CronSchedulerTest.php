@@ -10,17 +10,17 @@ class CronSchedulerTest extends \PHPUnit\Framework\TestCase
     /**
      * @var \Magento\TestFramework\ObjectManager
      */
-    private $objectManager;
+    protected $objectManager;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Service\CronScheduler
      */
-    private $cronScheduler;
+    protected $cronScheduler;
 
     /**
      * @var \Magento\Cron\Model\ResourceModel\Schedule\Collection
      */
-    private $cronCollection;
+    protected $cronCollection;
 
     public function setUp()
     {

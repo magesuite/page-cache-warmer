@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Api\Data\Entity;
 
-interface RelationsInterface
+interface RelationInterface
 {
     /**
      * @return int
@@ -10,7 +10,7 @@ interface RelationsInterface
 
     /**
      * @param int $id
-     * @return \MageSuite\PageCacheWarmer\Model\Entity\Relations
+     * @return \MageSuite\PageCacheWarmer\Model\Entity\Relation
      */
     public function setId($id);
 
@@ -21,7 +21,7 @@ interface RelationsInterface
 
     /**
      * @param string $urlId
-     * @return \MageSuite\PageCacheWarmer\Model\Entity\Relations
+     * @return \MageSuite\PageCacheWarmer\Model\Entity\Relation
      */
     public function setUrlId($urlId);
 
@@ -32,7 +32,7 @@ interface RelationsInterface
 
     /**
      * @param string $tagId
-     * @return \MageSuite\PageCacheWarmer\Model\Entity\Relations
+     * @return \MageSuite\PageCacheWarmer\Model\Entity\Relation
      */
     public function setTagId($tagId);
 }

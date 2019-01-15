@@ -11,15 +11,15 @@ class AbstractWarmerObserver
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    private $scopeConfig;
+    protected $scopeConfig;
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
-    private $configuration;
+    protected $configuration;
     /**
      * @var \MageSuite\PageCacheWarmer\Service\AssociatedWarmupEntityCreator
      */
-    private $associatedWarmupEntityCreator;
+    protected $associatedWarmupEntityCreator;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Service\WarmupEntityCreator $warmupEntityCreator,

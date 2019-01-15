@@ -7,7 +7,7 @@ class EnableModule extends \Magento\Framework\App\Config\Value
     /**
      * @var \MageSuite\PageCacheWarmer\Service\CustomerCreator
      */
-    private $customerCreator;
+    protected $customerCreator;
 
     public function __construct(
         \Magento\Framework\Model\Context $context,

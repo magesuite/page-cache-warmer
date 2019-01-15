@@ -7,7 +7,7 @@ class CustomerGroup implements \Magento\Framework\Option\ArrayInterface
     /**
      * @var \Magento\Customer\Model\Config\Source\Group
      */
-    private $customerGroupSource;
+    protected $customerGroupSource;
 
     public function __construct(
         \Magento\Customer\Model\Config\Source\Group $customerGroupSource

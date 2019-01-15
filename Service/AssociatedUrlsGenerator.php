@@ -10,43 +10,43 @@ class AssociatedUrlsGenerator
         'index' => 'cms-page'
     ];
     /**
-     * @var \MageSuite\PageCacheWarmer\Api\EntityTagsRepositoryInterface
+     * @var \MageSuite\PageCacheWarmer\Api\EntityTagRepositoryInterface
      */
-    private $entityTagsRepository;
+    protected $entityTagsRepository;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\Entity\TagsFactory
      */
-    private $tagsFactory;
+    protected $tagsFactory;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagsRepository
+     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagRepository
      */
-    private $tagsRepository;
+    protected $tagsRepository;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\Entity\UrlsFactory
      */
-    private $urlsFactory;
+    protected $urlsFactory;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\UrlsRepository
+     * @var \MageSuite\PageCacheWarmer\Model\Entity\UrlRepository
      */
-    private $urlsRepository;
+    protected $urlsRepository;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\Entity\RelationsFactory
      */
-    private $relationsFactory;
+    protected $relationsFactory;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\RelationsRepository
+     * @var \MageSuite\PageCacheWarmer\Model\Entity\RelationRepository
      */
-    private $relationsRepository;
+    protected $relationsRepository;
 
 
     public function __construct(
-        \MageSuite\PageCacheWarmer\Api\EntityTagsRepositoryInterface $entityTagsRepository,
+        \MageSuite\PageCacheWarmer\Api\EntityTagRepositoryInterface $entityTagsRepository,
         \MageSuite\PageCacheWarmer\Model\Entity\TagsFactory $tagsFactory,
-        \MageSuite\PageCacheWarmer\Model\Entity\TagsRepository $tagsRepository,
+        \MageSuite\PageCacheWarmer\Model\Entity\TagRepository $tagsRepository,
         \MageSuite\PageCacheWarmer\Model\Entity\UrlsFactory $urlsFactory,
-        \MageSuite\PageCacheWarmer\Model\Entity\UrlsRepository $urlsRepository,
+        \MageSuite\PageCacheWarmer\Model\Entity\UrlRepository $urlsRepository,
         \MageSuite\PageCacheWarmer\Model\Entity\RelationsFactory $relationsFactory,
-        \MageSuite\PageCacheWarmer\Model\Entity\RelationsRepository $relationsRepository
+        \MageSuite\PageCacheWarmer\Model\Entity\RelationRepository $relationsRepository
     )
     {
         $this->entityTagsRepository = $entityTagsRepository;

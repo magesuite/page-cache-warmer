@@ -6,47 +6,47 @@ class RegenerateUrls
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory
      */
-    private $pageWarmerCollectionFactory;
+    protected $pageWarmerCollectionFactory;
     /**
      * @var \Magento\Framework\App\ResourceConnection
      */
-    private $resourceConnection;
+    protected $resourceConnection;
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    private $logger;
+    protected $logger;
     /**
      * @var \Magento\Eav\Api\AttributeRepositoryInterface
      */
-    private $attributeRepository;
+    protected $attributeRepository;
     /**
      * @var \Magento\Store\Api\StoreRepositoryInterface
      */
-    private $storeRepository;
+    protected $storeRepository;
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
-    private $configuration;
+    protected $configuration;
     /**
      * @var \MageSuite\PageCacheWarmer\DataProviders\AdditionalWarmupUrlsInterface
      */
-    private $additionalWarmupUrls;
+    protected $additionalWarmupUrls;
     /**
      * @var \MageSuite\PageCacheWarmer\Api\UrlRepositoryInterface
      */
-    private $urlRepository;
+    protected $urlRepository;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory
      */
-    private $urlFactory;
+    protected $urlFactory;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls\CollectionFactory
      */
-    private $entityUrlsCollectionFactory;
+    protected $entityUrlsCollectionFactory;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations\CollectionFactory
      */
-    private $entityRelationsCollectionFactory;
+    protected $entityRelationsCollectionFactory;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory $pageWarmerCollectionFactory,

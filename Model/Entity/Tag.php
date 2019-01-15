@@ -1,11 +1,11 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Model\Entity;
 
-class Tags extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\Entity\TagsInterface
+class Tag extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\Entity\TagInterface
 {
     protected function _construct()
     {
-        $this->_init('MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags');
+        $this->_init('MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tag');
     }
 
     public function setId($id)

@@ -10,27 +10,27 @@ class CustomerCreatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @var \Magento\TestFramework\ObjectManager
      */
-    private $objectManager;
+    protected $objectManager;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Service\CustomerCreator
      */
-    private $customerCreatorService;
+    protected $customerCreatorService;
 
     /**
      * @var \Magento\Customer\Model\ResourceModel\Group\Collection
      */
-    private $customerGroupCollection;
+    protected $customerGroupCollection;
 
     /**
      * @var \Magento\Customer\Model\Customer
      */
-    private $customer;
+    protected $customer;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    private $storeManager;
+    protected $storeManager;
 
     public function setUp()
     {

@@ -6,27 +6,27 @@ class WarmupEntityCreator
     /**
      * @var \Magento\UrlRewrite\Model\ResourceModel\UrlRewriteCollectionFactory
      */
-    private $urlRewriteCollection;
+    protected $urlRewriteCollection;
     /**
      * @var \Magento\Customer\Model\ResourceModel\Group\CollectionFactory
      */
-    private $customerGroupCollection;
+    protected $customerGroupCollection;
     /**
      * @var \Magento\Store\Api\StoreRepositoryInterface
      */
-    private $storeRepository;
+    protected $storeRepository;
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
-    private $configuration;
+    protected $configuration;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory
      */
-    private $urlFactory;
+    protected $urlFactory;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlRepository
      */
-    private $urlRepository;
+    protected $urlRepository;
 
     public function __construct(
         \Magento\UrlRewrite\Model\ResourceModel\UrlRewriteCollectionFactory $urlRewriteCollection,

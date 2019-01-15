@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Model\ResourceModel\Entity;
 
-class Relations extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Relation extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     public function _construct()
     {

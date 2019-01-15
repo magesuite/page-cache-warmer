@@ -6,19 +6,19 @@ class RegenerateUrls
     /**
      * @var \MageSuite\PageCacheWarmer\Service\RegenerateUrlsFactory
      */
-    private $regenerateUrlsFactory;
+    protected $regenerateUrlsFactory;
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    private $scopeConfig;
+    protected $scopeConfig;
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
-    private $configuration;
+    protected $configuration;
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    private $logger;
+    protected $logger;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Service\RegenerateUrlsFactory $regenerateUrlsFactory,

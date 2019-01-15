@@ -10,42 +10,42 @@ class AssociatedUrlsGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @var \Magento\TestFramework\ObjectManager
      */
-    private $objectManager;
+    protected $objectManager;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Service\AssociatedUrlsGenerator
      */
-    private $associatedUrlsGenerator;
+    protected $associatedUrlsGenerator;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags\Collection
      */
-    private $tagsCollection;
+    protected $tagsCollection;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Api\EntityTagsRepositoryInterface
      */
-    private $tagsRepository;
+    protected $tagsRepository;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls\Collection
      */
-    private $urlsCollection;
+    protected $urlsCollection;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Api\EntityUrlsRepositoryInterface
      */
-    private $urlsRepository;
+    protected $urlsRepository;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations\Collection
      */
-    private $relationsCollection;
+    protected $relationsCollection;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Api\EntityRelationsRepositoryInterface
      */
-    private $relationsRepository;
+    protected $relationsRepository;
 
     public function setUp()
     {

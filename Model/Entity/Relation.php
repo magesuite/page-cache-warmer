@@ -1,11 +1,11 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Model\Entity;
 
-class Relations extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\Entity\RelationsInterface
+class Relation extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\Entity\RelationInterface
 {
     protected function _construct()
     {
-        $this->_init('MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations');
+        $this->_init('MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation');
     }
 
     public function setId($id)

@@ -6,11 +6,11 @@ class RegenerateWarmupUrls
     /**
      * @var \MageSuite\PageCacheWarmer\Service\CronScheduler
      */
-    private $cronScheduler;
+    protected $cronScheduler;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory
      */
-    private $pageWarmerCollectionFactory;
+    protected $pageWarmerCollectionFactory;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Service\CronScheduler $cronScheduler,

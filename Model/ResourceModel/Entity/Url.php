@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Model\ResourceModel\Entity;
 
-class Urls extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Url extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     public function _construct()
     {

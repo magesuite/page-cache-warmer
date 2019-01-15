@@ -6,7 +6,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
     /**
      * @var \Magento\Eav\Setup\EavSetupFactory
      */
-    private $eavSetupFactory;
+    protected $eavSetupFactory;
 
     /**
      * @var \Magento\Framework\Setup\ModuleDataSetupInterface
@@ -20,11 +20,11 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
     /**
      * @var \Magento\Catalog\Model\Config
      */
-    private $catalogConfig;
+    protected $catalogConfig;
     /**
      * @var \Magento\Eav\Api\AttributeManagementInterface
      */
-    private $attributeManagement;
+    protected $attributeManagement;
 
     public function __construct(
         \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory,

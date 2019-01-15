@@ -7,19 +7,19 @@ class CacheFlush implements \Magento\Framework\Event\ObserverInterface
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    private $scopeConfig;
+    protected $scopeConfig;
     /**
      * @var \MageSuite\PageCacheWarmer\Service\CronScheduler
      */
-    private $cronScheduler;
+    protected $cronScheduler;
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
-    private $configuration;
+    protected $configuration;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory
      */
-    private $pageWarmerCollectionFactory;
+    protected $pageWarmerCollectionFactory;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Service\CronScheduler $cronScheduler,

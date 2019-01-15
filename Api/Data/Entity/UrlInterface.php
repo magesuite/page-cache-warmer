@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Api\Data\Entity;
 
-interface UrlsInterface
+interface UrlInterface
 {
     /**
      * @return int
@@ -10,7 +10,7 @@ interface UrlsInterface
 
     /**
      * @param int $id
-     * @return \MageSuite\PageCacheWarmer\Model\Entity\Urls
+     * @return \MageSuite\PageCacheWarmer\Model\Entity\Url
      */
     public function setId($id);
 
@@ -21,7 +21,7 @@ interface UrlsInterface
 
     /**
      * @param int $id
-     * @return \MageSuite\PageCacheWarmer\Model\Entity\Urls
+     * @return \MageSuite\PageCacheWarmer\Model\Entity\Url
      */
     public function setEntityId($id);
 
@@ -32,7 +32,7 @@ interface UrlsInterface
 
     /**
      * @param string $type
-     * @return \MageSuite\PageCacheWarmer\Model\Entity\Urls
+     * @return \MageSuite\PageCacheWarmer\Model\Entity\Url
      */
     public function setEntityType($type);
 
@@ -43,7 +43,7 @@ interface UrlsInterface
 
     /**
      * @param string $url
-     * @return \MageSuite\PageCacheWarmer\Model\Entity\Urls
+     * @return \MageSuite\PageCacheWarmer\Model\Entity\Url
      */
     public function setUrl($url);
 }

@@ -10,21 +10,21 @@ class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
     /**
      * @var \Magento\TestFramework\ObjectManager
      */
-    private $objectManager;
+    protected $objectManager;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Service\RegenerateUrls
      */
-    private $regenerateUrls;
+    protected $regenerateUrls;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection
      */
-    private $urlCollection;
+    protected $urlCollection;
     /**
      * @var \MageSuite\PageCacheWarmer\DataProviders\AdditionalWarmupUrlsInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    private $additionalUrlProvider;
+    protected $additionalUrlProvider;
 
     public function setUp()
     {

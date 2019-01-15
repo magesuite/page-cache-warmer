@@ -7,19 +7,19 @@ class AssociatedWarmupEntityCreator
     /**
      * @var \Magento\Framework\App\ResourceConnection
      */
-    private $resourceConnection;
+    protected $resourceConnection;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagsRepository
+     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagRepository
      */
-    private $tagsRepository;
+    protected $tagsRepository;
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
-    private $configuration;
+    protected $configuration;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resourceConnection,
-        \MageSuite\PageCacheWarmer\Model\Entity\TagsRepository $tagsRepository,
+        \MageSuite\PageCacheWarmer\Model\Entity\TagRepository $tagsRepository,
         \MageSuite\PageCacheWarmer\Helper\Configuration $configuration
     )
     {

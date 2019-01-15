@@ -5,24 +5,24 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\CouldNotDeleteException;
 
-class RelationsRepository implements \MageSuite\PageCacheWarmer\Api\EntityRelationsRepositoryInterface
+class RelationRepository implements \MageSuite\PageCacheWarmer\Api\EntityRelationRepositoryInterface
 {
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation
      */
-    private $relationsResource;
+    protected $relationsResource;
     /**
      * @var RelationsFactory
      */
-    private $relationsFactory;
+    protected $relationsFactory;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations\CollectionFactory
      */
-    private $collectionFactory;
+    protected $collectionFactory;
 
     public function __construct(
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations $relationsResource,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation $relationsResource,
         \MageSuite\PageCacheWarmer\Model\Entity\RelationsFactory $relationsFactory,
         \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relations\CollectionFactory $collectionFactory
     )
@@ -42,7 +42,7 @@ class RelationsRepository implements \MageSuite\PageCacheWarmer\Api\EntityRelati
         return $page;
     }
 
-    public function save(\MageSuite\PageCacheWarmer\Api\Data\Entity\RelationsInterface $relation)
+    public function save(\MageSuite\PageCacheWarmer\Api\Data\Entity\RelationInterface $relation)
     {
         try {
             $entityUrlsCollection = $this->collectionFactory->create();
@@ -64,7 +64,7 @@ class RelationsRepository implements \MageSuite\PageCacheWarmer\Api\EntityRelati
         return $relation;
     }
 
-    public function delete(\MageSuite\PageCacheWarmer\Api\Data\Entity\RelationsInterface $relation)
+    public function delete(\MageSuite\PageCacheWarmer\Api\Data\Entity\RelationInterface $relation)
     {
         try {
             $this->relationsResource->delete($relation);

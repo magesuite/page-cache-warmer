@@ -14,7 +14,7 @@ class UrlRepository implements \MageSuite\PageCacheWarmer\Api\UrlRepositoryInter
     /**
      * @var \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory
      */
-    private $urlFactory;
+    protected $urlFactory;
 
 
     public function __construct(

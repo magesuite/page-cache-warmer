@@ -21,11 +21,11 @@ class GenerateAssociatedUrlsToWarmup
     /**
      * @var \MageSuite\PageCacheWarmer\Service\AssociatedUrlsGenerator
      */
-    private $associatedUrlsGenerator;
+    protected $associatedUrlsGenerator;
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    private $storeManager;
+    protected $storeManager;
 
     public function __construct(
         \Magento\Framework\App\RequestInterface $request,

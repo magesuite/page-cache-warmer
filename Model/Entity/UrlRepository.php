@@ -5,28 +5,28 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\CouldNotDeleteException;
 
-class UrlsRepository implements \MageSuite\PageCacheWarmer\Api\EntityUrlsRepositoryInterface
+class UrlRepository implements \MageSuite\PageCacheWarmer\Api\EntityUrlRepositoryInterface
 {
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url
      */
-    private $urlsResource;
+    protected $urlsResource;
     /**
      * @var UrlsFactory
      */
-    private $urlsFactory;
+    protected $urlsFactory;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls\CollectionFactory
      */
-    private $collectionFactory;
+    protected $collectionFactory;
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    private $logger;
+    protected $logger;
 
     public function __construct(
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls $urlsResource,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url $urlsResource,
         \MageSuite\PageCacheWarmer\Model\Entity\UrlsFactory $urlsFactory,
         \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls\CollectionFactory $collectionFactory,
         \Psr\Log\LoggerInterface $logger
@@ -55,7 +55,7 @@ class UrlsRepository implements \MageSuite\PageCacheWarmer\Api\EntityUrlsReposit
         return null;
     }
 
-    public function save(\MageSuite\PageCacheWarmer\Api\Data\Entity\UrlsInterface $url)
+    public function save(\MageSuite\PageCacheWarmer\Api\Data\Entity\UrlInterface $url)
     {
         try {
             $entityUrlsCollection = $this->collectionFactory->create();
@@ -78,7 +78,7 @@ class UrlsRepository implements \MageSuite\PageCacheWarmer\Api\EntityUrlsReposit
         return $url;
     }
 
-    public function delete(\MageSuite\PageCacheWarmer\Api\Data\Entity\UrlsInterface $url)
+    public function delete(\MageSuite\PageCacheWarmer\Api\Data\Entity\UrlInterface $url)
     {
         try {
             $this->urlsResource->delete($url);

@@ -6,11 +6,11 @@ class AddCustomerAfterCustomerGroupIsCreated implements \Magento\Framework\Event
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
-    private $configuration;
+    protected $configuration;
     /**
      * @var \MageSuite\PageCacheWarmer\Service\CustomerCreator
      */
-    private $customerCreator;
+    protected $customerCreator;
 
 
     public function __construct(

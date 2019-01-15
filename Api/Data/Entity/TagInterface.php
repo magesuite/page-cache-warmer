@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Api\Data\Entity;
 
-interface TagsInterface
+interface TagInterface
 {
     /**
      * @return int
@@ -10,7 +10,7 @@ interface TagsInterface
 
     /**
      * @param int $id
-     * @return \MageSuite\PageCacheWarmer\Model\Entity\Tags
+     * @return \MageSuite\PageCacheWarmer\Model\Entity\Tag
      */
     public function setId($id);
 
@@ -21,7 +21,7 @@ interface TagsInterface
 
     /**
      * @param string $tag
-     * @return \MageSuite\PageCacheWarmer\Model\Entity\Tags
+     * @return \MageSuite\PageCacheWarmer\Model\Entity\Tag
      */
     public function setTag($tag);
 }

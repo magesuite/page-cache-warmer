@@ -1,11 +1,11 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Model\Entity;
 
-class Urls extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\Entity\UrlsInterface
+class Url extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\Entity\UrlInterface
 {
     protected function _construct()
     {
-        $this->_init('MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Urls');
+        $this->_init('MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url');
     }
 
     public function setId($id)

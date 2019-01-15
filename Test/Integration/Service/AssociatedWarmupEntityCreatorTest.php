@@ -10,17 +10,17 @@ class AssociatedWarmupEntityCreatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @var \Magento\TestFramework\ObjectManager
      */
-    private $objectManager;
+    protected $objectManager;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Service\AssociatedWarmupEntityCreator
      */
-    private $associatedWarmupEntityCreator;
+    protected $associatedWarmupEntityCreator;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection
      */
-    private $urlCollection;
+    protected $urlCollection;
 
 
     public function setUp()
