@@ -14,7 +14,7 @@ class AssociatedUrlsGenerator
      */
     protected $entityTagsRepository;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagsFactory
+     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagFactory
      */
     protected $tagsFactory;
     /**
@@ -41,7 +41,7 @@ class AssociatedUrlsGenerator
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Api\EntityTagRepositoryInterface $entityTagsRepository,
-        \MageSuite\PageCacheWarmer\Model\Entity\TagsFactory $tagsFactory,
+        \MageSuite\PageCacheWarmer\Model\Entity\TagFactory $tagsFactory,
         \MageSuite\PageCacheWarmer\Model\Entity\TagRepository $tagsRepository,
         \MageSuite\PageCacheWarmer\Model\Entity\UrlsFactory $urlsFactory,
         \MageSuite\PageCacheWarmer\Model\Entity\UrlRepository $urlsRepository,

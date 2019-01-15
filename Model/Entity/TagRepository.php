@@ -12,11 +12,11 @@ class TagRepository implements \MageSuite\PageCacheWarmer\Api\EntityTagRepositor
      */
     protected $tagsResource;
     /**
-     * @var TagsFactory
+     * @var TagFactory
      */
     protected $tagsFactory;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags\CollectionFactory
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tag\CollectionFactory
      */
     protected $collectionFactory;
     /**
@@ -27,8 +27,8 @@ class TagRepository implements \MageSuite\PageCacheWarmer\Api\EntityTagRepositor
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tag $tagsResource,
-        \MageSuite\PageCacheWarmer\Model\Entity\TagsFactory $tagsFactory,
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tags\CollectionFactory $collectionFactory,
+        \MageSuite\PageCacheWarmer\Model\Entity\TagFactory $tagsFactory,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tag\CollectionFactory $collectionFactory,
         \Psr\Log\LoggerInterface $logger
     )
     {
