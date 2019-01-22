@@ -58,7 +58,7 @@ class AssociatedUrlsGenerator
         $this->relationsRepository = $relationsRepository;
     }
 
-    public function addAssociatedUrlsToWarmup($value, $controller, $url, $params)
+    public function addTagToUrlRelations($value, $controller, $url, $params)
     {
         $this->addTags($value);
 
@@ -101,6 +101,9 @@ class AssociatedUrlsGenerator
         foreach ($tags as $tag) {
             $tagData = $this->tagsRepository->getByTag($tag);
 
+            if(!$tagData){
+                continue;
+            }
             $relation = $this->relationsFactory->create();
 
             $relation->setTagId($tagData->getId())

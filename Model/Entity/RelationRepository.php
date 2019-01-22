@@ -53,7 +53,6 @@ class RelationRepository implements \MageSuite\PageCacheWarmer\Api\EntityRelatio
             if($entityUrlsCollection->getSize()) {
                 return $relation;
             }
-
             $this->relationsResource->save($relation);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__(

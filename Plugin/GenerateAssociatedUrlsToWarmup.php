@@ -54,7 +54,7 @@ class GenerateAssociatedUrlsToWarmup
             if ($moduleCheck && $controllerCheck && $actionCheck) {
                 $baseUrl = $this->storeManager->getStore()->getBaseUrl();
                 $requesUrl = rtrim($baseUrl, '/') . $request->getOriginalPathInfo();
-                $this->associatedUrlsGenerator->addAssociatedUrlsToWarmup($value, $controller, $requesUrl, $request->getParams());
+                $this->associatedUrlsGenerator->addTagToUrlRelations($value, $controller, $requesUrl, $request->getParams());
             }
         }
 
