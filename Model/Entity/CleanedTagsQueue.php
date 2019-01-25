@@ -1,11 +1,11 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Model\Entity;
 
-class TagsCleanupQueue extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\Entity\TagsCleanupQueueInterface
+class CleanedTagsQueue extends \Magento\Framework\Model\AbstractModel implements \MageSuite\PageCacheWarmer\Api\Data\Entity\CleanedTagsQueueInterface
 {
     protected function _construct()
     {
-        $this->_init('MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\TagsCleanupQueue');
+        $this->_init('MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\CleanedTagsQueue');
     }
 
     public function setId($id)

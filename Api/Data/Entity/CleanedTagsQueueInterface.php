@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Api\Data\Entity;
 
-interface TagsCleanupQueueInterface
+interface CleanedTagsQueueInterface
 {
     /**
      * @return int
@@ -10,7 +10,7 @@ interface TagsCleanupQueueInterface
 
     /**
      * @param int $id
-     * @return \MageSuite\PageCacheWarmer\Model\Entity\TagsCleanupQueue
+     * @return \MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueue
      */
     public function setId($id);
 
@@ -21,7 +21,7 @@ interface TagsCleanupQueueInterface
 
     /**
      * @param string $tag
-     * @return \MageSuite\PageCacheWarmer\Model\Entity\TagsCleanupQueue
+     * @return \MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueue
      */
     public function setTag($tag);
 }

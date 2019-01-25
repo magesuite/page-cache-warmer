@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Model\ResourceModel\Entity;
 
-class TagsCleanupQueue extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class CleanedTagsQueue extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     public function _construct()
     {

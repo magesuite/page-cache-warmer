@@ -1,25 +1,25 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Cron;
 
-class GenerateCleanupUrls
+class GenerateUrlsBasedOnCleanedTags
 {
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
     protected $configuration;
     /**
-     * @var \MageSuite\PageCacheWarmer\Service\GenerateCleanupUrlsFactory
+     * @var \MageSuite\PageCacheWarmer\Service\CleanupUrlsGeneratorFactory
      */
-    protected $generateCleanupUrlsFactory;
+    protected $cleanupUrlsGeneratorFactory;
 
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
-        \MageSuite\PageCacheWarmer\Service\GenerateCleanupUrlsFactory $generateCleanupUrlsFactory
+        \MageSuite\PageCacheWarmer\Service\CleanupUrlsGeneratorFactory $cleanupUrlsGeneratorFactory
     )
     {
         $this->configuration = $configuration;
-        $this->generateCleanupUrlsFactory = $generateCleanupUrlsFactory;
+        $this->cleanupUrlsGeneratorFactory = $cleanupUrlsGeneratorFactory;
     }
 
     public function execute()
@@ -28,6 +28,6 @@ class GenerateCleanupUrls
             return;
         }
 
-        $this->generateCleanupUrlsFactory->create()->generate();
+        $this->cleanupUrlsGeneratorFactory->create()->generate();
     }
 }

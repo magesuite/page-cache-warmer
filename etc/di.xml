@@ -15,10 +15,10 @@
     <preference for="MageSuite\PageCacheWarmer\Api\Data\Entity\UrlInterface"
                 type="MageSuite\PageCacheWarmer\Model\Entity\Url" />
 
-    <preference for="MageSuite\PageCacheWarmer\Api\EntityTagsCleanupQueueRepositoryInterface"
-                type="MageSuite\PageCacheWarmer\Model\Entity\TagsCleanupQueueRepository" />
-    <preference for="MageSuite\PageCacheWarmer\Api\Data\Entity\TagsCleanupQueueInterface"
-                type="MageSuite\PageCacheWarmer\Model\Entity\TagsCleanupQueue" />
+    <preference for="MageSuite\PageCacheWarmer\Api\EntityCleanedTagsQueueRepositoryInterface"
+                type="MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueueRepository" />
+    <preference for="MageSuite\PageCacheWarmer\Api\Data\Entity\CleanedTagsQueueInterface"
+                type="MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueue" />
 
     <preference for="MageSuite\PageCacheWarmer\Api\EntityRelationRepositoryInterface"
                 type="MageSuite\PageCacheWarmer\Model\Entity\RelationRepository" />

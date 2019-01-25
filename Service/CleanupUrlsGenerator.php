@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Service;
 
-class GenerateCleanupUrls
+class CleanupUrlsGenerator
 {
     /**
      * @var \Magento\Framework\App\ResourceConnection
@@ -12,14 +12,14 @@ class GenerateCleanupUrls
      */
     protected $configuration;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\TagsCleanupQueue\CollectionFactory
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\CleanedTagsQueue\CollectionFactory
      */
     protected $collection;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resourceConnection,
         \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\TagsCleanupQueue\CollectionFactory $collection
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\CleanedTagsQueue\CollectionFactory $collection
     )
     {
         $this->resourceConnection = $resourceConnection;

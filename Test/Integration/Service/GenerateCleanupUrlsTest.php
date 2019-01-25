@@ -13,9 +13,9 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
     protected $objectManager;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Service\GenerateCleanupUrls
+     * @var \MageSuite\PageCacheWarmer\Service\CleanupUrlsGenerator
      */
-    protected $generateCleanupUrls;
+    protected $cleanupUrlsGenerator;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection
@@ -33,24 +33,24 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
     protected $associatedUrlsGenerator;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagsCleanupQueue
+     * @var \MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueue
      */
-    protected $tagsCleanupQueue;
+    protected $cleanedTagsQueue;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Api\EntityTagsCleanupQueueRepositoryInterface
+     * @var \MageSuite\PageCacheWarmer\Api\EntityCleanedTagsQueueRepositoryInterface
      */
-    protected $tagsCleanupQueueRepository;
+    protected $cleanedTagsQueueRepository;
 
     public function setUp()
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->urlCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection::class);
-        $this->generateCleanupUrls = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\GenerateCleanupUrls::class);
+        $this->cleanupUrlsGenerator = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\CleanupUrlsGenerator::class);
         $this->tagsCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Tag\Collection::class);
         $this->associatedUrlsGenerator = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\AssociatedUrlsGenerator::class);
-        $this->tagsCleanupQueue = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\Entity\TagsCleanupQueue::class);
-        $this->tagsCleanupQueueRepository = $this->objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityTagsCleanupQueueRepositoryInterface::class);
+        $this->cleanedTagsQueue = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueue::class);
+        $this->cleanedTagsQueueRepository = $this->objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityCleanedTagsQueueRepositoryInterface::class);
     }
 
     /**
@@ -70,14 +70,14 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
         }
 
         foreach ($this->tagsCollection as $tag) {
-            $cleanupTag = $this->tagsCleanupQueue;
+            $cleanupTag = $this->cleanedTagsQueue;
 
             $cleanupTag->setTag($tag->getId());
 
-            $this->tagsCleanupQueueRepository->save($cleanupTag);
+            $this->cleanedTagsQueueRepository->save($cleanupTag);
         }
 
-        $this->generateCleanupUrls->generate();
+        $this->cleanupUrlsGenerator->generate();
 
         $urlCollection = $this->urlCollection;
 

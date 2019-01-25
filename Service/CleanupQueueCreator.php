@@ -8,26 +8,26 @@ class CleanupQueueCreator
      */
     protected $tagRepository;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagsCleanupQueue
+     * @var \MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueueFactory
      */
-    protected $tagsCleanupQueue;
+    protected $cleanedTagsQueueFactory;
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagsCleanupQueueRepository
+     * @var \MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueueRepository
      */
-    protected $tagsCleanupQueueRepository;
+    protected $cleanedTagsQueueRepository;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Model\Entity\TagRepository $tagRepository,
-        \MageSuite\PageCacheWarmer\Model\Entity\TagsCleanupQueue $tagsCleanupQueue,
-        \MageSuite\PageCacheWarmer\Model\Entity\TagsCleanupQueueRepository $tagsCleanupQueueRepository
+        \MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueueFactory $cleanedTagsQueueFactory,
+        \MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueueRepository $cleanedTagsQueueRepository
     )
     {
         $this->tagRepository = $tagRepository;
-        $this->tagsCleanupQueue = $tagsCleanupQueue;
-        $this->tagsCleanupQueueRepository = $tagsCleanupQueueRepository;
+        $this->cleanedTagsQueueFactory = $cleanedTagsQueueFactory;
+        $this->cleanedTagsQueueRepository = $cleanedTagsQueueRepository;
     }
 
-    public function addTagToCleanupQueue($tags)
+    public function addTagsToCleanupQueue($tags)
     {
         foreach ($tags as $tag) {
             $this->addTag($tag);
@@ -42,11 +42,11 @@ class CleanupQueueCreator
             return;
         }
 
-        $cleanupTag = $this->tagsCleanupQueue;
+        $cleanupTag = $this->cleanedTagsQueueFactory->create();
 
         $cleanupTag->setTag($tagData->getId());
 
-        $this->tagsCleanupQueueRepository->save($cleanupTag);
+        $this->cleanedTagsQueueRepository->save($cleanupTag);
     }
 
 }
