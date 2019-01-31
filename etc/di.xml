@@ -45,7 +45,7 @@
     </type>
 
     <type name="\Magento\Framework\App\Cache">
-        <plugin name="add_tags_to_cleanup_queue" type="MageSuite\PageCacheWarmer\Plugin\AddTagsToCleanupQueue" sortOrder="1" />
+        <plugin name="add_tags_to_cleanup_queue" type="MageSuite\PageCacheWarmer\Plugin\AddTagsToCleanedQueue" sortOrder="1" />
     </type>
 
 </config>

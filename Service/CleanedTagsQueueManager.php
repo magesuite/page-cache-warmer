@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Service;
 
-class CleanupQueueCreator
+class CleanedTagsQueueManager
 {
     /**
      * @var \MageSuite\PageCacheWarmer\Model\Entity\TagRepository

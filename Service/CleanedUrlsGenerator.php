@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\PageCacheWarmer\Service;
 
-class CleanupUrlsGenerator
+class CleanedUrlsGenerator
 {
     /**
      * @var \Magento\Framework\App\ResourceConnection

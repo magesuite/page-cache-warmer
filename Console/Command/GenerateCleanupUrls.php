@@ -5,14 +5,14 @@ namespace MageSuite\PageCacheWarmer\Console\Command;
 class GenerateCleanupUrls extends \Symfony\Component\Console\Command\Command
 {
     /**
-     * @var \MageSuite\PageCacheWarmer\Service\CleanupUrlsGeneratorFactory
+     * @var \MageSuite\PageCacheWarmer\Service\CleanedUrlsGeneratorFactory
      */
-    protected $cleanupUrlsGeneratorFactory;
+    protected $cleanedUrlsGeneratorFactory;
 
-    public function __construct(\MageSuite\PageCacheWarmer\Service\CleanupUrlsGeneratorFactory $cleanupUrlsGeneratorFactory)
+    public function __construct(\MageSuite\PageCacheWarmer\Service\CleanedUrlsGeneratorFactory $cleanedUrlsGeneratorFactory)
     {
         parent::__construct();
-        $this->cleanupUrlsGeneratorFactory = $cleanupUrlsGeneratorFactory;
+        $this->cleanedUrlsGeneratorFactory = $cleanedUrlsGeneratorFactory;
     }
 
     protected function configure()
@@ -27,7 +27,7 @@ class GenerateCleanupUrls extends \Symfony\Component\Console\Command\Command
         \Symfony\Component\Console\Output\OutputInterface $output
     )
     {
-        $this->cleanupUrlsGeneratorFactory->create()->generate();
+        $this->cleanedUrlsGeneratorFactory->create()->generate();
     }
 }
 

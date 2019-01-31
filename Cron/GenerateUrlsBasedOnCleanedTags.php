@@ -8,18 +8,18 @@ class GenerateUrlsBasedOnCleanedTags
      */
     protected $configuration;
     /**
-     * @var \MageSuite\PageCacheWarmer\Service\CleanupUrlsGeneratorFactory
+     * @var \MageSuite\PageCacheWarmer\Service\CleanedUrlsGeneratorFactory
      */
-    protected $cleanupUrlsGeneratorFactory;
+    protected $cleanedUrlsGeneratorFactory;
 
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
-        \MageSuite\PageCacheWarmer\Service\CleanupUrlsGeneratorFactory $cleanupUrlsGeneratorFactory
+        \MageSuite\PageCacheWarmer\Service\CleanedUrlsGeneratorFactory $cleanedUrlsGeneratorFactory
     )
     {
         $this->configuration = $configuration;
-        $this->cleanupUrlsGeneratorFactory = $cleanupUrlsGeneratorFactory;
+        $this->cleanedUrlsGeneratorFactory = $cleanedUrlsGeneratorFactory;
     }
 
     public function execute()
@@ -28,6 +28,6 @@ class GenerateUrlsBasedOnCleanedTags
             return;
         }
 
-        $this->cleanupUrlsGeneratorFactory->create()->generate();
+        $this->cleanedUrlsGeneratorFactory->create()->generate();
     }
 }
