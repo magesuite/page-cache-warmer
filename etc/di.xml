@@ -15,6 +15,11 @@
     <preference for="MageSuite\PageCacheWarmer\Api\Data\Entity\UrlInterface"
                 type="MageSuite\PageCacheWarmer\Model\Entity\Url" />
 
+    <preference for="MageSuite\PageCacheWarmer\Api\EntityCleanedTagsQueueRepositoryInterface"
+                type="MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueueRepository" />
+    <preference for="MageSuite\PageCacheWarmer\Api\Data\Entity\CleanedTagsQueueInterface"
+                type="MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueue" />
+
     <preference for="MageSuite\PageCacheWarmer\Api\EntityRelationRepositoryInterface"
                 type="MageSuite\PageCacheWarmer\Model\Entity\RelationRepository" />
     <preference for="MageSuite\PageCacheWarmer\Api\Data\Entity\RelationInterface"
@@ -30,12 +35,17 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="cache_warmup_manual" xsi:type="object">MageSuite\PageCacheWarmer\Console\Command\RegenerateUrls</item>
+                <item name="cache_cleanup_generate" xsi:type="object">MageSuite\PageCacheWarmer\Console\Command\GenerateCleanupUrls</item>
             </argument>
         </arguments>
     </type>
 
     <type name="\Magento\Framework\App\ResponseInterface">
         <plugin name="add_pages_to_warmup_queue_by_tags" type="MageSuite\PageCacheWarmer\Plugin\GenerateAssociatedUrlsToWarmup" sortOrder="1" />
+    </type>
+
+    <type name="\Magento\Framework\App\Cache">
+        <plugin name="add_tags_to_cleanup_queue" type="MageSuite\PageCacheWarmer\Plugin\AddTagsToCleanedQueue" sortOrder="1" />
     </type>
 
 </config>

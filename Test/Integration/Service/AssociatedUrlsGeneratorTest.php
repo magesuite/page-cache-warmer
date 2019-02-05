@@ -38,7 +38,7 @@ class AssociatedUrlsGeneratorTest extends \PHPUnit\Framework\TestCase
     protected $urlsRepository;
 
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\Collection
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\CollectionFactory
      */
     protected $relationsCollection;
 
@@ -55,7 +55,7 @@ class AssociatedUrlsGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->tagsRepository = $this->objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityTagRepositoryInterface::class);
         $this->urlsCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url\Collection::class);
         $this->urlsRepository = $this->objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityUrlRepositoryInterface::class);
-        $this->relationsCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\Collection::class);
+        $this->relationsCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\CollectionFactory::class);
         $this->relationsRepository = $this->objectManager->create(\MageSuite\PageCacheWarmer\Api\EntityRelationRepositoryInterface::class);
     }
 
@@ -79,6 +79,10 @@ class AssociatedUrlsGeneratorTest extends \PHPUnit\Framework\TestCase
         }
     }
 
+    /**
+     * @magentoDbIsolation enabled
+     * @magentoAppIsolation enabled
+     */
     public function testItAddUrlsCorrectly()
     {
         $sampleUrls = $this->sampleUrls();
@@ -93,13 +97,21 @@ class AssociatedUrlsGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(6, $this->urlsCollection->getSize());
     }
 
+    /**
+     * @magentoDbIsolation enabled
+     * @magentoAppIsolation enabled
+     */
     public function testItAddRelationsCorrectly()
     {
+        $sampleTags = $this->sampleTags();
+        $this->associatedUrlsGenerator->addTags(implode(',', $sampleTags));
+
         foreach ($this->sampleUrls() as $urlData) {
-            $this->associatedUrlsGenerator->generateRelations(implode(',', $this->sampleTags()), $urlData['url']);
+            $this->associatedUrlsGenerator->addUrls($urlData['controller'], $urlData['url'], [$urlData['entity_id']]);
+            $this->associatedUrlsGenerator->generateRelations(implode(',', $sampleTags), $urlData['url']);
         }
 
-        $this->assertEquals(78, $this->relationsCollection->getSize());
+        $this->assertEquals(78, $this->relationsCollection->create()->getSize());
     }
 
     protected function sampleTags()

@@ -54,7 +54,7 @@ $sampleUrls = [
 ];
 
 foreach ($sampleUrls as $url) {
-    $associatedUrlsGenerator->addAssociatedUrlsToWarmup(implode(',', $sampleTags), $url['controller'], $url['url'], [$url['entity_id']]);
+    $associatedUrlsGenerator->addTagToUrlRelations(implode(',', $sampleTags), $url['controller'], $url['url'], [$url['entity_id']]);
 }
 
 
