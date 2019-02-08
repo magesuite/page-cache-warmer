@@ -6,39 +6,47 @@ class RegenerateUrls
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory
      */
-    private $pageWarmerCollectionFactory;
+    protected $pageWarmerCollectionFactory;
     /**
      * @var \Magento\Framework\App\ResourceConnection
      */
-    private $resourceConnection;
+    protected $resourceConnection;
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    private $logger;
+    protected $logger;
     /**
      * @var \Magento\Eav\Api\AttributeRepositoryInterface
      */
-    private $attributeRepository;
+    protected $attributeRepository;
     /**
      * @var \Magento\Store\Api\StoreRepositoryInterface
      */
-    private $storeRepository;
+    protected $storeRepository;
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
-    private $configuration;
+    protected $configuration;
     /**
      * @var \MageSuite\PageCacheWarmer\DataProviders\AdditionalWarmupUrlsInterface
      */
-    private $additionalWarmupUrls;
+    protected $additionalWarmupUrls;
     /**
      * @var \MageSuite\PageCacheWarmer\Api\UrlRepositoryInterface
      */
-    private $urlRepository;
+    protected $urlRepository;
     /**
      * @var \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory
      */
-    private $urlFactory;
+    protected $urlFactory;
+    /**
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url\CollectionFactory
+     */
+    protected $entityUrlsCollectionFactory;
+    /**
+     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\CollectionFactory
+     */
+    protected $entityRelationsCollectionFactory;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory $pageWarmerCollectionFactory,
@@ -49,7 +57,9 @@ class RegenerateUrls
         \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
         \MageSuite\PageCacheWarmer\DataProviders\AdditionalWarmupUrlsInterface $additionalWarmupUrls,
         \MageSuite\PageCacheWarmer\Api\UrlRepositoryInterface $urlRepository,
-        \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory $urlFactory
+        \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory $urlFactory,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url\CollectionFactory $entityUrlsCollectionFactory,
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\CollectionFactory $entityRelationsCollectionFactory
 
     )
     {
@@ -62,13 +72,13 @@ class RegenerateUrls
         $this->additionalWarmupUrls = $additionalWarmupUrls;
         $this->urlRepository = $urlRepository;
         $this->urlFactory = $urlFactory;
+        $this->entityUrlsCollectionFactory = $entityUrlsCollectionFactory;
+        $this->entityRelationsCollectionFactory = $entityRelationsCollectionFactory;
     }
 
     public function regenerate()
     {
-        $pageWarmerCollection = $this->pageWarmerCollectionFactory->create();
-
-        $pageWarmerCollection->walk('delete');
+        $this->clearWarmerUrls();
 
         $configuration = $this->configuration->getConfiguration();
 
@@ -165,7 +175,6 @@ class RegenerateUrls
     {
         try {
             $customUrls = $this->additionalWarmupUrls->getAdditionalUrls();
-
             foreach ($customUrls as $customUrl) {
                 foreach ($storeViews as $storeView) {
                     foreach ($customerGroups as $customerGroup) {
@@ -221,5 +230,20 @@ class RegenerateUrls
         $store = $storeRepository->getById($storeId);
 
         return $store->getBaseUrl();
+    }
+
+    public function clearWarmerUrls()
+    {
+        $pageWarmerCollection = $this->pageWarmerCollectionFactory->create();
+
+        $pageWarmerCollection->walk('delete');
+
+        $entityUrlsCollectionFactory = $this->entityUrlsCollectionFactory->create();
+
+        $entityUrlsCollectionFactory->walk('delete');
+
+        $entityRelationsCollectionFactory = $this->entityRelationsCollectionFactory->create();
+
+        $entityRelationsCollectionFactory->walk('delete');
     }
 }

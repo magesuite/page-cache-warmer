@@ -11,21 +11,27 @@ class AbstractWarmerObserver
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    private $scopeConfig;
+    protected $scopeConfig;
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
-    private $configuration;
+    protected $configuration;
+    /**
+     * @var \MageSuite\PageCacheWarmer\Service\AssociatedWarmupEntityCreator
+     */
+    protected $associatedWarmupEntityCreator;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Service\WarmupEntityCreator $warmupEntityCreator,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration
+        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
+        \MageSuite\PageCacheWarmer\Service\AssociatedWarmupEntityCreator $associatedWarmupEntityCreator
     )
     {
         $this->warmupEntityCreator = $warmupEntityCreator;
         $this->scopeConfig = $scopeConfig;
         $this->configuration = $configuration;
+        $this->associatedWarmupEntityCreator = $associatedWarmupEntityCreator;
     }
 
     public function prepareAndSaveEntity($id, $priority, $type)
@@ -40,5 +46,13 @@ class AbstractWarmerObserver
     public function getIsCrawlerEnabled()
     {
         return $this->configuration->isCacheWarmerEnabled();
+    }
+
+    public function prepareAndSaveEntityAssociatedUrls($tags)
+    {
+        $associatedWarmupEntityCreator = $this->associatedWarmupEntityCreator;
+
+        $associatedWarmupEntityCreator->addAssociatedUrls($tags);
+
     }
 }

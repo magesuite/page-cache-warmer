@@ -10,27 +10,27 @@ class WarmupEntityCreatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @var \Magento\TestFramework\ObjectManager
      */
-    private $objectManager;
+    protected $objectManager;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Service\WarmupEntityCreator
      */
-    private $warmupEntityCreator;
+    protected $warmupEntityCreator;
 
     /**
      * @var \Magento\Catalog\Api\CategoryRepositoryInterface
      */
-    private $categoryRepository;
+    protected $categoryRepository;
 
     /**
      * @var \Magento\Catalog\Api\ProductRepositoryInterface
      */
-    private $productRepository;
+    protected $productRepository;
 
     /**
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection
      */
-    private $urlCollection;
+    protected $urlCollection;
 
     public function setUp()
     {

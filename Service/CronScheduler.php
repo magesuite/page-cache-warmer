@@ -8,15 +8,15 @@ class CronScheduler
     /**
      * @var \Magento\Cron\Model\Schedule
      */
-    private $schedule;
+    protected $schedule;
     /**
      * @var \Magento\Cron\Model\ResourceModel\Schedule
      */
-    private $scheduleResource;
+    protected $scheduleResource;
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    private $logger;
+    protected $logger;
 
     public function __construct(
         \Magento\Cron\Model\Schedule $schedule,

@@ -6,7 +6,7 @@ class Configuration
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    private $scopeConfig;
+    protected $scopeConfig;
 
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig

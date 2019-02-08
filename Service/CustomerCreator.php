@@ -8,32 +8,32 @@ class CustomerCreator
     /**
      * @var \Magento\Customer\Model\CustomerFactory
      */
-    private $customerFactory;
+    protected $customerFactory;
 
     /**
      * @var \Magento\Customer\Api\CustomerRepositoryInterface
      */
-    private $customerRepository;
+    protected $customerRepository;
 
     /**
      * @var \Magento\Customer\Model\ResourceModel\Group\CollectionFactory
      */
-    private $groupCollectionFactory;
+    protected $groupCollectionFactory;
 
     /**
      * @var \Magento\Customer\Model\ResourceModel\Customer
      */
-    private $customerResource;
+    protected $customerResource;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    private $scopeConfig;
+    protected $scopeConfig;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    private $storeManager;
+    protected $storeManager;
 
     public function __construct(
         \Magento\Customer\Model\CustomerFactory $customerFactory,

@@ -4,27 +4,33 @@ namespace MageSuite\PageCacheWarmer\Cron;
 class RegenerateUrls
 {
     /**
-     * @var \MageSuite\PageCacheWarmer\Service\RegenerateUrls
+     * @var \MageSuite\PageCacheWarmer\Service\RegenerateUrlsFactory
      */
-    private $regenerateUrls;
+    protected $regenerateUrlsFactory;
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    private $scopeConfig;
+    protected $scopeConfig;
     /**
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
-    private $configuration;
+    protected $configuration;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
 
     public function __construct(
-        \MageSuite\PageCacheWarmer\Service\RegenerateUrls $regenerateUrls,
+        \MageSuite\PageCacheWarmer\Service\RegenerateUrlsFactory $regenerateUrlsFactory,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration
+        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
+        \Psr\Log\LoggerInterface $logger
     )
     {
-        $this->regenerateUrls = $regenerateUrls;
+        $this->regenerateUrlsFactory = $regenerateUrlsFactory;
         $this->scopeConfig = $scopeConfig;
         $this->configuration = $configuration;
+        $this->logger = $logger;
     }
 
     public function execute()
@@ -33,6 +39,6 @@ class RegenerateUrls
             return;
         }
 
-        $this->regenerateUrls->regenerate();
+        $this->regenerateUrlsFactory->create()->regenerate();
     }
 }

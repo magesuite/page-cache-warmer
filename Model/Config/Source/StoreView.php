@@ -6,7 +6,7 @@ class StoreView implements \Magento\Framework\Option\ArrayInterface
     /**
      * @var \Magento\Store\Model\ResourceModel\Store\Collection
      */
-    private $storeCollection;
+    protected $storeCollection;
 
     public function __construct(
         \Magento\Store\Model\ResourceModel\Store\Collection $storeCollection
