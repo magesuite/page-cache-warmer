@@ -29,6 +29,10 @@ class CleanedTagsQueueManager
 
     public function addTagsToCleanupQueue($tags)
     {
+        if(!is_array($tags)){
+            return;
+        }
+
         foreach ($tags as $tag) {
             $this->addTag($tag);
         }
