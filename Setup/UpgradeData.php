@@ -74,18 +74,6 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
                 'note',
                 'Page cache for this category can be warmed-up. Select if it shall be warmed up and how important the warm-up is.'
             );
-
-            foreach ($this->attributeSetCollection as $attributeSet) {
-                $setId = $this->catalogConfig->getAttributeSetId(\Magento\Catalog\Model\Product::ENTITY, $attributeSet->getAttributeSetName());
-                $groupId = $this->catalogConfig->getAttributeGroupId($setId, 'Cache Warmup');
-                $this->eavSetup->updateAttributeGroup(
-                    \Magento\Catalog\Model\Product::ENTITY,
-                    $setId,
-                    $groupId,
-                    'attribute_group_name',
-                    'Warm up page cache'
-                );
-            }
         }
 
         $setup->endSetup();
