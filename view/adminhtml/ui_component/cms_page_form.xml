@@ -3,7 +3,7 @@
     <fieldset name="warmup_priority" sortOrder="100">
         <settings>
             <collapsible>true</collapsible>
-            <label translate="true">Cache Warmup</label>
+            <label translate="true">Warm up page cache</label>
         </settings>
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
@@ -14,11 +14,14 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">page</item>
+                    <item name="notice" xsi:type="string" translate="true">
+                        Page cache for this page can be warmed-up. Select if it shall be warmed up and how important the warm-up is.
+                    </item>
                 </item>
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Warmup Priority</label>
+                <label translate="true">Cache Warm-up</label>
                 <dataScope>warmup_priority</dataScope>
             </settings>
             <formElements>

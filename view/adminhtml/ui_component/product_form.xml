@@ -4,8 +4,11 @@
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="collapsible" xsi:type="boolean">true</item>
-                <item name="label" xsi:type="string" translate="true">Cache Warmup</item>
+                <item name="label" xsi:type="string" translate="true">Warm up page cache</item>
                 <item name="additionalClasses" xsi:type="string">cs-csfeature__logo</item>
+                <item name="notice" xsi:type="string" translate="true">
+                    Page cache for this product can be warmed-up. Select if it shall be warmed up and how important the warm-up is.
+                </item>
             </item>
         </argument>
     </fieldset>
