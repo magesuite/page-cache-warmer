@@ -4,6 +4,7 @@
         <cache_warmer>
             <general>
                 <enabled>0</enabled>
+                <gather_tags_from_url>0</gather_tags_from_url>
                 <customer_group>0,1</customer_group>
                 <store_view>1</store_view>
             </general>

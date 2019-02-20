@@ -26,21 +26,27 @@ class GenerateAssociatedUrlsToWarmup
      * @var \Magento\Store\Model\StoreManagerInterface
      */
     protected $storeManager;
+    /**
+     * @var \MageSuite\PageCacheWarmer\Helper\Configuration
+     */
+    private $configuration;
 
     public function __construct(
         \Magento\Framework\App\RequestInterface $request,
         \MageSuite\PageCacheWarmer\Service\AssociatedUrlsGenerator $associatedUrlsGenerator,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration
     )
     {
         $this->request = $request;
         $this->associatedUrlsGenerator = $associatedUrlsGenerator;
         $this->storeManager = $storeManager;
+        $this->configuration = $configuration;
     }
 
     public function aroundSetHeader(\Magento\Framework\App\ResponseInterface $subject, callable $proceed, $name, $value, $replace = false)
     {
-        if($name == 'X-Magento-Tags'){
+        if($name == 'X-Magento-Tags' && $this->configuration->isGatheringTagsEnabled()){
             $request = $this->request;
 
             $module = $request->getModuleName();

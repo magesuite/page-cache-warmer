@@ -14,11 +14,16 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <backend_model>MageSuite\PageCacheWarmer\Model\Config\Backend\EnableModule</backend_model>
                 </field>
-                <field id="customer_group" translate="label" type="multiselect" sortOrder="20" showInDefault="1" >
+                <field id="gather_tags_from_url" translate="label" type="select" sortOrder="20" showInDefault="1" >
+                    <label>Enable gathering tags from url</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>This functionality will gather all cache tags associated with URLs visited by customers. Gathered URLs will be used to fill page cache warmup queue when specific tag is cleaned.</comment>
+                </field>
+                <field id="customer_group" translate="label" type="multiselect" sortOrder="30" showInDefault="1" >
                     <label>Customer Group</label>
                     <source_model>MageSuite\PageCacheWarmer\Model\Config\Source\CustomerGroup</source_model>
                 </field>
-                <field id="store_view" translate="label" type="multiselect" sortOrder="30" showInDefault="1" >
+                <field id="store_view" translate="label" type="multiselect" sortOrder="40" showInDefault="1" >
                     <label>Store View</label>
                     <source_model>MageSuite\PageCacheWarmer\Model\Config\Source\StoreView</source_model>
                 </field>
