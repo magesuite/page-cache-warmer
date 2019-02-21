@@ -78,20 +78,22 @@ class AssociatedUrlsGenerator
         $urlData = $this->urlsRepository->getByUrl($url);
 
         $insertData = [];
-        foreach ($tags as $tag) {
-            $connection = $this->resourceConnection->getConnection();
 
-            $select = $connection->select()
-                ->from('varnish_cache_tags')
-                ->where('tag =?', $tag);
+        $connection = $this->resourceConnection->getConnection();
 
-            $result = $connection->fetchOne($select);
+        $select = $connection->select()
+            ->from('varnish_cache_tags')
+            ->where('tag IN(?)', $tags);
 
-            if(!$result){
-                continue;
-            }
+        $result = $connection->fetchAll($select);
+
+        if(!$result){
+            return;
+        }
+
+        foreach ($result as $tag) {
             $insertData[] = [
-                'tag_id' => $result,
+                'tag_id' => $tag['id'],
                 'url_id' => $urlData->getId()
             ];
         }

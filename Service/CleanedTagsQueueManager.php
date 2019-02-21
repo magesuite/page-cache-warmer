@@ -21,30 +21,27 @@ class CleanedTagsQueueManager
             $tags = [$tags];
         }
 
-        foreach ($tags as $tag) {
-            $this->addTag($tag);
-        }
-    }
-
-    public function addTag($tag)
-    {
         $connection = $this->resourceConnection->getConnection();
         $select = $connection->select()
             ->from('varnish_cache_tags')
-            ->where('tag =?', $tag);
+            ->where('tag IN(?)', $tags);
 
-        $result = $connection->fetchOne($select);
+        $result = $connection->fetchAll($select);
 
         if(!$result){
             return;
         }
 
+        $insertData = [];
+        foreach ($result as $tag){
+            $insertData[] = $tag['id'];
+        }
+
         $connection->insertArray(
             $connection->getTableName('varnish_cache_cleanup_queue'),
             ['tag'],
-            [$result],
+            $insertData,
             \Magento\Framework\DB\Adapter\Pdo\Mysql::INSERT_IGNORE
         );
     }
-
 }
