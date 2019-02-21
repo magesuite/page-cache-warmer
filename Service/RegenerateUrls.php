@@ -151,7 +151,7 @@ class RegenerateUrls
                         ['customer_group' => 'customer_group_id']
                     )
                     ->where('customer_group.customer_group_id IN(?)', $data['customer_groups']);
-                
+
                 $insertQuery = $connection->insertFromSelect(
                     $select,
                     'cache_warmup_queue',

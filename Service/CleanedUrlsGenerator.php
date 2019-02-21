@@ -11,20 +11,14 @@ class CleanedUrlsGenerator
      * @var \MageSuite\PageCacheWarmer\Helper\Configuration
      */
     protected $configuration;
-    /**
-     * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\CleanedTagsQueue\CollectionFactory
-     */
-    protected $collection;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resourceConnection,
-        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration,
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\CleanedTagsQueue\CollectionFactory $collection
+        \MageSuite\PageCacheWarmer\Helper\Configuration $configuration
     )
     {
         $this->resourceConnection = $resourceConnection;
         $this->configuration = $configuration;
-        $this->collection = $collection;
     }
 
     public function generate()
@@ -84,12 +78,21 @@ class CleanedUrlsGenerator
 
     public function getTags()
     {
-        $cleanupCollection = $this->collection->create();
+        $connection = $this->resourceConnection->getConnection();
+        $select = $connection->select()
+            ->from('varnish_cache_cleanup_queue');
+
+        $result = $connection->fetchAll($select);
+
+        if(empty($result)){
+            return [];
+        }
 
         $tags = [];
 
-        foreach ($cleanupCollection as $tag) {
-            $tags[] = $tag->getTag();
+        foreach ($result as $tag){
+            $tags[] = $tag['tag'];
+
         }
 
         return $tags;

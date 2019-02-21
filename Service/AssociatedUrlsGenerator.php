@@ -10,18 +10,6 @@ class AssociatedUrlsGenerator
         'index' => 'cms-page'
     ];
     /**
-     * @var \MageSuite\PageCacheWarmer\Api\EntityTagRepositoryInterface
-     */
-    protected $entityTagsRepository;
-    /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagFactory
-     */
-    protected $tagsFactory;
-    /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagRepository
-     */
-    protected $tagsRepository;
-    /**
      * @var \MageSuite\PageCacheWarmer\Model\Entity\UrlFactory
      */
     protected $urlsFactory;
@@ -29,33 +17,22 @@ class AssociatedUrlsGenerator
      * @var \MageSuite\PageCacheWarmer\Model\Entity\UrlRepository
      */
     protected $urlsRepository;
+
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\RelationFactory
+     * @var \Magento\Framework\App\ResourceConnection
      */
-    protected $relationsFactory;
-    /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\RelationRepository
-     */
-    protected $relationsRepository;
+    protected $resourceConnection;
 
 
     public function __construct(
-        \MageSuite\PageCacheWarmer\Api\EntityTagRepositoryInterface $entityTagsRepository,
-        \MageSuite\PageCacheWarmer\Model\Entity\TagFactory $tagsFactory,
-        \MageSuite\PageCacheWarmer\Model\Entity\TagRepository $tagsRepository,
         \MageSuite\PageCacheWarmer\Model\Entity\UrlFactory $urlsFactory,
         \MageSuite\PageCacheWarmer\Model\Entity\UrlRepository $urlsRepository,
-        \MageSuite\PageCacheWarmer\Model\Entity\RelationFactory $relationsFactory,
-        \MageSuite\PageCacheWarmer\Model\Entity\RelationRepository $relationsRepository
+        \Magento\Framework\App\ResourceConnection $resourceConnection
     )
     {
-        $this->entityTagsRepository = $entityTagsRepository;
-        $this->tagsFactory = $tagsFactory;
-        $this->tagsRepository = $tagsRepository;
         $this->urlsFactory = $urlsFactory;
         $this->urlsRepository = $urlsRepository;
-        $this->relationsFactory = $relationsFactory;
-        $this->relationsRepository = $relationsRepository;
+        $this->resourceConnection = $resourceConnection;
     }
 
     public function addTagToUrlRelations($value, $controller, $url, $params)
@@ -71,12 +48,14 @@ class AssociatedUrlsGenerator
     {
         $tags = explode(',', $tags);
 
-        foreach ($tags as $tag) {
-            $tagEntity = $this->tagsFactory->create();
-            $tagEntity->setTag($tag);
+        $connection = $this->resourceConnection->getConnection();
 
-            $this->tagsRepository->save($tagEntity);
-        }
+        $connection->insertArray(
+            $connection->getTableName('varnish_cache_tags'),
+            ['tag'],
+            $tags,
+            \Magento\Framework\DB\Adapter\Pdo\Mysql::INSERT_IGNORE
+        );
     }
 
     public function addUrls($controller, $url, $params)
@@ -98,19 +77,33 @@ class AssociatedUrlsGenerator
 
         $urlData = $this->urlsRepository->getByUrl($url);
 
+        $insertData = [];
         foreach ($tags as $tag) {
-            $tagData = $this->tagsRepository->getByTag($tag);
+            $connection = $this->resourceConnection->getConnection();
 
-            if(!$tagData){
+            $select = $connection->select()
+                ->from('varnish_cache_tags')
+                ->where('tag =?', $tag);
+
+            $result = $connection->fetchOne($select);
+
+            if(!$result){
                 continue;
             }
-            $relation = $this->relationsFactory->create();
-
-            $relation->setTagId($tagData->getId())
-                ->setUrlId($urlData->getId());
-
-            $this->relationsRepository->save($relation);
+            $insertData[] = [
+                'tag_id' => $result,
+                'url_id' => $urlData->getId()
+            ];
         }
+
+        $connection = $this->resourceConnection->getConnection();
+
+        $connection->insertArray(
+            $connection->getTableName('varnish_cache_relations'),
+            ['tag_id', 'url_id'],
+            $insertData,
+            \Magento\Framework\DB\Adapter\Pdo\Mysql::INSERT_IGNORE
+        );
     }
 
     protected function getEntityType($controllerName)
