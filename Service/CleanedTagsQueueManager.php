@@ -4,53 +4,44 @@ namespace MageSuite\PageCacheWarmer\Service;
 class CleanedTagsQueueManager
 {
     /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\TagRepository
+     * @var \Magento\Framework\App\ResourceConnection
      */
-    protected $tagRepository;
-    /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueueFactory
-     */
-    protected $cleanedTagsQueueFactory;
-    /**
-     * @var \MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueueRepository
-     */
-    protected $cleanedTagsQueueRepository;
+    protected $resourceConnection;
 
     public function __construct(
-        \MageSuite\PageCacheWarmer\Model\Entity\TagRepository $tagRepository,
-        \MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueueFactory $cleanedTagsQueueFactory,
-        \MageSuite\PageCacheWarmer\Model\Entity\CleanedTagsQueueRepository $cleanedTagsQueueRepository
+        \Magento\Framework\App\ResourceConnection $resourceConnection
     )
     {
-        $this->tagRepository = $tagRepository;
-        $this->cleanedTagsQueueFactory = $cleanedTagsQueueFactory;
-        $this->cleanedTagsQueueRepository = $cleanedTagsQueueRepository;
+        $this->resourceConnection = $resourceConnection;
     }
 
     public function addTagsToCleanupQueue($tags)
     {
         if(!is_array($tags)){
+            $tags = [$tags];
+        }
+
+        $connection = $this->resourceConnection->getConnection();
+        $select = $connection->select()
+            ->from('varnish_cache_tags')
+            ->where('tag IN(?)', $tags);
+
+        $result = $connection->fetchAll($select);
+
+        if(!$result){
             return;
         }
 
-        foreach ($tags as $tag) {
-            $this->addTag($tag);
-        }
-    }
-
-    public function addTag($tag)
-    {
-        $tagData = $this->tagRepository->getByTag($tag);
-
-        if (!$tagData) {
-            return;
+        $insertData = [];
+        foreach ($result as $tag){
+            $insertData[] = $tag['id'];
         }
 
-        $cleanupTag = $this->cleanedTagsQueueFactory->create();
-
-        $cleanupTag->setTag($tagData->getId());
-
-        $this->cleanedTagsQueueRepository->save($cleanupTag);
+        $connection->insertArray(
+            $connection->getTableName('varnish_cache_cleanup_queue'),
+            ['tag'],
+            $insertData,
+            \Magento\Framework\DB\Adapter\Pdo\Mysql::INSERT_IGNORE
+        );
     }
-
 }
