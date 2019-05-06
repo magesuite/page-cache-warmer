@@ -33,7 +33,8 @@ class RegenerateWarmupUrls
         if ($typeCode == 'full_page' && $isTableExist) {
             $pageWarmerCollection = $this->pageWarmerCollectionFactory->create();
 
-            $pageWarmerCollection->walk('delete');
+            $pageWarmerCollection->getConnection()
+                ->delete($pageWarmerCollection->getMainTable());
 
             $this->cronScheduler->schedule();
         }

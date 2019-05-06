@@ -45,7 +45,8 @@ class CacheFlush implements \Magento\Framework\Event\ObserverInterface
 
         $pageWarmerCollection = $this->pageWarmerCollectionFactory->create();
 
-        $pageWarmerCollection->walk('delete');
+        $pageWarmerCollection->getConnection()
+            ->delete($pageWarmerCollection->getMainTable());
 
         $this->cronScheduler->schedule();
     }

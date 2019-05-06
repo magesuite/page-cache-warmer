@@ -235,15 +235,13 @@ class RegenerateUrls
     public function clearWarmerUrls()
     {
         $pageWarmerCollection = $this->pageWarmerCollectionFactory->create();
-
-        $pageWarmerCollection->walk('delete');
-
         $entityUrlsCollectionFactory = $this->entityUrlsCollectionFactory->create();
-
-        $entityUrlsCollectionFactory->walk('delete');
-
         $entityRelationsCollectionFactory = $this->entityRelationsCollectionFactory->create();
 
-        $entityRelationsCollectionFactory->walk('delete');
+        $connection = $pageWarmerCollection->getConnection();
+
+        $connection->delete($pageWarmerCollection->getMainTable());
+        $connection->delete($entityUrlsCollectionFactory->getMainTable());
+        $connection->delete($entityRelationsCollectionFactory->getMainTable());
     }
 }
