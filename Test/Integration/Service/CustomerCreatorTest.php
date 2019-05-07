@@ -152,6 +152,39 @@ class CustomerCreatorTest extends \PHPUnit\Framework\TestCase
         }
     }
 
+    /**
+     * @magentoDbIsolation enabled
+     * @magentoAppIsolation enabled
+     * @magentoDataFixture websiteFixture
+     * @magentoConfigFixture default/cache_warmer/general/domain testdomain12345
+     * @magentoConfigFixture default/cache_warmer/general/password test1234
+     * @magentoAdminConfigFixture customer/address/prefix_show req
+     * @magentoAdminConfigFixture customer/address/prefix_options Miss
+     */
+    public function testItCreateCustomerCorrectlyWhenPrefixIsEnabled()
+    {
+        $this->customerCreatorService->create();
+
+        $customerGroupCollection = $this->customerGroupCollection;
+
+        $storeManager = $this->storeManager;
+
+        foreach ($customerGroupCollection as $customerGroup) {
+            if($customerGroup->getCustomerGroupId() == 0){
+                continue;
+            }
+            $email = $this->customerCreatorService->prepareEmail($customerGroup->getCustomerGroupId());
+
+            foreach ($storeManager->getWebsites() as $website) {
+                $customer = $this->customer;
+                $customer->setWebsiteId($website->getId());
+                $customer = $customer->loadByEmail($email);
+
+                $this->assertEquals($customer->getPrefix(), 'Miss');
+            }
+        }
+    }
+
     public static function websiteFixture()
     {
         include __DIR__ . '/../_files/website.php';
