@@ -101,6 +101,10 @@ class CustomerCreator
             'password' => $this->preparePassword()
         ];
 
+        if($config['prefix_required'] == \Magento\Config\Model\Config\Source\Nooptreq::VALUE_REQUIRED) {
+            $customerData['prefix'] = $this->generatePrefix($config);
+        }
+
         $email = $customerData['email'];
 
         $customers = [];
@@ -144,7 +148,20 @@ class CustomerCreator
         return [
             'domain' => $this->scopeConfig->getValue('cache_warmer/general/domain'),
             'password' => $this->scopeConfig->getValue('cache_warmer/general/password'),
-            'website_scope' => $this->scopeConfig->getValue('customer/account_share/scope') ? true : false
+            'website_scope' => $this->scopeConfig->getValue('customer/account_share/scope') ? true : false,
+            'prefix_required' => $this->scopeConfig->getValue('customer/address/prefix_show'),
+            'allowed_prefixes' => $this->scopeConfig->getValue('customer/address/prefix_options')
         ];
+    }
+
+    protected function generatePrefix(array $config)
+    {
+        if(empty($config['allowed_prefixes'])) {
+            return 'Mr.';
+        }
+
+        $allowedPrefixes = explode(';', $config['allowed_prefixes']);
+
+        return $allowedPrefixes[array_rand($allowedPrefixes)];
     }
 }
