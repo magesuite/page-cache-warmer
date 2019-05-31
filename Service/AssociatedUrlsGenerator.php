@@ -39,7 +39,7 @@ class AssociatedUrlsGenerator
     {
         $this->addTags($value);
 
-        $this->addUrls($controller, $url, $params);
+        $this->addUrls($controller, $url);
 
         $this->generateRelations($value, $url);
     }
@@ -58,14 +58,12 @@ class AssociatedUrlsGenerator
         );
     }
 
-    public function addUrls($controller, $url, $params)
+    public function addUrls($controller, $url)
     {
-        $entityId = array_shift($params);
         $entityType = $this->getEntityType($controller);
 
         $urlEntity = $this->urlsFactory->create();
-        $urlEntity->setEntityId($entityId)
-            ->setEntityType($entityType)
+        $urlEntity->setEntityType($entityType)
             ->setUrl($url);
 
         $this->urlsRepository->save($urlEntity);
