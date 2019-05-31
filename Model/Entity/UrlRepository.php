@@ -60,6 +60,7 @@ class UrlRepository implements \MageSuite\PageCacheWarmer\Api\EntityUrlRepositor
         try {
             $entityUrlsCollection = $this->collectionFactory->create();
             $entityUrlsCollection
+                ->addFieldToFilter('entity_id', ['eq' => $url->getEntityId()])
                 ->addFieldToFilter('entity_type', ['eq' => $url->getEntityType()])
                 ->addFieldToFilter('url', ['eq' => $url->getUrl()]);
 

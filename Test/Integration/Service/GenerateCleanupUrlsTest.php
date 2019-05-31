@@ -65,7 +65,7 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
         $this->associatedUrlsGenerator->addTags(implode(',', $sampleTags));
 
         foreach ($this->sampleUrls() as $urlData) {
-            $this->associatedUrlsGenerator->addUrls($urlData['controller'], $urlData['url']);
+            $this->associatedUrlsGenerator->addUrls($urlData['controller'], $urlData['url'], $urlData['entity_id']);
             $this->associatedUrlsGenerator->generateRelations(implode(',', $sampleTags), $urlData['url']);
         }
 
@@ -93,15 +93,19 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
             ];
         }
 
+        $this->assertEquals(1, $pages[0]['id']);
         $this->assertEquals('creativeshop.me', $pages[0]['url']);
         $this->assertEquals(0, $pages[0]['customer_group']);
 
+        $this->assertEquals(2, $pages[2]['id']);
         $this->assertEquals('creativeshop.me/catalog/category/id/2', $pages[2]['url']);
         $this->assertEquals(0, $pages[2]['customer_group']);
 
+        $this->assertEquals(54, $pages[7]['id']);
         $this->assertEquals('creativeshop.me/catalog/product/id/54', $pages[7]['url']);
         $this->assertEquals(1, $pages[7]['customer_group']);
 
+        $this->assertEquals(4, $pages[9]['id']);
         $this->assertEquals('creativeshop.me/catalog/product/id/4', $pages[9]['url']);
         $this->assertEquals(1, $pages[9]['customer_group']);
     }
@@ -135,26 +139,44 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
     {
         return [
             [
+                'entity_id' => [
+                    'id' => '1'
+                ],
                 'controller' => 'index',
                 'url' => 'creativeshop.me'
             ],
             [
+                'entity_id' => [
+                    'id' => '2'
+                ],
                 'controller' => 'category',
                 'url' => 'creativeshop.me/catalog/category/id/2'
             ],
             [
+                'entity_id' => [
+                    'id' => '4'
+                ],
                 'controller' => 'category',
                 'url' => 'creativeshop.me/catalog/category/id/4'
             ],
             [
+                'entity_id' => [
+                    'id' => '54'
+                ],
                 'controller' => 'product',
                 'url' => 'creativeshop.me/catalog/product/id/54'
             ],
             [
+                'entity_id' => [
+                    'id' => '4'
+                ],
                 'controller' => 'product',
                 'url' => 'creativeshop.me/catalog/product/id/4'
             ],
             [
+                'entity_id' => [
+                    'id' => '8'
+                ],
                 'controller' => 'page',
                 'url' => 'creativeshop.me/about-us'
             ],
