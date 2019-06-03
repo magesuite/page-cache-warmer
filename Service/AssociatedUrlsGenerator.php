@@ -50,6 +50,11 @@ class AssociatedUrlsGenerator
 
         $connection = $this->resourceConnection->getConnection();
 
+        foreach ($tags as $tag) {
+            $insertData[] = [
+                'tag' => $tag,
+            ];
+        }
         $connection->insertArray(
             $connection->getTableName('varnish_cache_tags'),
             ['tag'],
@@ -63,12 +68,20 @@ class AssociatedUrlsGenerator
         $entityId = isset($params['id']) ? $params['id'] : null;
         $entityType = $this->getEntityType($controller);
 
-        $urlEntity = $this->urlsFactory->create();
-        $urlEntity->setEntityId($entityId)
-            ->setEntityType($entityType)
-            ->setUrl($url);
+        $connection = $this->resourceConnection->getConnection();
 
-        $this->urlsRepository->save($urlEntity);
+        $insertData[] = [
+            'entity_id' => $entityId,
+            'entity_type' => $entityType,
+            'url' => $url
+        ];
+
+        $connection->insertArray(
+            $connection->getTableName('varnish_cache_url_tags'),
+            ['entity_id', 'entity_type', 'url'],
+            $insertData,
+            \Magento\Framework\DB\Adapter\Pdo\Mysql::INSERT_IGNORE
+        );
     }
 
     public function generateRelations($tags, $url)
