@@ -65,7 +65,7 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
         $this->associatedUrlsGenerator->addTags(implode(',', $sampleTags));
 
         foreach ($this->sampleUrls() as $urlData) {
-            $this->associatedUrlsGenerator->addUrls($urlData['controller'], $urlData['url'], [$urlData['entity_id']]);
+            $this->associatedUrlsGenerator->addUrls($urlData['controller'], $urlData['url'], $urlData['entity_id']);
             $this->associatedUrlsGenerator->generateRelations(implode(',', $sampleTags), $urlData['url']);
         }
 
@@ -139,32 +139,44 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
     {
         return [
             [
-                'entity_id' => '1',
+                'entity_id' => [
+                    'id' => '1'
+                ],
                 'controller' => 'index',
                 'url' => 'creativeshop.me'
             ],
             [
-                'entity_id' => '2',
+                'entity_id' => [
+                    'id' => '2'
+                ],
                 'controller' => 'category',
                 'url' => 'creativeshop.me/catalog/category/id/2'
             ],
             [
-                'entity_id' => '4',
+                'entity_id' => [
+                    'id' => '4'
+                ],
                 'controller' => 'category',
                 'url' => 'creativeshop.me/catalog/category/id/4'
             ],
             [
-                'entity_id' => '54',
+                'entity_id' => [
+                    'id' => '54'
+                ],
                 'controller' => 'product',
                 'url' => 'creativeshop.me/catalog/product/id/54'
             ],
             [
-                'entity_id' => '4',
+                'entity_id' => [
+                    'id' => '4'
+                ],
                 'controller' => 'product',
                 'url' => 'creativeshop.me/catalog/product/id/4'
             ],
             [
-                'entity_id' => '8',
+                'entity_id' => [
+                    'id' => '8'
+                ],
                 'controller' => 'page',
                 'url' => 'creativeshop.me/about-us'
             ],
