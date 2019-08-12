@@ -2,14 +2,12 @@
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <fieldset name="warmup_priority" sortOrder="100">
         <settings>
+            <additionalClasses>
+                <class name="cs-csfeature__logo">true</class>
+            </additionalClasses>
             <collapsible>true</collapsible>
             <label translate="true">Warm up page cache</label>
         </settings>
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="additionalClasses" xsi:type="string">cs-csfeature__logo</item>
-            </item>
-        </argument>
         <field name="warmup_priority" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
