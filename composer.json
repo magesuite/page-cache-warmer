@@ -3,8 +3,9 @@
   "description": "Page Cache Warmer",
   "type": "magento2-module",
   "require": {
-    "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0",
-    "magento/framework": "^101.0.0|^102.0.0"
+    "php": ">=7.1",
+    "magento/framework": "^101.0.0|^102.0.0",
+    "creativestyle/magesuite-page-cache-warmer-crawler": "~1"
   },
   "autoload": {
     "files": [
