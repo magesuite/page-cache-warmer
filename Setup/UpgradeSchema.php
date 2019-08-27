@@ -195,6 +195,23 @@ class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
             );
         }
 
+        if (version_compare($context->getVersion(), '1.1.6', '<')) {
+            $idxName = $installer->getIdxName(
+                $installer->getTable('varnish_cache_url_tags'),
+                ['url'],
+                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
+            );
+            
+            /* The index is added this way, because magento does not have
+             * a built-in way of creating a partial (defined length) index. */
+            $installer->getConnection()->query(
+                sprintf("CREATE INDEX %s ON %s (url(256))",
+                    strtoupper($idxName),
+                    $installer->getTable('varnish_cache_url_tags')
+                )
+            );
+        }
+
         $installer->endSetup();
     }
 }
