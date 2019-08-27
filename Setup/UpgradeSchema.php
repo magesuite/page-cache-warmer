@@ -205,7 +205,7 @@ class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
             /* The index is added this way, because magento does not have
              * a built-in way of creating a partial (defined length) index. */
             $installer->getConnection()->query(
-                sprintf("CREATE INDEX %s ON %s (url(256))",
+                sprintf("CREATE INDEX %s ON %s (url(255))",
                     strtoupper($idxName),
                     $installer->getTable('varnish_cache_url_tags')
                 )
