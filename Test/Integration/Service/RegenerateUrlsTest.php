@@ -59,8 +59,7 @@ class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
                 'customer_group' => $page->getCustomerGroup()
             ];
         }
-
-//        var_dump($pages);
+        
         $this->assertEquals(0, $pages[0]['id']);
         $this->assertEquals('http://localhost/index.php/test_url', $pages[0]['url']);
         $this->assertEquals(20, $pages[0]['priority']);
