@@ -47,6 +47,10 @@ class RegenerateUrls
      * @var \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\CollectionFactory
      */
     protected $entityRelationsCollectionFactory;
+    /**
+     * @var \Magento\Framework\EntityManager\MetadataPool
+     */
+    protected $metadataPool;
 
     public function __construct(
         \MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\CollectionFactory $pageWarmerCollectionFactory,
@@ -59,7 +63,8 @@ class RegenerateUrls
         \MageSuite\PageCacheWarmer\Api\UrlRepositoryInterface $urlRepository,
         \MageSuite\PageCacheWarmer\Model\WarmupQueue\UrlFactory $urlFactory,
         \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Url\CollectionFactory $entityUrlsCollectionFactory,
-        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\CollectionFactory $entityRelationsCollectionFactory
+        \MageSuite\PageCacheWarmer\Model\ResourceModel\Entity\Relation\CollectionFactory $entityRelationsCollectionFactory,
+        \Magento\Framework\EntityManager\MetadataPool $metadataPool
 
     )
     {
@@ -74,6 +79,7 @@ class RegenerateUrls
         $this->urlFactory = $urlFactory;
         $this->entityUrlsCollectionFactory = $entityUrlsCollectionFactory;
         $this->entityRelationsCollectionFactory = $entityRelationsCollectionFactory;
+        $this->metadataPool = $metadataPool;
     }
 
     public function regenerate()
@@ -82,22 +88,27 @@ class RegenerateUrls
 
         $configuration = $this->configuration->getConfiguration();
 
+        $this->insertAdditionalUrls($configuration['store_views'], $configuration['customer_groups']);
+
         foreach ($this->getEntityData() as $data) {
             $data['store_ids'] = $configuration['store_views'];
             $data['customer_groups'] = $configuration['customer_groups'];
             $this->insert($data);
         }
-
-        $this->insertAdditionalUrls($configuration['store_views'], $configuration['customer_groups']);
     }
 
     public function insert($data)
     {
+        $table = $data['table'];
+        $tableAlias = $data['table_alias'];
+        $entityType = $data['entity_type'];
+        $linkField = $data['link_field'];
+
         try {
-            if ($data['entity_type'] == 'cms-page') {
+            if ($entityType == 'cms-page') {
                 $priorityExpression = 'cms_page.warmup_priority';
             } else {
-                $priorityExpression = 'COALESCE('.$data['table_alias']. '_store'.'.value, '.$data['table_alias']. '_default'.'.value)';
+                $priorityExpression = 'COALESCE('.$tableAlias. '_store'.'.value, '.$tableAlias. '_default'.'.value)';
             }
 
             foreach ($data['store_ids'] as $storeId) {
@@ -114,34 +125,46 @@ class RegenerateUrls
                             'priority' => new \Zend_Db_Expr($priorityExpression)
                         ]
                     )
-                    ->where('main_table.entity_type =?', $data['entity_type'])
+                    ->where('main_table.entity_type =?', $entityType)
                     ->where('main_table.store_id =?', $storeId);
 
-                if ($data['entity_type'] != 'cms-page') {
+                if ($entityType != 'cms-page') {
                     $attributeId = $this->attributeRepository->get($data['attribute_entity_type'], 'warmup_priority')->getAttributeId();
 
+                    $tableFieldLink = 'main_table.entity_id';
+
+                    if($linkField == 'row_id'){
+                        $select->joinLeft(
+                            ['catalog_' . $entityType . '_entity' => 'catalog_' . $entityType . '_entity'],
+                            'main_table.entity_id = catalog_' . $entityType . '_entity.entity_id',
+                            ['row_id']
+                        );
+
+                        $tableFieldLink = 'catalog_' . $entityType . '_entity.row_id';
+                    }
+
                     $select->joinLeft(
-                        [$data['table_alias'] . '_default' => $data['table']],
-                        'main_table.entity_id = ' . $data['table_alias']. '_default' . '.entity_id AND ' . $data['table_alias'] . '_default' . '.attribute_id = ' . $attributeId,
+                        [$tableAlias . '_default' => $table],
+                        $tableFieldLink . ' = ' . $tableAlias. '_default' . '.' .$linkField . ' AND ' . $tableAlias . '_default' . '.attribute_id = ' . $attributeId,
                         ['']
                     );
 
                     $select->joinLeft(
-                        [$data['table_alias'] . '_store' => $data['table']],
-                        $data['table_alias']. '_default' . '.entity_id = ' . $data['table_alias'] . '_store' . '.entity_id AND ' . $data['table_alias'] . '_default' . '.attribute_id = ' . $data['table_alias'] . '_store' . '.attribute_id AND ' . $data['table_alias'] . '_store' . '.store_id = ' . $storeId,
+                        [$tableAlias . '_store' => $table],
+                        $tableAlias. '_default' . '.' . $linkField . ' = ' . $tableAlias . '_store' . '.' .$linkField . ' AND ' . $tableAlias . '_default' . '.attribute_id = ' . $tableAlias . '_store' . '.attribute_id AND ' . $tableAlias . '_store' . '.store_id = ' . $storeId,
                         ['']
                     );
 
-                    $select->where($data['table_alias']. '_default' . '.attribute_id =?', $attributeId);
-                    $select->where($data['table_alias']. '_default' . '.store_id = 0');
-                    $select->where('COALESCE('.$data['table_alias']. '_store'.'.value, '.$data['table_alias']. '_default'.'.value)');
+                    $select->where($tableAlias. '_default' . '.attribute_id =?', $attributeId);
+                    $select->where($tableAlias. '_default' . '.store_id = 0');
+                    $select->where('COALESCE('.$tableAlias. '_store'.'.value, '.$tableAlias. '_default'.'.value)');
                 } else {
                     $select->joinLeft(
-                        [$data['table_alias'] => 'cms_page'],
-                        'main_table.entity_id = ' . $data['table_alias'] . '.page_id',
+                        [$tableAlias => 'cms_page'],
+                        'main_table.entity_id = ' . $tableAlias . '.page_id',
                         ['']
                     )
-                        ->where($data['table_alias'] . '.warmup_priority != 0');
+                        ->where($tableAlias . '.warmup_priority != 0');
                 }
 
 
@@ -152,8 +175,20 @@ class RegenerateUrls
                     )
                     ->where('customer_group.customer_group_id IN(?)', $data['customer_groups']);
 
+                $subSelect = $connection->select()
+                    ->from(
+                        $select,
+                        [
+                            'entity_type',
+                            'entity_id',
+                            'url',
+                            'priority',
+                            'customer_group'
+                        ]
+                    );
+
                 $insertQuery = $connection->insertFromSelect(
-                    $select,
+                    $subSelect,
                     'cache_warmup_queue',
                     [
                         'entity_type',
@@ -205,20 +240,23 @@ class RegenerateUrls
                 'entity_type' => 'category',
                 'table' => 'catalog_category_entity_int',
                 'table_alias' => 'catalog_entity',
-                'field' => 'value'
+                'field' => 'value',
+                'link_field' => $this->metadataPool->getMetadata(\Magento\Catalog\Api\Data\CategoryInterface::class)->getLinkField()
             ],
             'product' => [
                 'attribute_entity_type' => 'catalog_product',
                 'entity_type' => 'product',
                 'table' => 'catalog_product_entity_int',
                 'table_alias' => 'product_entity',
-                'field' => 'value'
+                'field' => 'value',
+                'link_field' => $this->metadataPool->getMetadata(\Magento\Catalog\Api\Data\ProductInterface::class)->getLinkField()
             ],
             'cms' => [
                 'entity_type' => 'cms-page',
                 'table' => 'cms_page',
                 'table_alias' => 'cms_page',
-                'field' => 'warmup_priority'
+                'field' => 'warmup_priority',
+                'link_field' => $this->metadataPool->getMetadata(\Magento\Cms\Api\Data\PageInterface::class)->getLinkField()
             ],
         ];
     }

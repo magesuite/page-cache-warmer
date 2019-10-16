@@ -59,45 +59,45 @@ class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
                 'customer_group' => $page->getCustomerGroup()
             ];
         }
-
-        $this->assertEquals(1, $pages[0]['id']);
-        $this->assertEquals('http://localhost/index.php/no-route', $pages[0]['url']);
-        $this->assertEquals(10, $pages[0]['priority']);
+        
+        $this->assertEquals(0, $pages[0]['id']);
+        $this->assertEquals('http://localhost/index.php/test_url', $pages[0]['url']);
+        $this->assertEquals(20, $pages[0]['priority']);
         $this->assertEquals(0, $pages[0]['customer_group']);
 
-        $this->assertEquals(1, $pages[1]['id']);
-        $this->assertEquals('http://localhost/index.php/no-route', $pages[1]['url']);
-        $this->assertEquals(10, $pages[1]['priority']);
+        $this->assertEquals(0, $pages[1]['id']);
+        $this->assertEquals('http://localhost/index.php/test_url', $pages[1]['url']);
+        $this->assertEquals(20, $pages[1]['priority']);
         $this->assertEquals(1, $pages[1]['customer_group']);
 
         $this->assertEquals(0, $pages[2]['id']);
-        $this->assertEquals('http://localhost/index.php/test_url', $pages[2]['url']);
+        $this->assertEquals('http://localhost/index.php/second_url', $pages[2]['url']);
         $this->assertEquals(20, $pages[2]['priority']);
         $this->assertEquals(0, $pages[2]['customer_group']);
 
         $this->assertEquals(0, $pages[3]['id']);
-        $this->assertEquals('http://localhost/index.php/test_url', $pages[3]['url']);
+        $this->assertEquals('http://localhost/index.php/second_url', $pages[3]['url']);
         $this->assertEquals(20, $pages[3]['priority']);
         $this->assertEquals(1, $pages[3]['customer_group']);
 
         $this->assertEquals(0, $pages[4]['id']);
-        $this->assertEquals('http://localhost/index.php/second_url', $pages[4]['url']);
+        $this->assertEquals('http://localhost/index.php/third_url', $pages[4]['url']);
         $this->assertEquals(20, $pages[4]['priority']);
         $this->assertEquals(0, $pages[4]['customer_group']);
 
         $this->assertEquals(0, $pages[5]['id']);
-        $this->assertEquals('http://localhost/index.php/second_url', $pages[5]['url']);
+        $this->assertEquals('http://localhost/index.php/third_url', $pages[5]['url']);
         $this->assertEquals(20, $pages[5]['priority']);
         $this->assertEquals(1, $pages[5]['customer_group']);
 
-        $this->assertEquals(0, $pages[6]['id']);
-        $this->assertEquals('http://localhost/index.php/third_url', $pages[6]['url']);
-        $this->assertEquals(20, $pages[6]['priority']);
+        $this->assertEquals(1, $pages[6]['id']);
+        $this->assertEquals('http://localhost/index.php/no-route', $pages[6]['url']);
+        $this->assertEquals(10, $pages[6]['priority']);
         $this->assertEquals(0, $pages[6]['customer_group']);
 
-        $this->assertEquals(0, $pages[7]['id']);
-        $this->assertEquals('http://localhost/index.php/third_url', $pages[7]['url']);
-        $this->assertEquals(20, $pages[7]['priority']);
+        $this->assertEquals(1, $pages[7]['id']);
+        $this->assertEquals('http://localhost/index.php/no-route', $pages[7]['url']);
+        $this->assertEquals(10, $pages[7]['priority']);
         $this->assertEquals(1, $pages[7]['customer_group']);
     }
 
