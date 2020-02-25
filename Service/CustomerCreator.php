@@ -131,6 +131,9 @@ class CustomerCreator
     public function prepareEmail($customerGroupId)
     {
         $domainPrefix = $this->getConfig()['domain'];
+        if(!$domainPrefix){
+            $domainPrefix = $_SERVER['SERVER_NAME'];
+        }
         $hash = md5($customerGroupId);
 
         return $hash . '@' . $domainPrefix . self::CUSTOMER_EMAIL_HOST_SUFFIX;
@@ -138,8 +141,10 @@ class CustomerCreator
 
     public function preparePassword()
     {
-        $config = $this->getConfig();
-
+        $password = $this->getConfig()['password'];
+        if(!$password){
+            $password = "magesuite";
+        }
         return $config['password'];
     }
 
