@@ -145,7 +145,7 @@ class CustomerCreator
         if(!$password){
             $password = "magesuite";
         }
-        return $config['password'];
+        return $password;
     }
 
     public function getConfig()
