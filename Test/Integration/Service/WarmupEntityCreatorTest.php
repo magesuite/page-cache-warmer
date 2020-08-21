@@ -32,7 +32,7 @@ class WarmupEntityCreatorTest extends \PHPUnit\Framework\TestCase
      */
     protected $urlCollection;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->warmupEntityCreator = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\WarmupEntityCreator::class);

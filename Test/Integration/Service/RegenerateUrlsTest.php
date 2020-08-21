@@ -26,7 +26,7 @@ class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
      */
     protected $additionalUrlProvider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->urlCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection::class);
@@ -59,7 +59,7 @@ class RegenerateUrlsTest extends \PHPUnit\Framework\TestCase
                 'customer_group' => $page->getCustomerGroup()
             ];
         }
-        
+
         $this->assertEquals(0, $pages[0]['id']);
         $this->assertEquals('http://localhost/index.php/test_url', $pages[0]['url']);
         $this->assertEquals(20, $pages[0]['priority']);

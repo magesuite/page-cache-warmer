@@ -32,7 +32,7 @@ class CustomerCreatorTest extends \PHPUnit\Framework\TestCase
      */
     protected $storeManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->customerCreatorService = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\CustomerCreator::class);

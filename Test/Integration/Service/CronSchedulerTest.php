@@ -22,7 +22,7 @@ class CronSchedulerTest extends \PHPUnit\Framework\TestCase
      */
     protected $cronCollection;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->cronScheduler = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\CronScheduler::class);
@@ -43,7 +43,7 @@ class CronSchedulerTest extends \PHPUnit\Framework\TestCase
             ->addFieldToFilter('job_code', ['eq' => 'regenerate_page_cache_warmer_urls']);
 
         $job = $cronCollection->getFirstItem();
-        
+
         $this->assertEquals('regenerate_page_cache_warmer_urls', $job->getJobCode());
     }
 }

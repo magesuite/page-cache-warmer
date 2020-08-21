@@ -42,7 +42,7 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
      */
     protected $cleanedTagsQueueRepository;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->urlCollection = $this->objectManager->create(\MageSuite\PageCacheWarmer\Model\ResourceModel\WarmupQueue\Url\Collection::class);
