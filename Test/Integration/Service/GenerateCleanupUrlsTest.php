@@ -57,7 +57,6 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
      * @magentoConfigFixture cache_warmer/general/enabled 1
-     * @magentoDataFixture loadCleanupTags
      */
     public function testItGenerateCleanupUrlsCorrectly()
     {
@@ -84,6 +83,7 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(12, $urlCollection->getSize());
 
         $pages = [];
+
         foreach ($urlCollection as $page) {
             $pages[] = [
                 'id' => $page->getEntityId(),
@@ -108,11 +108,6 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(4, $pages[9]['id']);
         $this->assertEquals('creativeshop.me/catalog/product/id/4', $pages[9]['url']);
         $this->assertEquals(1, $pages[9]['customer_group']);
-    }
-
-    public static function loadCleanupTags()
-    {
-        require __DIR__.'/../_files/url_rewrite.php';
     }
 
     protected function sampleTags()
