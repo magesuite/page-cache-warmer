@@ -47,7 +47,7 @@ class AssociatedUrlsGeneratorTest extends \PHPUnit\Framework\TestCase
      */
     protected $relationsRepository;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->associatedUrlsGenerator = $this->objectManager->create(\MageSuite\PageCacheWarmer\Service\AssociatedUrlsGenerator::class);
