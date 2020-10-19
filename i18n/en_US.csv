@@ -1,0 +1,29 @@
+No,No
+"Yes, Low priority","Yes, Low priority"
+"Yes, High priority - As soon as possible","Yes, High priority - As soon as possible"
+"Link with id ""%1"" does not exist.","Link with id ""%1"" does not exist."
+"Could not save the link: %1","Could not save the link: %1"
+"Could not delete the link: %1","Could not delete the link: %1"
+MageSuite,MageSuite
+"Cache Warmer","Cache Warmer"
+Enabled,Enabled
+"Enable gathering tags from url","Enable gathering tags from url"
+"Customer Group","Customer Group"
+"Store View","Store View"
+"Warm up page cache","Warm up page cache"
+"Cache Warm-up","Cache Warm-up"
+"
+                        Page cache for this category can be warmed-up. Select if it shall be warmed up and how important the warm-up is.
+                    ","
+                        Page cache for this category can be warmed-up. Select if it shall be warmed up and how important the warm-up is.
+                    "
+"
+                        Page cache for this page can be warmed-up. Select if it shall be warmed up and how important the warm-up is.
+                    ","
+                        Page cache for this page can be warmed-up. Select if it shall be warmed up and how important the warm-up is.
+                    "
+"
+                    Page cache for this product can be warmed-up. Select if it shall be warmed up and how important the warm-up is.
+                ","
+                    Page cache for this product can be warmed-up. Select if it shall be warmed up and how important the warm-up is.
+                "
