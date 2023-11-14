@@ -10,4 +10,3 @@ $product = $productRepository->get('simple');
 $product->setWarmupPriority(40);
 
 $productRepository->save($product);
-

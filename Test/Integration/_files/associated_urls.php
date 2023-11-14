@@ -56,7 +56,3 @@ $sampleUrls = [
 foreach ($sampleUrls as $url) {
     $associatedUrlsGenerator->addTagToUrlRelations(implode(',', $sampleTags), $url['controller'], $url['url'], [$url['entity_id']]);
 }
-
-
-
-

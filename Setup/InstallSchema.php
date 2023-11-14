@@ -66,7 +66,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
             self::ACQUIRE_JOBS_INDEX_COLUMNS,
             ['type' => \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX]
         );
-        
+
         $installer->getConnection()->createTable($table);
 
         $installer->getConnection()->addColumn(

@@ -30,5 +30,3 @@ class GenerateCleanupUrls extends \Symfony\Component\Console\Command\Command
         $this->cleanedUrlsGeneratorFactory->create()->generate();
     }
 }
-
-

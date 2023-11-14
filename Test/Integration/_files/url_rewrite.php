@@ -11,5 +11,3 @@ $page = $pageRepository->getById(1);
 $page->setWarmupPriority(10);
 
 $pageRepository->save($page);
-
-

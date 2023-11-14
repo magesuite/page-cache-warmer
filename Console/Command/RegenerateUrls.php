@@ -31,5 +31,3 @@ class RegenerateUrls extends \Symfony\Component\Console\Command\Command
         $this->regenerateUrlsFactory->create()->regenerate();
     }
 }
-
-

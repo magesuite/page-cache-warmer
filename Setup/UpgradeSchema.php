@@ -201,7 +201,7 @@ class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
                 ['url'],
                 \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_INDEX
             );
-            
+
             /* The index is added this way, because magento does not have
              * a built-in way of creating a partial (defined length) index. */
             $installer->getConnection()->query(

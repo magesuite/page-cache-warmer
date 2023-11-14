@@ -10,4 +10,3 @@ $category = $categoryRepository->get(333);
 $category->setWarmupPriority(10);
 
 $categoryRepository->save($category);
-
