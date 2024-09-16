@@ -57,15 +57,19 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
      * @magentoConfigFixture cache_warmer/general/enabled 1
+     * @magentoConfigFixture cache_warmer/general/customer_group 0,1
      */
     public function testItGenerateCleanupUrlsCorrectly()
     {
         $sampleTags = $this->sampleTags();
         $this->associatedUrlsGenerator->addTags(implode(',', $sampleTags));
+        $expectedPages = [];
+        $customerGroups = [0,1];
 
         foreach ($this->sampleUrls() as $urlData) {
             $this->associatedUrlsGenerator->addUrls($urlData['controller'], $urlData['url'], $urlData['entity_id']);
             $this->associatedUrlsGenerator->generateRelations(implode(',', $sampleTags), $urlData['url']);
+            $expectedPages = $this->addExpectedPagesForGroups($urlData, $customerGroups, $expectedPages);
         }
 
         foreach ($this->tagsCollection as $tag) {
@@ -88,26 +92,30 @@ class GenerateCleanupUrlsTest extends \PHPUnit\Framework\TestCase
             $pages[] = [
                 'id' => $page->getEntityId(),
                 'url' => $page->getUrl(),
-                'priority' => $page->getPriority(),
                 'customer_group' => $page->getCustomerGroup()
             ];
         }
 
-        $this->assertEquals(1, $pages[0]['id']);
-        $this->assertEquals('creativeshop.me', $pages[0]['url']);
-        $this->assertEquals(0, $pages[0]['customer_group']);
+        $this->assertContainsEqualsAll($expectedPages, $pages);
+    }
 
-        $this->assertEquals(2, $pages[2]['id']);
-        $this->assertEquals('creativeshop.me/catalog/category/id/2', $pages[2]['url']);
-        $this->assertEquals(0, $pages[2]['customer_group']);
+    protected function addExpectedPagesForGroups($urlData, $customerGroups, $expectedPages): array
+    {
+        foreach ($customerGroups as $customerGroup) {
+            $expectedPages[] = [
+                'id' => $urlData['entity_id']['id'],
+                'url' => $urlData['url'],
+                'customer_group' => $customerGroup
+            ];
+        }
+        return $expectedPages;
+    }
 
-        $this->assertEquals(54, $pages[7]['id']);
-        $this->assertEquals('creativeshop.me/catalog/product/id/54', $pages[7]['url']);
-        $this->assertEquals(1, $pages[7]['customer_group']);
-
-        $this->assertEquals(4, $pages[9]['id']);
-        $this->assertEquals('creativeshop.me/catalog/product/id/4', $pages[9]['url']);
-        $this->assertEquals(1, $pages[9]['customer_group']);
+    protected function assertContainsEqualsAll($needles, $haystack): void
+    {
+        foreach ($needles as $needle) {
+            $this->assertContainsEquals($needle, $haystack);
+        }
     }
 
     protected function sampleTags()
