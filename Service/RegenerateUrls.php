@@ -185,7 +185,8 @@ class RegenerateUrls
                             'priority',
                             'customer_group'
                         ]
-                    );
+                    )->order('priority DESC'
+                    )->order('customer_group ASC');
 
                 $insertQuery = $connection->insertFromSelect(
                     $subSelect,
